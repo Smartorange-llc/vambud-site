@@ -1,0 +1,130 @@
+extends /../index.pug
+
+block variable
+  -
+    var title_page = 'single-news'
+    var id_page = 'id-page-single-news'
+
+block meta
+  title= title_page
+  meta(name='description', content='')
+
+block header
+  +header() 
+
+block content
+  section.single-news.container
+    .single-news__container
+      .sticky-wrap
+        a.btn-back
+          .btn-back__svg-wrap
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M1.63452 5.59929L1.31421 5.94109L1.63452 6.28288L5.63452 10.5495L6.36499 9.86589L3.15405 6.44109L9.99976 6.44109L9.99976 5.44109L3.15405 5.44109L6.36499 2.01628L5.63452 1.33269L1.63452 5.59929Z" fill="#0F4272"/>
+            </svg>
+          span Назад
+        h1 Інвестори відзначають стабільний дохід і високий попит навіть поза сезоном
+        .socials-list 
+          a(href="" aria-label="facebook").socials-list__item 
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M11.8569 2.98875H13.5V0.12675C13.2165 0.08775 12.2416 0 11.1062 0C8.73715 0 7.11428 1.49025 7.11428 4.22925V6.75H4.5V9.9495H7.11428V18H10.3195V9.95025H12.8281L13.2263 6.75075H10.3188V4.5465C10.3195 3.62175 10.5685 2.98875 11.8569 2.98875Z" fill="#F6F4EB"/>
+            </svg>
+          a(href="" aria-label="instagram").socials-list__item 
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9.00293 0.75C11.1527 0.75 11.4285 0.75924 12.2832 0.799805C13.1563 0.838349 13.7679 0.980616 14.3086 1.18945C14.8779 1.40397 15.3965 1.74174 15.8252 2.17578L15.5879 2.41797L15.8291 2.18066L15.8271 2.17773C16.2666 2.60769 16.6016 3.12478 16.8193 3.7002C17.0285 4.23856 17.1705 4.85293 17.209 5.72559C17.2464 6.57777 17.25 6.8542 17.25 9.00195C17.25 11.1515 17.2405 11.4262 17.2031 12.2773C17.1646 13.1512 17.0224 13.7628 16.8135 14.3037C16.3679 15.4559 15.4561 16.3669 14.3037 16.8125C13.765 17.022 13.15 17.1646 12.2764 17.2031C11.425 17.2406 11.1502 17.25 9 17.25C6.84981 17.25 6.57489 17.2406 5.72363 17.2031C4.85018 17.1646 4.23908 17.0223 3.69824 16.8135C3.12784 16.5986 2.60792 16.2604 2.17871 15.8252L2.18066 15.8262L2.41797 15.585L2.17676 15.8223C1.74278 15.3939 1.40433 14.8791 1.18652 14.3037C0.977293 13.7653 0.835371 13.1503 0.796875 12.2773C0.759481 11.4262 0.750001 11.1515 0.75 9.00195C0.75 6.85262 0.759232 6.57626 0.799805 5.72168C0.838381 4.84886 0.980612 4.23787 1.18945 3.69727C1.40441 3.12724 1.74262 2.60779 2.17773 2.17871L2.17578 2.18164L2.41797 2.41797L2.18066 2.17676L2.17773 2.17871C2.60769 1.73942 3.12468 1.40424 3.7002 1.18652C4.23853 0.97748 4.85359 0.835377 5.72656 0.796875C6.57788 0.759487 6.85277 0.75 9.00293 0.75ZM9 5.0918C6.84258 5.09183 5.0918 6.84246 5.0918 9C5.09196 11.1574 6.84268 12.9072 9 12.9072C11.1575 12.9072 12.908 11.1574 12.9082 9C12.9082 6.84244 11.1576 5.0918 9 5.0918ZM13.7764 2.48633C12.8173 2.48633 12.04 3.26427 12.04 4.22363C12.0403 5.18259 12.8174 5.95996 13.7764 5.95996C14.7354 5.95993 15.5134 5.18261 15.5137 4.22363C15.5137 3.26425 14.7355 2.48636 13.7764 2.48633Z" fill="#F6F4EB"/>
+            </svg>
+          a(href="" aria-label="telegram").socials-list__item 
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 18" fill="none">
+              <path d="M9.4174 11.8632L9.0204 16.8888C9.58841 16.8888 9.83441 16.6692 10.1294 16.4055L12.7925 14.115L18.3106 17.7519C19.3226 18.2595 20.0357 17.9922 20.3087 16.914L23.9308 1.63926L23.9318 1.63836C24.2528 0.291963 23.3907 -0.234534 22.4047 0.0957645L1.1142 7.43163C-0.33883 7.93922 -0.31683 8.66822 0.867199 8.99852L6.31033 10.5222L18.9536 3.40235C19.5486 3.04775 20.0897 3.24395 19.6446 3.59855L9.4174 11.8632Z" fill="#27292B"/>
+            </svg>
+      .single-news__content-wrap
+        .single-news__date-wrap 
+          p 01.05.2025
+          
+        .single-news__content 
+          .news-slider
+            .news-slider__track-wrap
+              .news-slider__track
+                .news-slider__slide
+                  img(loading="lazy" src="/src/shared/images/about/infra.jpg", alt="фото 1")
+                .news-slider__slide
+                  img(loading="lazy" src="/src/shared/images/gallery/1.jpg", alt="фото 2")
+                .news-slider__slide
+                  img(loading="lazy" src="/src/shared/images/gallery/2.jpg", alt="фото 3")
+                .news-slider__slide
+                  img(loading="lazy" src="/src/shared/images/gallery/3.jpg", alt="фото 4")
+                .news-slider__slide
+                  img(loading="lazy" src="/src/shared/images/gallery/4.jpg", alt="фото 5")
+                .news-slider__slide
+                  img(loading="lazy" src="/src/shared/images/gallery/5.jpg", alt="фото 6")
+                .news-slider__slide
+                  img(loading="lazy" src="/src/shared/images/gallery/6.jpg", alt="фото 7")
+                .news-slider__slide
+                  img(loading="lazy" src="/src/shared/images/about/infra.jpg", alt="фото 8")
+            .news-slider__controls
+              button.news-slider__nav.news-slider__nav--prev(type="button" aria-label="Попереднє фото")
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M11.3846 20L4 12M4 12L11.3846 4M4 12L20 12" stroke="currentColor" stroke-width="1.2"/>
+                </svg>
+              .news-slider__counter
+                span.news-slider__counter-current 01
+                span.news-slider__counter-divider /
+                span.news-slider__counter-total 08
+              button.news-slider__nav.news-slider__nav--next(type="button" aria-label="Наступне фото")
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12.6154 20L20 12M20 12L12.6154 4M20 12L4 12" stroke="currentColor" stroke-width="1.2"/>
+                </svg>
+          img(loading="lazy" src="/src/shared/images/about/infra.jpg", alt="news")
+          h2 Шановні майбутні мешканці!
+          p Компанія відкриває масштабний розпродаж квартир у вже майже проданих житлових комплексах. Це чудова нагода придбати житло у сучасних будинках, які вже заселені та мають сформовану інфраструктуру. Якщо ви давно мріяли про власну квартиру — зараз найкращий момент для вигідної покупки.
+          h3 Чому варто діяти саме зараз:
+          ul 
+            li Це фінальний шанс придбати житло у популярних комплексах, де більшість квартир вже продані.
+            li Тільки під час акції діють особливі знижки та ексклюзивні умови, які недоступні на старті продажів.
+            li Наші житлові комплекси розташовані у районах з розвиненою інфраструктурою: школи, садочки, магазини, аптеки та зручна транспортна розв’язка поруч з домом.
+            li Ми дбаємо про надійність та довговічність кожного будинку, використовуючи перевірені технології та матеріали.
+            li У нас залишаються квартири різних форматів — від компактних однокімнатних до просторих сімейних рішень. Кожен знайде варіант під свої потреби.
+          p Не упустіть свій шанс здійснити мрію про власне житло! Станьте часткою дружньої та гармонійної спільноти від "RIEL". Наші кваліфіковані консультанти з радістю допоможуть вам обрати ідеальний варіант житла, який відповідає всім вашим потребам.
+          <iframe  src="https://www.youtube.com/embed/-PqHS9B4bHk?si=HwSye8zSG7ILLnTB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          h3 Останні акційні пропозиції по вигідній ціні!
+          p Компанія відкриває масштабний розпродаж квартир у вже майже проданих житлових комплексах. Це чудова нагода придбати житло у сучасних будинках, які вже заселені та мають сформовану інфраструктуру. Якщо ви давно мріяли про власну квартиру — зараз найкращий момент для вигідної покупки.
+          button(type="button" data-call-us-btn).general-btn.general-btn--dark
+            span Дізнатися більше у відділі продажів
+
+  section.latest-news
+    .latest-news__inner.container
+      h2.latest-news__title Останні новини
+      mixin latestNewsCard(title, date)
+        a(href="/single-news").news-card
+          .news-card__corner.news-card__corner--tl
+          .news-card__corner.news-card__corner--tr
+          p.news-card__title-text= title
+          .news-card__img-wrap
+            img(loading="lazy" src="/src/shared/images/advantages/1.jpg", alt="news")
+            .news-card__magnetic
+              .news-card__btn
+                span.news-card__btn-text ПЕРЕГЛЯНУТИ
+                .news-card__btn-icon
+                  svg(xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none")
+                    circle(cx="11" cy="11" r="10" stroke="currentColor" stroke-width="1.4")
+                    line(x1="11" y1="6" x2="11" y2="16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 2")
+                    line(x1="6" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 2")
+          .news-card__footer
+            .news-card__date
+              svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+                rect(x="1.5" y="3.5" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.1")
+                path(d="M1.5 6.5H14.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.1")
+                path(d="M5 1.5V4.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.1")
+                path(d="M11 1.5V4.5" stroke="currentColor" stroke-linecap="round" stroke-width="1.1")
+              span= date
+          .news-card__corner.news-card__corner--bl
+          .news-card__corner.news-card__corner--br
+      .latest-news__list
+        +latestNewsCard("Висаджено нові дерева та зелені зони у дворі комплексу", "16 ГРУДНЯ 2026")
+        +latestNewsCard("Як формувались планування квартир у другій черзі", "02 ГРУДНЯ 2026")
+        +latestNewsCard("Триває оздоблення місць загального користування", "28 ЛИСТОПАДА 2026")
+  +footerSvg
+block footer
+  +footer()
+
+block scripts
+  script(type="module" src="/src/pages/single-news/single-news.js")

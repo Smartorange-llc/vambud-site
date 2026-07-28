@@ -1,0 +1,45 @@
+[data-ty-popup] {
+  .general-btn {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+}
+
+.thank-you-popup__title {
+  @include article-title;
+  color: $text-color;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 12px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.thank-you-popup__subtitle {
+  @include general-text;
+  color: $grey-color;
+  width: 100%;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.thank-you-popup__icon {
+  display: flex;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 2;
+
+  svg {
+    width: 56px;
+    height: 56px;
+
+    @include tablet {
+      width: 64px;
+      height: 64px;
+    }
+  }
+}

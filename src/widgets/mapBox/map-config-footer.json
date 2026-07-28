@@ -1,0 +1,91 @@
+{
+  "map": {
+    "mapbox_access_token": "key",
+    "default_coordinates": [48.9226, 24.7111],
+    "default_zoom": 12,
+    "categories": [
+      { "id": "projects", "label": "Наші проєкти" },
+      { "id": "sales", "label": "Відділи продажу" },
+      { "id": "office", "label": "Головний офіс" }
+    ],
+    "markers": [
+      {
+        "category": "projects",
+        "coordinates": [48.943, 24.73],
+        "title": "ЖК «Долішній»",
+        "description": "м. Івано-Франківськ, р-н Міського озера",
+        "images": ["/src/shared/images/comp/5.jpg"]
+      },
+      {
+        "category": "projects",
+        "coordinates": [48.916, 24.687],
+        "title": "ЖК «Квартал Краківський»",
+        "description": "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)",
+        "images": ["/src/shared/images/comp/20.jpg", "/src/shared/images/comp/20.jpg"]
+      },
+      {
+        "category": "projects",
+        "coordinates": [48.928, 24.742],
+        "title": "Prostir (Простір)",
+        "description": "м. Івано-Франківськ, вул. Гетьмана Полуботка",
+        "images": ["/src/shared/images/comp/35.jpg"]
+      },
+      {
+        "category": "projects",
+        "coordinates": [48.9175, 24.689],
+        "title": "Wawel (Вавель)",
+        "description": "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)",
+        "images": ["/src/shared/images/comp/50.jpg"]
+      },
+      {
+        "category": "projects",
+        "coordinates": [48.91, 24.695],
+        "title": "Клубний квартал «Сонячний»",
+        "description": "м. Івано-Франківськ, вул. Вовчинецька",
+        "images": ["/src/shared/images/comp/65.jpg"]
+      },
+      {
+        "category": "projects",
+        "coordinates": [48.893, 24.725],
+        "title": "Затишний двір",
+        "description": "м. Івано-Франківськ, р-н Пасічна",
+        "images": ["/src/shared/images/comp/12.jpg"]
+      },
+      {
+        "category": "projects",
+        "coordinates": [48.923, 24.708],
+        "title": "Урбан Хаус",
+        "description": "м. Івано-Франківськ, вул. Незалежності",
+        "images": ["/src/shared/images/comp/45.jpg"]
+      },
+      {
+        "category": "projects",
+        "coordinates": [48.935, 24.72],
+        "title": "Панорама Сіті",
+        "description": "м. Івано-Франківськ, вул. Братів Домбровських",
+        "images": ["/src/shared/images/comp/72.jpg"]
+      },
+      {
+        "category": "sales",
+        "coordinates": [48.895, 24.68],
+        "title": "Відділ продажу ЖК «Квартал Краківський»",
+        "description": "вул. Т. Шевченка, 113, с. Вовчинець, м. Івано-Франківськ",
+        "images": ["/src/shared/images/comp/20.jpg"]
+      },
+      {
+        "category": "sales",
+        "coordinates": [48.933, 24.635],
+        "title": "Відділ продажу ЖК «Долішній»",
+        "description": "вул. 24-го серпня, с. Крихівці, м. Івано-Франківськ",
+        "images": ["/src/shared/images/comp/5.jpg"]
+      },
+      {
+        "category": "office",
+        "coordinates": [48.91, 24.715],
+        "title": "Офіс та центр продажу VAMBUD",
+        "description": "вул. Південний Бульвар, 41, м. Івано-Франківськ",
+        "images": ["/src/shared/images/form.jpg"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+extends /../index.pug
+
+block variable
+  -
+    var title_page = '404'
+    var id_page = 'id-page-404'
+
+block meta
+  title= title_page
+  meta(name='description', content='')
+
+block header
+  +header() 
+
+block content
+  section.page-404
+    .page-404__photo
+      img(loading="eager" src="/src/shared/images/404.jpg" alt="404")
+      
+    .page-404__info
+      .page-404__info-inner
+        p.page-404__subtitle Сторінку не знайдено
+        h1.page-404__title ІНОДІ, ЩОБ ЗНАЙТИ ДІМ, ТРЕБА ТРОХИ ЗАБЛУКАТИ
+        .page-404__btns
+          a(href="/").general-btn.general-btn--dark
+            span НА ГОЛОВНУ
+          a(href="/apartments").general-btn.general-btn--dark
+            span ОБРАТИ КВАРТИРУ
+  +footerSvg
+block footer
+  +footer() 
+block scripts
+  script(type="module" src="/src/pages/404/404.js")
+

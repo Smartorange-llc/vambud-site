@@ -1,0 +1,39 @@
+mixin form(attr, btnText)
+	.form-wrapper(data-form-wrapper)
+		//- .form-close(data-close-form)
+		//- 	<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+		//- 	<path d="M25 25L1 1M1 25L25 1L1 25Z" stroke-width="2"/>
+		//- 	</svg>
+		form(data-form=attr autocomplete="off" contact-form-js).form
+			//- .form-title.text-style-h-3.text-black Замовити дзвінок
+			//- .form-description.text-style-body Залишіть контактні дані і ми обов'язково зв'яжемося з вами
+			.inputs-wrapper
+				.form-field.form-field-input(data-field-input data-field-name data-status="field--inactive").first-offset
+					.form-field__required *
+						
+					//- .input-title Ім’я
+					input(type='text' name="name" placeholder=" ").form-field__input
+					.placeholder Введіть ваше ім’я
+					.input-message(data-input-message)
+				.form-field.form-field-input(data-field-input data-field-phone data-status="field--inactive")
+					.form-field__required *
+						
+					//- .input-title Телефон
+					input(type='text' name="phone" placeholder=" " ).form-field__input
+					.placeholder Телефон
+					.input-message(data-input-message)
+				//- .form-field.disabled.form-field-input(data-field-input data-field-email data-status="field--inactive")
+				//- 	//- .input-title.text-style-h-4.text-gray Email:
+				//- 	input(type='text' name="email" placeholder="").form-field__input
+				//- 	.placeholder Email
+				//- 	.input-message(data-input-message)
+				
+				
+				
+
+			.form__button-wrapper
+				button( type="submit" data-btn-submit).general-btn
+					span.submit-btn__text(data-btn-submit-text)= btnText || "Надіслати повідомлення"
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" >
+						<path d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64359L4.229 14.1856L2.81494 12.7715L9.35693 6.22952L3.229 6.22952L3.229 4.22952L4.229 4.22952L11.772 4.22855C12.037 4.22863 12.2916 4.33413 12.479 4.52151C12.6664 4.70895 12.7719 4.96352 12.772 5.22855L12.771 12.7715Z" fill="white"/>
+					</svg>
