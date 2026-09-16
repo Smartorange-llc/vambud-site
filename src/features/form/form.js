@@ -229,6 +229,9 @@ export default class FormMonster {
           this.watchedState.status = "loading";
           const formData = new FormData(this.elements.$form);
           formData.append("action", "app");
+          formData.append("url", window.location.href);
+          const theme = this.elements.$form.dataset.theme;
+          if (theme) formData.append("theme", theme);
 
           /* eslint-disable-next-line */
           const { error, code_error } = await sendForm(formData);

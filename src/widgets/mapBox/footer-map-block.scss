@@ -311,11 +311,75 @@
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   border: 2px solid $wc;
+  transition: filter 0.25s ease;
+  // Contains z-index of glow/icon locally so it can't leak into the map's
+  // own stacking (only the `--selected` z-index below affects sibling markers).
+  isolation: isolate;
 
-  svg {
+  svg,
+  .footer-map__marker-icon {
+    position: relative;
+    z-index: 1;
     transform: rotate(45deg);
   }
+
+  // Soft glow behind the pin, revealed when the marker is selected.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -14px;
+    z-index: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($accent-color, 0.55) 0%, rgba($accent-color, 0) 70%);
+    opacity: 0;
+    transform: rotate(45deg) scale(0.6);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+
+  &.footer-map__marker--selected {
+    z-index: 5;
+
+    &::before {
+      opacity: 1;
+      transform: rotate(45deg) scale(1);
+    }
+  }
+
+  // Custom icons (src/shared/images/markers/*) already come as self-contained
+  // pin/badge graphics, so drop the default diamond pin chrome for them.
+  &.footer-map__marker--custom {
+    width: 56px;
+    height: 90px;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    border: none;
+    transform: none;
+
+    .footer-map__marker-icon {
+      transform: none;
+    }
+
+    &::before {
+      inset: -10px -18px;
+      transform: scale(0.6);
+    }
+
+    &.footer-map__marker--selected::before {
+      transform: scale(1);
+    }
+  }
 }
+
+.footer-map__marker-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
 
 .footer-map__popup {
   position: absolute;
@@ -528,7 +592,12 @@
   word-break: break-word;
 }
 
-.footer-map__popup-btn {
+.footer-map__popup-btn.general-btn {
   width: 100%;
   justify-content: center;
+  background-color: transparent;
+
+  span {
+    text-transform: none;
+  }
 }

@@ -1,0 +1,519 @@
+// ==========================================================================
+// Projects section
+// ==========================================================================
+
+.projects {
+  position: relative;
+  background-color: $bg-color;
+  padding-bottom: 60px;
+
+  @include tablet {
+    padding-bottom: 100px;
+  }
+
+  @include laptop {
+    padding-bottom: vw(100);
+  }
+}
+
+.projects__hero {
+  position: relative;
+  height: 90svh;
+  min-height: 460px;
+  overflow: hidden;
+
+
+  @include tablet {
+    height: 82svh;
+
+  }
+
+  @include laptop {
+    height: 150svh;
+
+  }
+}
+
+.projects__hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  will-change: transform;
+}
+
+.projects__hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+      $bg-color 0%,
+      rgba(223, 222, 225, 0) 10% 90%,
+      $bg-color 100%);
+}
+
+.projects__hero-title {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  margin: 0;
+  pointer-events: none;
+
+  @include tablet {
+    padding-top: 152px;
+    padding-bottom: 152px;
+  }
+
+  @include laptop {
+    justify-content: flex-end;
+    padding-top: vw(280);
+    padding-bottom: vw(340);
+  }
+}
+
+.projects__hero-word {
+  @include super-title;
+  display: block;
+  width: fit-content;
+  color: $text-color-light;
+  text-transform: uppercase;
+  margin: 0;
+  will-change: transform;
+}
+
+.projects__hero-word--start {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.projects__hero-word--end {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.projects__inner {
+  display: flex;
+  flex-direction: column;
+  margin-top: -40px;
+  position: relative;
+  z-index: 2;
+  max-width: 100vw;
+
+  @include tablet {
+    margin-top: -100px;
+  }
+}
+
+.projects__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  @include tablet {
+    margin-bottom: 32px;
+  }
+
+  @include laptop {
+    align-items: center;
+    margin-bottom: vw(40);
+  }
+}
+
+.projects__filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+
+
+}
+
+.projects__filter-btn {
+  @include tiny-text;
+  color: $text-color;
+  background-color: $wc;
+  border: 1px solid $accent-color-2;
+  border-radius: 100px;
+  padding: 5px 10px;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+  @include tablet {
+    padding: 12px 20px;
+  }
+
+  @include laptop {
+    padding: vw(12) vw(20);
+  }
+
+
+  &.is-active {
+    background-color: $accent-color;
+    border-color: $accent-color;
+    color: $text-color-light;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-active):hover {
+      border-color: $accent-color;
+    }
+  }
+}
+
+
+
+.projects__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 2px;
+  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  transform: translateY(-50%);
+  pointer-events: none;
+
+  &>* {
+    pointer-events: all;
+  }
+}
+
+.projects__nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: $wc;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+
+  // Mobile/tablet: frosted-glass pill (semi-transparent + blur + white
+  // border) per the design; laptop+ reverts to a plain solid-purple circle.
+  // background-color: rgba(79, 48, 127, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid $wc;
+
+  @include tablet {
+    width: 48px;
+    height: 48px;
+  }
+
+  @include laptop {
+    background-color: $accent-color;
+    backdrop-filter: none;
+    border: none;
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.projects__nav-btn--prev svg {
+  transform: rotate(0deg);
+}
+
+.projects__slider {
+  width: 100%;
+
+  @include laptop {
+    overflow: visible;
+  }
+}
+
+.projects__slide {
+  height: auto;
+  transition: opacity 0.3s ease;
+
+  &.is-hidden {
+    display: none;
+  }
+}
+
+// Figma card proportions are per-breakpoint, not a single fixed ratio:
+// ~351x354 (near-square) on mobile, ~728x551 (3:2-ish) from tablet up.
+.projects__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 351 / 354;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: $wc;
+  border-radius: 20px;
+
+  @include tablet {
+    aspect-ratio: 728 / 651;
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    aspect-ratio: 856 / 600;
+    border-radius: vw(40);
+  }
+}
+
+.projects__image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+@media (hover: hover) {
+  .projects__card:hover .projects__image {
+    transform: scale(1.06);
+  }
+}
+
+// Pinned to the card's own top edge (not a flex sibling of .projects__info)
+// — the card is a column flex with justify-content: flex-end, so a normal
+// -flow sibling here would get packed down against .projects__info instead
+// of sitting at the top like the Figma design.
+.projects__top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 16px;
+
+  @include laptop {
+    padding: vw(20);
+  }
+}
+
+.projects__price,
+.projects__badge {
+  @include tiny-text;
+  flex-shrink: 1;
+  min-width: 0;
+  padding: 6px 14px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  max-width: calc(50% - 4px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.projects__price {
+  background-color: $wc;
+  color: $text-color;
+}
+
+.projects__badge {
+  background-color: $accent-color;
+  color: $wc;
+}
+
+.projects__info {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 48px 16px 16px;
+  background: linear-gradient(180deg, rgba(15, 16, 16, 0) 0%, rgba(15, 16, 16, 0.85) 70%, #0f1010 100%);
+
+  @include tablet {
+    padding: 72px 24px 24px;
+  }
+
+  @include laptop {
+    padding: vw(120) vw(40) vw(40);
+    gap: vw(20);
+  }
+}
+
+.projects__text {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// Figma: 1920/H4 — Montserrat Medium 40px, letter-spacing -8%.
+.projects__name {
+  font-family: $default-font;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.08em;
+  color: $wc;
+  margin: 0;
+  overflow-wrap: break-word;
+  font-size: 22px;
+
+  @include tablet {
+    font-size: 32px;
+  }
+
+  @include laptop {
+    font-size: vw(40);
+  }
+}
+
+.projects__location {
+  @include tiny-text;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: $bg-color;
+  margin: 0;
+
+  span {
+    flex: 1;
+  }
+}
+
+.projects__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: $wc;
+  transition: transform 0.3s ease;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (hover: hover) {
+  .projects__card:hover .projects__arrow {
+    transform: rotate(45deg);
+  }
+}
+
+.projects__pin {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.projects__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 32px;
+
+  @include tablet {
+    margin-top: 48px;
+  }
+
+  @include laptop {
+    margin-top: vw(40);
+  }
+}
+
+.projects__all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: $text-color;
+  text-decoration: none;
+  margin: 0;
+
+  span {
+    text-transform: none;
+  }
+
+  svg {
+    flex-shrink: 0;
+
+    path {
+      fill: $text-color;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $accent-color;
+
+      span {
+        color: $accent-color;
+      }
+
+      svg path {
+        fill: $accent-color;
+      }
+    }
+  }
+}
+
+.projects__map-btn {
+  padding: 14px 20px;
+  height: auto;
+  background-color: transparent;
+
+  span {
+    text-transform: none;
+  }
+
+  @include tablet {
+    padding: 22px 32px;
+  }
+
+  @include laptop {
+    padding: vw(22) vw(32);
+  }
+
+  &.general-btn {
+    color: $text-color-light;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $accent-color;
+
+      span {
+        color: $accent-color;
+      }
+
+      svg path {
+        fill: $accent-color;
+      }
+    }
+  }
+}

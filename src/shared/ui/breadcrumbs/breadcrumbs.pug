@@ -1,0 +1,9 @@
+mixin breadcrumbs(items)
+  nav.breadcrumbs(aria-label="Хлібні крихти")
+    each item, index in items
+      if item.href && index !== items.length - 1
+        a.breadcrumbs__item(href=item.href)= item.label
+      else
+        span.breadcrumbs__item.breadcrumbs__item--current= item.label
+      if index !== items.length - 1
+        span.breadcrumbs__sep ·

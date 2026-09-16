@@ -1,0 +1,318 @@
+// Compound selector so this beats .modal-form's own tablet+/laptop+
+// `flex-direction: row` (its default two-panel photo+panel layout) — this
+// popup stays a single column through tablet (per Figma's 375/768 frames,
+// both stacked) and only becomes a row at laptop, matching the 1920 frame.
+.modal-form.presentation-modal {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 8px;
+  gap: 8px;
+  border-radius: 20px;
+
+  @include tablet {
+    flex-direction: column;
+    max-width: 620px;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    max-width: vw(1060);
+    padding: vw(8);
+    gap: vw(8);
+    border-radius: vw(40);
+  }
+}
+
+.presentation-modal__photo {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @include tablet {
+    height: 320px;
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    width: vw(440);
+    height: auto;
+    align-self: stretch;
+    border-radius: vw(32);
+  }
+}
+
+.presentation-modal__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 20px 12px;
+  border: 1px solid $bg-color;
+  border-radius: 12px;
+
+  @include tablet {
+    gap: 32px;
+    padding: 28px 20px;
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    align-self: stretch;
+    gap: vw(32);
+    padding: vw(28) vw(20);
+    border-radius: vw(32);
+  }
+}
+
+.presentation-modal__title {
+  @include article-title;
+  color: $accent-color;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+.presentation-modal__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+
+  @include tablet {
+    gap: 32px;
+  }
+
+  @include laptop {
+    gap: vw(32);
+  }
+}
+
+.presentation-modal__inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+
+  @include tablet {
+    gap: 28px;
+  }
+
+  @include laptop {
+    gap: vw(28);
+  }
+}
+
+.presentation-modal__field {
+  width: 100%;
+
+  .form-field__input {
+    @include btn-text;
+    letter-spacing: -0.06em;
+    width: 100%;
+    height: 48px;
+    padding: 0 32px;
+    color: $text-color;
+    text-align: center;
+    background-color: $wc;
+    border: 1px solid #cfcfcf;
+    border-radius: 100px;
+    transition: border-color 0.3s ease;
+
+    &::placeholder {
+      color: $grey-color;
+    }
+
+    &:focus {
+      border-color: $accent-color;
+      outline: none;
+    }
+
+    @include laptop {
+      height: vw(48);
+      padding: 0 vw(32);
+    }
+  }
+
+  .input-message {
+    left: 20px;
+  }
+}
+
+.presentation-modal__social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  @include tablet {
+    gap: 12px;
+  }
+
+  @include laptop {
+    gap: vw(12);
+  }
+}
+
+.presentation-modal__social-label {
+  @include general-text;
+  letter-spacing: -0.06em;
+  color: $text-color;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+.presentation-modal__messengers {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.presentation-modal__messenger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding-right: 20px;
+  background-color: transparent;
+  border: 1px solid #cfcfcf;
+  border-radius: 1000px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+
+  @include tablet {
+    height: 40px;
+  }
+
+  @include laptop {
+    height: vw(40);
+  }
+
+  &.is-active {
+    border-color: $accent-color;
+
+    .presentation-modal__messenger-check {
+      background-color: $accent-color;
+      border-color: $accent-color;
+
+      svg {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.presentation-modal__messenger-check {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid $bg-color;
+  border-radius: 100px;
+  background-color: $wc;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  @include tablet {
+    width: 40px;
+    height: 40px;
+  }
+
+  @include laptop {
+    width: vw(40);
+    height: vw(40);
+  }
+}
+
+.presentation-modal__messenger-name {
+  @include btn-text;
+  letter-spacing: -0.06em;
+  color: $text-color;
+  white-space: nowrap;
+}
+
+.presentation-modal__messenger-icon {
+  flex-shrink: 0;
+  display: flex;
+  width: 24px;
+  height: 24px;
+  color: $accent-color;
+}
+
+.presentation-modal__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 48px;
+  padding: 0 20px;
+  background-color: $accent-color;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  span {
+    @include btn-text;
+    letter-spacing: -0.06em;
+    color: $wc;
+  }
+
+  svg path {
+    fill: $wc;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover:not(:disabled) {
+      opacity: 0.85;
+    }
+  }
+
+  @include tablet {
+    height: 68px;
+    padding: 0 32px;
+  }
+
+  @include laptop {
+    height: vw(68);
+    padding: 0 vw(32);
+    gap: vw(10);
+  }
+}

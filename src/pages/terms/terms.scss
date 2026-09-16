@@ -1,0 +1,1060 @@
+// ==========================================================================
+// Hero banner
+// ==========================================================================
+
+.terms-hero {
+  position: relative;
+  height: 240px;
+  min-height: 240px;
+  overflow: hidden;
+
+  @include tablet {
+    height: 340px;
+  }
+
+  @include laptop {
+    height: vw(601);
+  }
+}
+
+.terms-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.terms-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0803117a 0% 60%, rgba(91, 95, 104, 0.70) 79.62%, $bg-color 100%);
+}
+
+.terms-hero__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+
+  @include laptop {
+    gap: vw(8);
+  }
+}
+
+// Figma: 1920/H2 — Montserrat Regular 100px, line-height 100%, letter-spacing -6%.
+// Matches super-title's tablet step (100px) but not its bold weight or its
+// laptop scale-up (super-title keeps growing past 1024px; this title is a
+// fixed 100px reference at 1920, so it needs its own laptop clamp.
+.terms-hero__title {
+  font-family: $default-font;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: $wc;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: 32px;
+
+  @include tablet {
+    font-size: 60px;
+  }
+
+  @include laptop {
+    font-size: vw(100);
+  }
+}
+
+// ==========================================================================
+// Buttons
+// ==========================================================================
+
+// Same sweep-fill hover mechanic as the shared .general-btn (header.scss):
+// a skewed ::before panel covers the button by default and slides out on
+// hover via transform, while the text/icon colour inverts to match.
+.terms-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 100px;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+
+  @include tablet {
+    height: 68px;
+    padding: 0 32px;
+  }
+
+  @include laptop {
+    height: vw(68);
+    padding: 0 vw(32);
+  }
+
+  span {
+    @include btn-text;
+
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+    transition: color 0.4s ease-in-out;
+  }
+
+  svg {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  path {
+    transition: fill 0.4s ease-in-out;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    /* Розтягуємо на всю площу */
+    border-radius: 100px;
+    /* Повторюємо радіус картки */
+
+    /* 1. Задаємо товщину нашого бордера */
+    padding: 1px;
+
+    /* 2. Малюємо сам градієнт (він буде видно тільки там, де відпрацює маска) */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.05) 40%,
+        rgba(255, 255, 255, 0.05) 60%,
+        rgba(255, 255, 255, 0.4) 100%);
+
+    /* 3. Магія маскування: вирізаємо середину, залишаючи лише padding (наш 1px бордер) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    /* Щоб рамка не перехоплювала кліки */
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2%;
+    left: -10%;
+    z-index: 1;
+    width: 120%;
+    height: 104%;
+    transform: skew(30deg);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+  }
+
+  @media (hover: hover) {
+    &:hover::before {
+      transform: translate3d(100%, 0, 0) skew(30deg);
+    }
+  }
+
+  // Default: accent fill, white text — sweeps away to a white pill with
+  // accent text on hover.
+  &--accent {
+    background-color: $wc;
+    border-color: rgba(255, 255, 255, 0.5);
+
+    &::before {
+      background-color: $accent-color;
+    }
+
+    span,
+    path {
+      color: $wc;
+      fill: $wc;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        span {
+          color: $accent-color;
+        }
+
+        path {
+          fill: $accent-color;
+        }
+      }
+    }
+  }
+
+  // Default: white fill, dark text — sweeps to an accent-filled pill with
+  // white text on hover (the mirrored version of the same mechanic).
+  &--light {
+
+    border: 1px solid $wc;
+
+    &::before {
+      background-color: $wc;
+    }
+
+    span,
+    path {
+      color: $text-color;
+      fill: $text-color;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        border-color: $wc;
+
+        span {
+          color: $wc;
+        }
+
+        path {
+          fill: $wc;
+        }
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// Pitch card
+// ==========================================================================
+
+.terms-pitch {
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
+
+  @include tablet {
+    margin-top: -40px;
+  }
+
+  @include laptop {
+    margin-top: vw(-120);
+  }
+}
+
+.terms-pitch__card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 460px;
+  display: flex;
+  align-items: flex-end;
+
+  @include tablet {
+    border-radius: 32px;
+    min-height: 480px;
+  }
+
+  @include laptop {
+    display: block;
+    border-radius: vw(40);
+    min-height: vw(680);
+  }
+}
+
+.terms-pitch__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.2);
+  // Mobile (per the Figma frame): no extra zoom — the source photo's full
+  // height (sky/bubbles down to the rooftop railing) already exactly fills
+  // the card via `cover` alone, so a 1.5x transform was just zooming
+  // straight into the mother's hair at the image's horizontal center,
+  // cropping both kids out entirely. Shifting the anchor left keeps the
+  // kids in frame and lets the mother crop off naturally at the right edge.
+  object-position: 30% bottom;
+
+  @include tablet {
+    // Tablet/laptop crop is unchanged — only the mobile frame was off.
+    transform: scale(1);
+    object-position: center;
+  }
+
+  @include laptop {
+    object-position: center;
+  }
+}
+
+.terms-pitch__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(1, 10, 22, 0) 0%, rgba(1, 10, 22, 0.85) 100%);
+
+  @include laptop {
+    background: linear-gradient(90deg, rgba(1, 10, 22, 0) 52%, rgba(1, 10, 22, 0.6) 68%, rgba(1, 10, 22, 0.92) 100%);
+  }
+}
+
+.terms-pitch__content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 20px 12px;
+  margin-top: auto;
+
+  @include tablet {
+    gap: 24px;
+    padding: 48px;
+  }
+
+  @include laptop {
+    margin-top: 0;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    justify-content: center;
+    width: vw(651);
+    height: 100%;
+    gap: vw(28);
+    padding: vw(60);
+  }
+}
+
+.terms-pitch__title {
+  @include subtitle-text;
+  color: $wc;
+  font-size: 20px;
+  letter-spacing: -0.08em;
+  margin: 0;
+
+  @include tablet {
+    font-size: 24px;
+  }
+
+  @include laptop {
+    font-size: vw(24);
+  }
+}
+
+// Figma nests "text + button" as their own gap-40 group, separate from the
+// gap-28 between the title and that group.
+.terms-pitch__group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include tablet {
+    gap: 24px;
+  }
+
+  @include laptop {
+    gap: vw(40);
+  }
+}
+
+.terms-pitch__text {
+  @include general-text;
+  color: #DFDEE1;
+  margin: 0;
+}
+
+// ==========================================================================
+// Benefit sections (100% оплата / розтермінування / єОселя / класичне / online)
+// ==========================================================================
+
+.terms-benefit {
+  position: relative;
+  margin-top: 20px;
+
+  @include tablet {
+    margin-top: 100px;
+  }
+
+  @include laptop {
+    margin-top: vw(100);
+  }
+}
+
+.terms-benefit__card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+
+  @include tablet {
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    border-radius: vw(40);
+  }
+}
+
+.terms-benefit--light .terms-benefit__card {
+  background-color: $wc;
+}
+
+.terms-benefit__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+
+  @include laptop {
+    object-position: 50% 80%;
+  }
+}
+
+.terms-benefit__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(14, 16, 12, 0.35) 0%, rgba(14, 16, 12, 0.75) 100%);
+
+  @include laptop {
+    background: linear-gradient(0deg, rgba(14, 16, 12, 0.75) 0%, rgba(14, 16, 12, 0.2) 100%);
+  }
+}
+
+.terms-benefit__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 12px;
+
+  @include tablet {
+    gap: 32px;
+    padding: 40px 12px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    gap: vw(64);
+    padding: vw(60) vw(40);
+  }
+}
+
+.terms-benefit__header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include laptop {
+    flex: 1 0 0;
+    gap: vw(20);
+  }
+}
+
+.terms-benefit__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0;
+}
+
+.terms-benefit--dark .terms-benefit__title {
+  color: $wc;
+}
+
+.terms-benefit__text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @include laptop {
+    gap: vw(32);
+  }
+}
+
+.terms-benefit__lead-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include tablet {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+  }
+}
+
+.terms-benefit__lead {
+  @include general-text;
+  color: $grey-color;
+  margin: 0;
+
+  @include laptop {
+    max-width: 400px;
+  }
+}
+
+.terms-benefit--dark .terms-benefit__lead {
+  color: $wc;
+}
+
+.terms-benefit__logo {
+  height: 44px;
+  width: fit-content;
+  flex: auto;
+  object-fit: contain;
+
+  @include tablet {
+    height: 36px;
+  }
+
+  @include laptop {
+    height: vw(44);
+  }
+}
+
+.terms-benefit__rows {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+
+  @include laptop {
+    flex: 1 0 0;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
+.terms-benefit__row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 12px;
+  border-radius: 16px;
+  width: 100%;
+  background: rgba(223, 222, 225, 0.01);
+  box-shadow: 0 0 40px 0 rgba(79, 48, 127, 0.10) inset;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+
+
+  @include tablet {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 28px;
+    border-radius: 20px;
+
+
+
+  }
+
+  @include laptop {
+
+    gap: vw(40);
+    padding: vw(28) vw(40);
+  }
+}
+
+.terms-benefit--dark .terms-benefit__row {
+  background-color: rgba(223, 222, 225, 0.08);
+  width: 65%;
+
+  @include tablet {
+    width: 45%;
+  }
+
+
+}
+
+.terms-benefit__row-label {
+  @include subtitle-text;
+  color: $text-color;
+  letter-spacing: -0.08em;
+  flex-shrink: 0;
+
+  @include tablet {
+    width: 220px;
+  }
+
+  @include laptop {
+    flex: 1;
+  }
+}
+
+.terms-benefit--dark .terms-benefit__row-label {
+  color: $wc;
+}
+
+.terms-benefit__row-text {
+  @include general-text;
+  color: $text-color;
+  margin: 0;
+
+  b {
+    font-weight: 700;
+  }
+
+  @include laptop {
+    width: vw(364);
+  }
+}
+
+.terms-benefit--dark .terms-benefit__row-text {
+  color: $wc;
+}
+
+// ==========================================================================
+// Formats split section
+// ==========================================================================
+
+.terms-formats {
+  margin-top: 8px;
+
+  @include tablet {
+    margin-top: 12px;
+  }
+
+  @include laptop {
+    margin-top: vw(20);
+  }
+}
+
+.terms-formats__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+
+  @include tablet {
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: vw(40);
+    min-height: vw(700);
+  }
+}
+
+.terms-formats__media {
+  position: relative;
+  aspect-ratio: 351 / 240;
+
+  @include tablet {
+    aspect-ratio: 704 / 320;
+  }
+
+  @include laptop {
+    aspect-ratio: auto;
+    flex: 1 0 0;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.terms-formats__media-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.35) 100%);
+
+  @include laptop {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.45) 100%);
+  }
+}
+
+.terms-formats__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px 20px;
+  background-color: $wc;
+
+  @include tablet {
+    gap: 24px;
+    padding: 48px;
+  }
+
+  @include laptop {
+    flex-shrink: 0;
+    justify-content: center;
+    width: vw(608);
+    gap: vw(28);
+    padding: vw(60);
+  }
+}
+
+.terms-formats__title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @include laptop {
+    gap: vw(12);
+  }
+}
+
+.terms-formats__title-accent {
+  @include article-title;
+  color: $accent-color;
+  text-transform: uppercase;
+}
+
+.terms-formats__title-sub {
+  @include subtitle-text;
+  color: $text-color;
+  font-weight: 700;
+  letter-spacing: -0.08em;
+}
+
+.terms-formats__btn {
+
+  border: 1px solid #DFDEE1;
+  background-color: $accent-color;
+}
+
+// Figma nests "text + button" as their own gap-40 group, separate from the
+// gap-28 between the title block and that group.
+.terms-formats__group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include tablet {
+    gap: 24px;
+  }
+
+  @include laptop {
+    gap: vw(40);
+  }
+}
+
+.terms-formats__text {
+  @include general-text;
+  color: $grey-color;
+  margin: 0;
+}
+
+// ==========================================================================
+// CTA — Комбінуйте формати
+// ==========================================================================
+
+.terms-cta {
+  margin-top: 20px;
+
+  @include tablet {
+    margin-top: 100px;
+  }
+
+  @include laptop {
+    margin-top: vw(100);
+  }
+}
+
+.terms-cta__card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 20px 12px;
+  min-height: 600px;
+
+  @include tablet {
+    border-radius: 32px;
+    padding: 60px;
+    min-height: 788px;
+  }
+
+  @include laptop {
+    border-radius: vw(40);
+    padding: vw(40);
+    min-height: vw(788);
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
+
+.terms-cta__bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -150%;
+  width: 300%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: 30% 100%;
+  display: block;
+  will-change: transform;
+
+  @include tablet {
+    left: 0;
+    margin-left: 0;
+    width: 100%;
+    object-position: center;
+  }
+
+  @include laptop {
+    left: 0;
+    margin-left: 0;
+    width: 100%;
+    object-position: center;
+  }
+}
+
+.terms-cta__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #0f1010 0%, rgba(15, 16, 16, 0.7) 30%, rgba(15, 16, 16, 0) 60%);
+
+  @include laptop {
+    background: linear-gradient(90deg, #0f1010 0%, rgba(15, 16, 16, 0.7) 30%, rgba(15, 16, 16, 0) 60%);
+  }
+}
+
+.terms-cta__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  max-width: 500px;
+
+  @include laptop {
+    gap: vw(32);
+
+  }
+}
+
+// Figma nests title+text as their own gap-20 group, separate from the
+// gap-32 between that group, the divider and the button.
+.terms-cta__text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+
+  @include laptop {
+    gap: vw(20);
+  }
+}
+
+.terms-cta__title {
+  @include article-title;
+  color: $wc;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.terms-cta__text {
+  @include general-text;
+  color: #ccc;
+  margin: 0;
+}
+
+.terms-cta__divider {
+  position: relative;
+  width: 140px;
+  height: 1px;
+  background: linear-gradient(90deg, #ffffff00, $wc, #ffffff00);
+
+  @include tablet {
+    width: 180px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: $wc;
+  }
+}
+
+// ==========================================================================
+// Why VAMBUD
+// ==========================================================================
+
+.terms-why {
+  margin-top: 20px;
+  margin-bottom: 60px;
+
+  @include tablet {
+    margin-top: 100px;
+    margin-bottom: 100px;
+  }
+
+  @include laptop {
+    margin-top: vw(120);
+    margin-bottom: vw(120);
+  }
+}
+
+// Figma: white rounded-40 card (like the benefit sections), px-40 py-80,
+// gap-60 between the intro block, the grid and the closing line.
+.terms-why__card {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 20px 12px;
+  background-color: $wc;
+  border-radius: 20px;
+
+  @include tablet {
+    gap: 50px;
+    padding: 60px 40px;
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    gap: vw(60);
+    padding: vw(80) vw(40);
+    border-radius: vw(40);
+  }
+}
+
+.terms-why__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  @include laptop {
+    gap: vw(20);
+  }
+}
+
+.terms-why__title {
+  @include article-title;
+  color: $accent-color;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+}
+
+.terms-why__lead {
+  @include subtitle-text;
+  color: $text-color;
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.terms-why__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @include laptop {
+    flex-direction: row;
+    gap: vw(8);
+  }
+}
+
+.terms-why__item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px 12px;
+  border-radius: 20px;
+
+  background: rgba(223, 222, 225, 0.01);
+  box-shadow: 0 0 40px 0 rgba(79, 48, 127, 0.10) inset;
+
+  @include tablet {
+    align-items: center;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    gap: vw(40);
+    padding: vw(40);
+  }
+}
+
+.terms-why__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: $accent-color;
+
+  @include laptop {
+    width: vw(100);
+    height: vw(100);
+  }
+
+  svg {
+    width: 36px;
+    height: 36px;
+    color: $wc;
+
+    @include laptop {
+      width: vw(60);
+      height: vw(60);
+    }
+  }
+}
+
+.terms-why__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.terms-why__card-title {
+  @include subtitle-text;
+  color: $text-color;
+  letter-spacing: -0.08em;
+  margin: 0;
+}
+
+.terms-why__card-text {
+  @include general-text;
+  color: $grey-color;
+  margin: 0;
+}
+
+.terms-why__closing {
+  @include subtitle-text;
+  color: $text-color;
+  letter-spacing: -0.08em;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 960px;
+}

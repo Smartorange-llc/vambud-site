@@ -10,7 +10,7 @@ const MENU_TRANSITION_DURATION = 700;
 const MENU_CONTENT_REVEAL_DELAY = 160;
 
 function getMenuAnimatedElements(menu) {
-  const links = menu.querySelectorAll(".menu-main-link, .menu-group__label, .menu-sublink");
+  const links = menu.querySelectorAll(".menu-main-link, .menu-sublink");
   return { links };
 }
 
@@ -47,7 +47,11 @@ function revealMenuContent(menu) {
 function setMenuOrigin(menu, triggerEl) {
   if (!menu || !triggerEl) return;
 
-  const rect = triggerEl.getBoundingClientRect();
+  // triggerEl is the whole .menu-block (burger circle + "Меню" label), so its
+  // own rect would center the animation between the two — anchor to the
+  // round .menu-btn itself instead, since that's what visually "opens".
+  const originEl = triggerEl.querySelector(".menu-btn") || triggerEl;
+  const rect = originEl.getBoundingClientRect();
   const x = rect.left + rect.width / 2;
   const y = rect.top + rect.height / 2;
 
@@ -67,12 +71,6 @@ function openMenuWithReveal(menu, triggerEl) {
 
   menu.classList.add("is-open");
 
-  const video = menu.querySelector(".menu-video");
-  if (video) {
-    video.currentTime = 0;
-    video.play().catch(() => {});
-  }
-
   window.setTimeout(() => {
     revealMenuContent(menu);
   }, MENU_CONTENT_REVEAL_DELAY);
@@ -86,12 +84,6 @@ function closeMenuWithReveal(menu) {
 
   menu.classList.remove("is-open");
   menu.classList.add("is-closing");
-
-  const video = menu.querySelector(".menu-video");
-  if (video) {
-    video.pause();
-    video.currentTime = 0;
-  }
 
   window.setTimeout(() => {
     menu.classList.remove("is-closing");
@@ -307,22 +299,18 @@ document.body.addEventListener("click", function (evt) {
   const btnMenuTarget = evt.target.closest("[data-menu-button]");
   const btnMenuClose = evt.target.closest("[data-menu-close]");
   const menu = document.querySelector("[data-menu]");
-  const menuItem = evt.target.closest(".menu-main-link");
+  const menuItem = evt.target.closest(".menu-main-link, .menu-sublink");
   const tyPopup = document.querySelector("[data-ty-popup]");
   const formSubmit = evt.target.closest("[data-form-submit]");
   if (btnMenuTarget) {
     const isHidden = menu.classList.contains("hidden");
 
     if (isHidden) {
-      if (window.innerWidth < 768) {
-        window.dispatchEvent(new Event("stop-scroll"));
-      }
+      window.dispatchEvent(new Event("stop-scroll"));
       header.classList.add("menu-is-open");
       openMenuWithReveal(menu, btnMenuTarget);
     } else {
-      if (window.innerWidth < 768) {
-        window.dispatchEvent(new Event("start-scroll"));
-      }
+      window.dispatchEvent(new Event("start-scroll"));
       header.classList.remove("menu-is-open");
       closeMenuWithReveal(menu);
     }
@@ -330,17 +318,13 @@ document.body.addEventListener("click", function (evt) {
     return;
   }
   if (menuItem && !menu.classList.contains("hidden")) {
-    if (window.innerWidth < 768) {
-      window.dispatchEvent(new Event("start-scroll"));
-    }
+    window.dispatchEvent(new Event("start-scroll"));
     header.classList.remove("menu-is-open");
     closeMenuWithReveal(menu);
     return;
   }
   if (btnMenuClose || evt.target === menu) {
-    if (window.innerWidth < 768) {
-      window.dispatchEvent(new Event("start-scroll"));
-    }
+    window.dispatchEvent(new Event("start-scroll"));
     header.classList.remove("menu-is-open");
     closeMenuWithReveal(menu);
   }
@@ -348,6 +332,13 @@ document.body.addEventListener("click", function (evt) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   if (btn) {
+    // Stash which CTA opened the shared modal so the generic contact form
+    // can tag its submission with a theme (e.g. which vacancy, or "Продати
+    // квартиру") — always assign, even to "", so a stale theme from a
+    // previous button doesn't leak into an unrelated submission.
+    const modalForm = document.querySelector("[data-call-us-modal] form");
+    if (modalForm) modalForm.dataset.theme = btn.dataset.callUsTheme || "";
+
     if (overflow.classList.contains("hidden")) {
       window.dispatchEvent(new Event("stop-scroll"));
       overflowMob.classList.add("hidden");

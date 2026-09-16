@@ -1,0 +1,113 @@
+extends /../index.pug
+
+block variable
+  -
+    var title_page = 'Енергонезалежні квартири'
+    var id_page = 'id-page-energy'
+
+block meta
+  title= title_page
+  meta(name='description', content='Енергонезалежні квартири VAMBUD: автономне електроживлення, система накопичення All-in-One 5 кВт, готові будинки WAWEL та Квартал Краківський.')
+
+block header
+  +header
+
+block content
+  mixin energyArrow()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M12.521 11.7715L12.521 12.5215L11.021 12.5215L11.021 6.04004L4.229 12.832L3.16846 11.7715L9.96045 4.97949L3.479 4.97949L3.479 3.47949L4.229 3.47949L11.772 3.47852C11.9707 3.47859 12.1617 3.55774 12.3022 3.69824C12.4428 3.83879 12.5219 4.02979 12.522 4.22852L12.521 11.7715Z")
+
+  section.energy-hero
+    img.energy-hero__bg(src="/src/shared/images/energy/main-banner.jpg" alt="VAMBUD" loading="eager")
+    .energy-hero__overlay
+    .energy-hero__inner.container
+      +breadcrumbs([{ label: "Головна", href: "/home.html" }, { label: "Енергонезалежні квартири" }])
+      h1.energy-hero__title Енергонезалежні квартири
+
+  section.energy-pitch.container
+    .energy-pitch__card
+      img.energy-pitch__bg(src="/src/shared/images/energy/pitch-bg.jpg" alt="" loading="eager")
+      .energy-pitch__gradient
+      .energy-pitch__content
+        p.energy-pitch__lead Енергоефективні 3-кімнатні квартири у готових будинках з автономним електроживленням.
+        .energy-pitch__group
+          p.energy-pitch__area
+            | 83 - 112
+            span.energy-pitch__area-unit м²
+          button.energy-pitch__btn.energy-btn.energy-btn--light(type="button" data-call-us-btn)
+            span Дізнатись ціну
+            +energyArrow()
+
+  section.energy-about.container
+    .energy-about__card
+      .energy-about__left
+        h2.energy-about__title
+          | Що таке
+          br
+          | енергоефективна квартира?
+        .energy-about__texts
+          p.energy-about__text Енергоефективні квартири — це сучасне житло з автономним електроживленням, яке забезпечує комфорт навіть під час відключень електроенергії.
+          p.energy-about__text 3-кімнатні квартири з автономним електроживленням включають систему накопичення енергії All-in-One потужністю 5 кВт, яка забезпечує стабільну роботу побутової техніки.
+        button.energy-about__btn.energy-btn.energy-btn--accent(type="button" data-call-us-btn)
+          span Дізнатись ціну
+          +energyArrow()
+      .energy-about__info
+        span.energy-about__info-title ХАРАКТЕРИСТИКИ
+        -
+          var specs = [
+            { label: "Тип квартири", value: "3-кімнатні" },
+            { label: "Площа", value: "83 - 112 м²" },
+            { label: "Система", value: "All-in-One, 5 кВт" },
+            { label: "Будинки", value: "Готові до заселення" },
+            { label: "Доступно в ЖК", value: "WAWEL та Квартал Краківський" }
+          ]
+        each spec in specs
+          .energy-about__spec
+            span.energy-about__spec-label= spec.label
+            span.energy-about__spec-value= spec.value
+      .energy-about__media
+        img(src="/src/shared/images/energy/about-image.jpg" alt="Система автономного живлення" loading="lazy")
+
+  section.energy-cta.container
+    .energy-cta__card
+      img.energy-cta__bg(src="/src/shared/images/energy/cta-bg.jpg" alt="" loading="lazy" data-parallax="image")
+      .energy-cta__gradient
+      .energy-cta__content
+        h2.energy-cta__title Обирайте енергоефективну квартиру вже сьогодні
+        span.energy-cta__divider
+        .energy-cta__buttons
+          a.energy-btn.energy-btn--accent(href="#" data-presentation-trigger)
+            span Отримати презентацію
+            +energyArrow()
+          button.energy-btn.energy-btn--light(type="button" data-call-us-btn)
+            span Ціна та наявність
+            +energyArrow()
+
+  section.energy-benefits.container
+    .energy-benefits__card
+      h2.energy-benefits__title Що ви отримуєте
+      .energy-benefits__grid
+        -
+          var benefits = [
+            { num: "01", icon: "icon-01", title: "Світло під час відключень", text: "Квартира має автономне живлення — світло та базова техніка працюють навіть без електрики." },
+            { num: "02", icon: "icon-02", title: "Захист техніки", text: "Система стабілізує напругу та захищає прилади від перепадів і раптових вимкнень." },
+            { num: "03", icon: "icon-03", title: "Менші витрати на електроенергію", text: "Можна накопичувати електроенергію в дешевший період і використовувати тоді, коли це вигідно." },
+            { num: "04", icon: "icon-04", title: "Готове рішення", text: "Система вже готова до роботи — без додаткових витрат і налаштувань." }
+          ]
+        each benefit in benefits
+          .energy-benefits__item
+            .energy-benefits__item-top
+              span.energy-benefits__item-num= benefit.num
+              span.energy-benefits__item-icon
+                img(src=`/src/shared/images/energy/${benefit.icon}.svg` alt="" loading="lazy")
+            .energy-benefits__item-text
+              h3.energy-benefits__item-title= benefit.title
+              p.energy-benefits__item-desc= benefit.text
+
+  +presentationModal
+
+block footer
+  +footer
+
+block scripts
+  script(type="module" src="/src/pages/energy/energy.js")

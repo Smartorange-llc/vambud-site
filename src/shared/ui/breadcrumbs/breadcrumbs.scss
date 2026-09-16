@@ -1,0 +1,21 @@
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumbs__item {
+  @include tiny-text;
+  color: $wc;
+  text-transform: uppercase;
+  text-decoration: underline;
+
+  &--current {
+
+    text-decoration: none;
+  }
+}
+
+.breadcrumbs__sep {
+  color: rgba(255, 255, 255, 0.5);
+}

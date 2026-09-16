@@ -1,6 +1,7 @@
 @use "./vars" as *;
 @use "./smart-grid.scss" as *;
 
+@layer base {
 html,
 body,
 div,
@@ -405,5 +406,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
   &> :nth-child(n + 2) {
     margin-left: 8px;
+  }
   }
 }

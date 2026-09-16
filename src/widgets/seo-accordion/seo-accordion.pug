@@ -1,0 +1,20 @@
+mixin seoAccordion(title, sections)
+  .seo-accordion__item(data-doc-item)
+    button.seo-accordion__head(type="button" data-doc-trigger aria-expanded="false")
+      span.seo-accordion__head-title= title
+      svg.seo-accordion__chevron(xmlns="http://www.w3.org/2000/svg" width="14" height="8" viewBox="0 0 14 8" fill="none")
+        path(d="M1.24976 0C0.744466 3.59363e-05 0.289088 0.304811 0.095459 0.771484C-0.0979967 1.23851 0.00859451 1.77629 0.365967 2.13379L5.69897 7.4668C5.93337 7.70121 6.25127 7.83298 6.58276 7.83301C6.91424 7.83296 7.23217 7.7012 7.46655 7.4668L12.7996 2.13379C13.1568 1.77629 13.2645 1.23844 13.071 0.771484C12.8775 0.304612 12.4212 6.34103e-05 11.9158 0H1.24976Z" fill="currentColor")
+    .seo-accordion__body(data-doc-body data-lenis-prevent)
+      each section in sections
+        .seo-accordion__section
+          if section.title
+            h3.seo-accordion__section-title= section.title
+          if section.intro
+            p= section.intro
+          if section.list
+            ul.seo-accordion__list
+              each point in section.list
+                li= point
+          if section.items
+            each item in section.items
+              p= item.text

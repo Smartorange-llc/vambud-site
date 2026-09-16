@@ -1,0 +1,34 @@
+mixin founder
+  section.founder.container
+    .founder__bg
+      img.founder__bg-img(src="/src/shared/images/home/home-founder-bg.webp" alt="")
+    .founder__inner
+      h2.founder__title
+        span.founder__word.founder__word--start(data-parallax-word="start") Слово
+        span.founder__word.founder__word--end(data-parallax-word="end") засновника
+      .founder__content
+        .founder__photo(data-parallax="photo")
+          img(src="/src/shared/images/home/home-founder.webp" alt="Микола Ковальчук")
+        .founder__quote(data-parallax="text")
+          p.founder__quote-text Будівництво завжди залишає слід: воно або робить місто кращим, або забирає в нього душу. Для нас важливо створювати місця, де люди відчувають дім.
+          .founder__quote-footer
+            span.founder__quote-name Микола Ковальчук
+            button.stats__card-btn(type="button" data-founder-open aria-haspopup="dialog")
+              span Детальніше
+              //- span.founder__quote-plus +
+
+  .founder-popup(data-founder-popup data-lenis-prevent).hidden
+    .founder-popup__box(role="dialog" aria-modal="true" aria-label="Слово засновника")
+      button.founder-popup__close(type="button" data-founder-close aria-label="Закрити")
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M17.293 18.0215L11.9902 12.7178L6.68652 18.0215L5.97949 17.3145L11.2832 12.0107L5.97949 6.70703L6.68652 6L11.9902 11.3037L17.293 6L18 6.70703L12.6973 12.0107L18 17.3145L17.293 18.0215Z" fill="white"/>
+        </svg>
+      .founder-popup__panel
+        p.founder-popup__text Я пам'ятаю той момент, коли ще школярем зрозумів: я хочу будувати. Не тому, що це професія. А тому, що будівництво — це відповідальність. Ти залишаєш слід. Надовго. І він або робить місто кращим — або псує його.
+        p.founder-popup__text Перша мрія здійснилась. Але з часом прийшла інша. Я захотів, щоб наше місто перестало бути випадковим. Щоб у ньому з'явились місця, де хочеться жити. Залишатися. Повертатися додому.
+        p.founder-popup__text Разом із командою ми почали робити не «проєкти». Ми почали створювати середовище. Наші житлові комплекси — не про поверхи і метри. Вони про тишу у дворі. Про світло вранці. Про відчуття, що ти на своєму місці. Наші проєкти мають душу.
+        p.founder-popup__text І якщо люди це відчувають, значить, ми все робимо правильно.
+        .founder-popup__footer
+          span.founder-popup__name Микола Ковальчук
+          .founder-popup__signature
+            img(src="/src/shared/images/home/signature.svg" alt="Підпис Миколи Ковальчука" data-founder-signature)

@@ -4,8 +4,6 @@ import { Navigation } from "swiper/modules";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./footer-map-block.scss";
 
-Swiper.use([Navigation]);
-
 // Simple generic glyphs per category — intentionally minimal, no external assets required.
 const CATEGORY_ICONS = {
   projects: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3.2L3.5 10v10.3h6.2v-6.6h4.6v6.6h6.2V10L12 3.2z" fill="#fff"/></svg>`,
@@ -14,6 +12,17 @@ const CATEGORY_ICONS = {
 };
 
 const CLOSE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M18 6.7L17.3 6l-5.3 5.3L6.7 6 6 6.7l5.3 5.3L6 17.3l.7.7 5.3-5.3 5.3 5.3.7-.7-5.3-5.3L18 6.7z" fill="currentColor"/></svg>`;
+
+// Custom per-marker icons live in src/shared/images/markers/ — reference them in
+// map-config-footer.json via `"icon": "filename.svg"` (or a full "/src/..." path).
+// Loaded as raw SVG markup (not <img src>) so they stay vector and don't get
+// rasterized/blurred by Mapbox's marker transform (translate/rotate on a tilted map).
+const MARKER_ICONS_BASE = "/src/shared/images/markers/";
+const MARKER_ICON_MODULES = import.meta.glob("/src/shared/images/markers/*.svg", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
 const ARROW_PREV_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none"><path d="M9 1L2 8l7 7" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>`;
 const ARROW_NEXT_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none"><path d="M1 1l7 7-7 7" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>`;
 
@@ -55,6 +64,7 @@ export default class FooterMapBlock {
       coordinates: this.toLngLat(marker.coordinates),
     }));
     this.markerInstances = [];
+    this.activeMarkerEl = null;
     this.activeCategory = this.categories[0]?.id || null;
     this.activeTheme = "day";
     this.sliderInstance = null;
@@ -84,6 +94,31 @@ export default class FooterMapBlock {
 
   getCategoryIcon(id) {
     return CATEGORY_ICONS[id] || CATEGORY_ICONS.projects;
+  }
+
+  resolveMarkerIconSrc(icon) {
+    if (/^(https?:)?\//.test(icon)) return icon;
+    return `${MARKER_ICONS_BASE}${icon}`;
+  }
+
+  getInlineMarkerIcon(icon) {
+    if (/^https?:\/\//.test(icon)) return null;
+    const filename = icon.split("/").pop();
+    const raw = MARKER_ICON_MODULES[`${MARKER_ICONS_BASE}${filename}`];
+    if (!raw) return null;
+    return raw.replace("<svg", '<svg class="footer-map__marker-icon"');
+  }
+
+  getMarkerIcon(marker) {
+    if (marker.icon) {
+      const inlineSvg = this.getInlineMarkerIcon(marker.icon);
+      if (inlineSvg) return inlineSvg;
+
+      // Fallback for remote/external icon URLs that can't be inlined at build time.
+      const src = this.resolveMarkerIconSrc(marker.icon);
+      return `<img class="footer-map__marker-icon" src="${src}" alt="" />`;
+    }
+    return this.getCategoryIcon(marker.category);
   }
 
   render() {
@@ -188,17 +223,34 @@ export default class FooterMapBlock {
 
   addMarkers() {
     this.markers.forEach((marker) => {
+      const hasCustomIcon = Boolean(marker.icon);
       const el = document.createElement("div");
       el.className = `footer-map__marker footer-map__marker--${marker.category}`;
-      el.innerHTML = this.getCategoryIcon(marker.category);
-      el.addEventListener("click", () => this.showPopup(marker));
+      el.classList.toggle("footer-map__marker--custom", hasCustomIcon);
+      el.innerHTML = this.getMarkerIcon(marker);
+      el.addEventListener("click", () => {
+        this.setActiveMarker(el);
+        this.showPopup(marker);
+      });
 
-      const mapMarker = new mapboxgl.Marker({ element: el, anchor: "bottom" })
+      const mapMarker = new mapboxgl.Marker({ element: el, anchor: hasCustomIcon ? "center" : "bottom" })
         .setLngLat(marker.coordinates)
         .addTo(this.map);
 
       this.markerInstances.push({ marker, mapMarker, el });
     });
+  }
+
+  setActiveMarker(el) {
+    if (this.activeMarkerEl === el) return;
+    this.activeMarkerEl?.classList.remove("footer-map__marker--selected");
+    el.classList.add("footer-map__marker--selected");
+    this.activeMarkerEl = el;
+  }
+
+  clearActiveMarker() {
+    this.activeMarkerEl?.classList.remove("footer-map__marker--selected");
+    this.activeMarkerEl = null;
   }
 
   setActiveCategory(categoryId, { animate = true } = {}) {
@@ -284,6 +336,7 @@ export default class FooterMapBlock {
   hidePopup() {
     this.popup?.classList.remove("active");
     this._destroySliderSafely();
+    this.clearActiveMarker();
   }
 
   updateGallery(images) {
@@ -306,6 +359,7 @@ export default class FooterMapBlock {
     if (images.length > 1) {
       const swiperContainer = this.root.querySelector(".footer-map__popup-gallery.swiper");
       this.sliderInstance = new Swiper(swiperContainer, {
+        modules: [Navigation],
         slidesPerView: 1,
         navigation: {
           nextEl: ".footer-map__swiper-next",

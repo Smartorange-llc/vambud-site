@@ -1,0 +1,138 @@
+// Collapsible SEO copy block — used on any page that needs a big chunk of
+// keyword-rich text without it dominating the layout. Was duplicated
+// per-page (investors.pug's .inv-seo, commercial.pug's .commercial-seo)
+// with near-identical markup/behaviour and only minor visual drift; this is
+// the single shared version. The outer section (spacing, container width)
+// stays page-specific — only the accordion card itself lives here.
+.seo-accordion__item {
+  position: relative;
+  background-color: $wc;
+  border-radius: 20px;
+  box-shadow: inset 0 3px 0 0 #c7bdd5;
+  overflow: hidden;
+
+  @include tablet {
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    border-radius: vw(40);
+  }
+}
+
+.seo-accordion__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 20px 12px;
+
+  @include tablet {
+    padding: 28px 40px;
+  }
+
+  @include laptop {
+    padding: vw(28) vw(40);
+  }
+}
+
+.seo-accordion__chevron {
+  flex-shrink: 0;
+  color: $bc;
+  transition: transform 0.3s ease;
+}
+
+.seo-accordion__item.is-open .seo-accordion__chevron {
+  transform: rotate(180deg);
+}
+
+.seo-accordion__head-title {
+  @include subtitle-text;
+  font-size: 16px;
+  flex: 1 0 0;
+  color: $bc;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.seo-accordion__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 12px 20px;
+
+  @include tablet {
+    padding: 0 40px 28px;
+  }
+
+  @include laptop {
+    padding: 0 vw(40) vw(28);
+  }
+}
+
+.seo-accordion__item:not(.is-open) .seo-accordion__body {
+  display: none;
+}
+
+.seo-accordion__section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid $accent-color-2;
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  p {
+    @include general-text;
+    color: $grey-color;
+    margin: 0;
+  }
+}
+
+.seo-accordion__section-title {
+  @include subtitle-text;
+  font-size: 16px;
+  color: $bc;
+  margin: 0;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.seo-accordion__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    @include general-text;
+    color: $grey-color;
+    position: relative;
+    padding-left: 16px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: $accent-color;
+    }
+  }
+}

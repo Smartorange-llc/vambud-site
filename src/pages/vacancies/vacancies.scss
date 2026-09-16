@@ -1,0 +1,429 @@
+// ==========================================================================
+// Hero banner
+// ==========================================================================
+
+.vacancies-hero {
+  position: relative;
+  height: 240px;
+  min-height: 240px;
+  overflow: hidden;
+
+  @include tablet {
+    height: 340px;
+  }
+
+  @include laptop {
+    height: vw(601);
+  }
+}
+
+.vacancies-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom;
+  display: block;
+}
+
+.vacancies-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0803117a 0% 60%, rgba(91, 95, 104, 0.70) 79.62%, $bg-color 100%);
+}
+
+.vacancies-hero__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+
+  @include laptop {
+    gap: vw(8);
+  }
+}
+
+// Figma: 1920/H2 — Montserrat Regular 400, 100px, line-height 100%, letter-spacing -6%.
+.vacancies-hero__title {
+  font-family: $default-font;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: $wc;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: 32px;
+
+  @include tablet {
+    font-size: 60px;
+  }
+
+  @include laptop {
+    font-size: vw(100);
+  }
+}
+
+// ==========================================================================
+// Buttons — same sweep-fill hover mechanic as the shared .general-btn
+// (header.scss): a skewed ::before panel covers the button by default and
+// slides out on hover via transform, while text/icon colour inverts.
+// ==========================================================================
+
+.vacancy-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 100px;
+  border: 1px solid $accent-color;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+
+  @include tablet {
+    height: 68px;
+    padding: 0 32px;
+  }
+
+  @include laptop {
+    height: vw(68);
+    padding: 0 vw(32);
+  }
+
+  span {
+    @include btn-text;
+    letter-spacing: -0.06em;
+    text-transform: none;
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+    transition: color 0.4s ease-in-out;
+  }
+
+  svg {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  path {
+    transition: fill 0.4s ease-in-out;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2%;
+    left: -10%;
+    z-index: 1;
+    width: 120%;
+    height: 104%;
+    transform: skew(30deg);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+  }
+
+  @media (hover: hover) {
+    &:hover::before {
+      transform: translate3d(100%, 0, 0) skew(30deg);
+    }
+  }
+
+  &--accent {
+    background-color: $wc;
+
+
+    &::before {
+      background-color: $accent-color;
+    }
+
+    span,
+    path {
+      color: $wc;
+      fill: $wc;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        span {
+          color: $accent-color;
+        }
+
+        path {
+          fill: $accent-color;
+        }
+      }
+    }
+  }
+
+  &--light {
+    background-color: $accent-color;
+    border-color: $bg-color;
+
+    &::before {
+      background-color: $wc;
+    }
+
+    span,
+    path {
+      color: $text-color;
+      fill: $text-color;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        border-color: $accent-color;
+
+        span {
+          color: $wc;
+        }
+
+        path {
+          fill: $wc;
+        }
+      }
+    }
+  }
+}
+
+// ==========================================================================
+// Vacancy list
+// ==========================================================================
+
+.vacancies-list {
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @include tablet {
+    margin-top: -40px;
+    gap: 12px;
+  }
+
+  @include laptop {
+    margin-top: vw(-60);
+    gap: vw(20);
+  }
+}
+
+.vacancies-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 20px;
+  background-color: $wc;
+  border-radius: 20px;
+
+  @include tablet {
+    padding: 32px;
+    border-radius: 28px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    align-items: center;
+    gap: vw(20);
+    padding: vw(40);
+    border-radius: vw(32);
+  }
+}
+
+.vacancies-row__title {
+  @include article-title;
+  color: $accent-color;
+  overflow-wrap: break-word;
+  margin: 0;
+  text-transform: uppercase;
+
+  @include laptop {
+    flex: 1 0 0;
+  }
+}
+
+.vacancies-row__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+
+  @include tablet {
+    flex-direction: row;
+  }
+
+  @include laptop {
+    width: auto;
+    flex-shrink: 0;
+    gap: vw(10);
+  }
+
+  .vacancy-btn {
+    width: 100%;
+
+    @include laptop {
+      width: fit-content;
+    }
+  }
+}
+
+// ==========================================================================
+// Career — "Кар'єра у VAMBUD"
+// ==========================================================================
+
+.vacancies-career {
+  margin-top: 60px;
+  margin-bottom: 60px;
+
+  @include tablet {
+    margin-top: 100px;
+    margin-bottom: 100px;
+  }
+
+  @include laptop {
+    margin-top: vw(100);
+    margin-bottom: vw(100);
+  }
+}
+
+.vacancies-career__card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: $wc;
+
+  @include tablet {
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: vw(40);
+  }
+}
+
+.vacancies-career__intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 28px 20px;
+  background-color: $accent-color;
+
+  @include tablet {
+    padding: 48px;
+  }
+
+  @include laptop {
+    align-items: flex-start;
+    text-align: left;
+    flex: 1 0 0;
+    gap: vw(20);
+    padding: vw(60);
+  }
+}
+
+.vacancies-career__title {
+  @include article-title;
+  color: $wc;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.vacancies-career__text {
+  @include general-text;
+  letter-spacing: -0.06em;
+  color: #cfcfcf;
+  margin: 0;
+}
+
+.vacancies-career__media {
+  aspect-ratio: 351 / 190;
+
+  @include tablet {
+    aspect-ratio: 704 / 320;
+    max-height: 320px;
+  }
+
+  @include laptop {
+    flex-shrink: 0;
+    width: vw(646);
+    aspect-ratio: auto;
+    max-height: none;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+
+    @include tablet {
+      object-position: 50% 20%;
+    }
+  }
+}
+
+.vacancies-career__contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 28px 20px;
+
+  @include tablet {
+    padding: 48px;
+  }
+
+  @include laptop {
+    align-items: flex-start;
+    text-align: left;
+    flex: 1 0 0;
+    gap: vw(8);
+    padding: vw(60);
+  }
+}
+
+.vacancies-career__contact-label {
+  @include tiny-text;
+  letter-spacing: -0.06em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: $grey-color;
+}
+
+.vacancies-career__contact-name {
+  @include article-title;
+  color: $accent-color;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+.vacancies-career__contact-phone {
+  @include subtitle-text;
+  letter-spacing: -0.08em;
+  color: $text-color;
+  text-decoration: none;
+
+  @media (hover: hover) {
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}

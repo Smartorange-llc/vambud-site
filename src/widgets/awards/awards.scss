@@ -1,0 +1,421 @@
+// ==========================================================================
+// Awards slider section
+// ==========================================================================
+
+.awards {
+  position: relative;
+  z-index: 2;
+  overflow: fidden;
+  // background-color: $bg-color;
+  padding-bottom: 40px;
+  padding-top: 100px;
+  max-width: 100vw;
+
+  @include tablet {
+    padding-top: 140px;
+  }
+
+  @include laptop {
+    padding-top: 0;
+    margin-top: -32px;
+  }
+}
+
+.awards__inner {
+  display: flex;
+  flex-direction: column;
+  max-width: 100vw;
+
+}
+
+.awards__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  order: 1;
+  margin-bottom: 24px;
+
+  @include laptop {
+    order: 2;
+    margin-bottom: 0;
+    margin-top: vw(48);
+  }
+}
+
+.awards__title {
+  @include article-title;
+  color: $accent-color;
+  margin: 0;
+  text-transform: uppercase;
+
+}
+
+.awards__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 2px;
+  flex-shrink: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  transform: translateY(-50%);
+  // padding: 12px;
+
+  // @include tablet {
+  //   padding: 20px;
+  // }
+
+  // @include laptop {
+  //   padding: vw(60);
+  // }
+
+  &>* {
+    pointer-events: all;
+  }
+}
+
+.awards__nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  @include tablet {
+    width: 48px;
+    height: 48px;
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.awards__nav-btn--prev .awards__nav-icon {
+  transform: rotate(180deg);
+}
+
+.swiper.awards__slider {
+  order: 2;
+  width: 100%;
+
+  position: relative;
+  max-width: 100vw;
+
+  @include laptop {
+    overflow: visible;
+    order: 1;
+    // margin-top: -32px;
+  }
+}
+
+// .awards__slide {
+//   width: 78vw;
+
+//   @include tablet {
+//     width: 320px;
+//   }
+
+//   @include laptop {
+//     width: vw(400);
+//   }
+
+//   @include desktop {
+//     width: 400px;
+//   }
+// }
+
+.awards__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 351/460;
+  overflow: hidden;
+  background-color: $wc;
+  // border: 1px solid transparent;
+  border-radius: 20px;
+  padding: 28px 20px;
+  transition:
+    background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @include tablet {
+    aspect-ratio: 520/620;
+    padding: 40px;
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    padding: vw(40);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Розтягуємо на всю площу */
+    border-radius: inherit;
+    /* Повторюємо радіус картки */
+    /* 1. Задаємо товщину нашого бордера */
+    padding: 1px;
+    /* 2. Малюємо сам градієнт (він буде видно тільки там, де відпрацює маска) */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.1) 40%,
+        rgba(255, 255, 255, 0.1) 70%,
+        rgba(255, 255, 255, 0.8) 100%);
+    /* 3. Магія маскування: вирізаємо середину, залишаючи лише padding (наш 1px бордер) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+.awards__media {
+  position: relative;
+  width: 75%;
+  height: 60%;
+  margin-bottom: 20px;
+  margin-right: auto;
+
+  flex-shrink: 0;
+  transition:
+    width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  // @include tablet {
+  //   width: 160px;
+  //   height: 160px;
+  // }
+
+  // @include laptop {
+  //   width: vw(180);
+  //   height: vw(180);
+  // }
+
+  // @include desktop {
+  //   width: 180px;
+  //   height: 180px;
+  // }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    object-position: center left;
+  }
+}
+
+.awards__year {
+  @include btn-text;
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  z-index: 1;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background-color: $grey-color;
+  color: $wc;
+  text-transform: none;
+
+  @include tablet {
+
+    right: 36px;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+
+}
+
+.awards__body {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+
+.awards__card-title {
+  @include subtitle-text;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+  text-align: left;
+  color: $text-color;
+  line-height: 120%;
+
+  @include laptop {
+    margin: 0 0 12px;
+  }
+
+}
+
+.awards__card-subtitle {
+  @include tiny-text;
+  color: $grey-color;
+  text-transform: uppercase;
+  text-align: left;
+  // margin-bottom: 12px;
+
+  @include laptop {
+
+    margin-bottom: 0px;
+  }
+}
+
+.awards__card-divider {
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(74, 88, 102, 0), rgba(74, 88, 102, 1), rgba(74, 88, 102, 0));
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  position: relative;
+  transform: translateY(12px);
+  transition:
+    max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    margin 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(74, 88, 102, 1);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    z-index: 2;
+  }
+}
+
+.awards__card-desc {
+  @include general-text;
+  color: $grey-color;
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow-y: hidden;
+  transform: translateY(12px);
+  transition:
+    max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    margin 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.awards__card-btn.stats__card-btn {
+  width: fit-content;
+  border-color: #CFCFCF;
+  padding: 12px 20px;
+  margin: 0;
+  margin-top: 20px;
+  background-color: transparent;
+
+  @include laptop {
+    display: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $accent-color;
+
+      span {
+        color: $accent-color;
+      }
+    }
+  }
+
+  span {
+    font-size: 16px;
+    text-transform: none;
+  }
+
+  .awards__card-plus {
+    margin-left: 10px;
+    font-size: 16px;
+  }
+}
+
+@mixin awards-card-expanded {
+  background-color: rgba(255, 255, 255, 0);
+  // border-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  .awards__media {
+    width: 40%;
+    height: 40%;
+
+    @include laptop {
+      width: vw(200);
+      height: vw(200);
+    }
+
+    @media screen and (min-width: 1366px) {
+      width: vw(180);
+      height: vw(180);
+    }
+  }
+
+  .awards__card-divider {
+    max-height: 20px;
+    height: 1px;
+    flex-shrink: 0;
+    opacity: 1;
+    margin: 28px 0;
+    transform: translateY(0);
+
+    @include laptop {
+      margin: vw(28) 0;
+    }
+  }
+
+  .awards__card-desc {
+    max-height: 200px;
+    opacity: 1;
+    // overflow-y: auto;
+    transform: translateY(0);
+
+    @include laptop {
+      max-height: vw(280);
+    }
+
+    @media screen and (min-width: 1366px) {
+      max-height: vw(280);
+    }
+  }
+}
+
+.awards__card.is-expanded {
+  @include awards-card-expanded;
+}
+
+@include laptop {
+  @media (hover: hover) {
+    .awards__card:hover {
+      @include awards-card-expanded;
+    }
+  }
+}

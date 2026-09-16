@@ -1,4 +1,8 @@
-let currentMap = null;
+// Keyed by mount target rather than a single shared variable — a page can
+// embed more than one instance (e.g. a project's own infrastructure map
+// plus the footer's map), and each must be destroyed/replaced independently
+// instead of the most-recently-scrolled-to one tearing down the others.
+const mapsByTarget = new Map();
 
 /**
  * Lazily loads and initializes the footer map widget once its container
@@ -17,20 +21,20 @@ export const initFooterMap = ({ selector, accessToken, center, zoom, categories,
         observer.disconnect();
 
         import("./FooterMapBlock").then(({ default: FooterMapBlock }) => {
-          if (currentMap) {
-            currentMap.destroy();
-            currentMap = null;
-          }
+          mapsByTarget.get(target)?.destroy();
 
-          currentMap = new FooterMapBlock({
-            mountTo: target,
-            accessToken,
-            center,
-            zoom,
-            categories,
-            markers,
-            i18n,
-          });
+          mapsByTarget.set(
+            target,
+            new FooterMapBlock({
+              mountTo: target,
+              accessToken,
+              center,
+              zoom,
+              categories,
+              markers,
+              i18n,
+            }),
+          );
         });
       });
     },

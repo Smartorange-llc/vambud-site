@@ -1,0 +1,122 @@
+extends /../index.pug
+
+block variable
+  -
+    var title_page = 'VAMBUD перепродаж'
+    var id_page = 'id-page-resale'
+
+block meta
+  title= title_page
+  meta(name='description', content='Сервіс продажу квартир від власників у комплексах VAMBUD: консультація, стратегія продажу, покази та супровід угоди від початку до кінця.')
+
+block header
+  +header
+
+block content
+  mixin resaleArrow()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M12.521 11.7715L12.521 12.5215L11.021 12.5215L11.021 6.04004L4.229 12.832L3.16846 11.7715L9.96045 4.97949L3.479 4.97949L3.479 3.47949L4.229 3.47949L11.772 3.47852C11.9707 3.47859 12.1617 3.55774 12.3022 3.69824C12.4428 3.83879 12.5219 4.02979 12.522 4.22852L12.521 11.7715Z")
+
+  section.resale-hero
+    img.resale-hero__bg(src="/src/shared/images/resale/main-banner.jpg" alt="VAMBUD" loading="eager")
+    .resale-hero__overlay
+    .resale-hero__inner.container
+      +breadcrumbs([{ label: "Головна", href: "/home.html" }, { label: "Перепродаж" }])
+      h1.resale-hero__title Перепродаж
+
+  section.resale-pitch.container
+    .resale-pitch__card
+      img.resale-pitch__bg(src="/src/shared/images/resale/pitch-bg.webp" alt="" loading="eager" data-parallax="image")
+      .resale-pitch__overlay
+      .resale-pitch__row
+        p.resale-pitch__heading сервіс продажу квартир від власників у комплексах VAMBUD
+        .resale-pitch__col
+          p.resale-pitch__lead Хочете продати квартиру й зробити це швидко і вигідно — звертайтеся напряму до VAMBUD. Ми допоможемо пройти весь шлях: від першої консультації до угоди.
+          ul.resale-pitch__bullets
+            -
+              var bullets = [
+                "Знаємо свої житлові комплекси якнайкраще",
+                "Працюємо з реальним великим потоком клієнтів",
+                "Супроводжуємо продаж від заявки до продажу"
+              ]
+            each bullet in bullets
+              li.resale-pitch__bullet
+                span.resale-pitch__dot
+                span= bullet
+          .resale-pitch__buttons
+            button.resale-btn.resale-btn--accent(type="button" data-call-us-btn)
+              span Отримати консультацію
+              +resaleArrow()
+            button.resale-btn.resale-btn--light(type="button" data-call-us-btn data-call-us-theme="Продати квартиру")
+              span Продати квартиру
+              +resaleArrow()
+
+  section.resale-process.container
+    .resale-process__card
+      .resale-process__intro
+        h2.resale-process__title Як проходить перепродаж?
+        p.resale-process__lead Ми зробили процес зрозумілим і послідовним, щоб ви з самого початку розуміли, що відбувається на кожному етапі.
+        img.resale-process__image(src="/src/shared/images/resale/process-image.jpg" alt="Документи для перепродажу VAMBUD" loading="lazy")
+      .resale-process__steps
+        -
+          var steps = [
+            { title: "Залишаєте заявку", text: "Ви надсилаєте інформацію про квартиру, а ми зв'язуємося з вами для уточнення деталей." },
+            { title: "Отримуєте консультацію", text: "Обговорюємо ваш об'єкт, цілі, бажані терміни продажу та поточну ситуацію на ринку." },
+            { title: "Формуємо стратегію продажу", text: "Допомагаємо визначити позиціонування квартири, вартість і логіку подачі об'єкта." },
+            { title: "Підготовка квартири до продажу", text: "Уточнюємо матеріали, фото, переваги об'єкта, готуємо все необхідне для якісної презентації." },
+            { title: "Покази та переговори", text: "Організовуємо комунікацію з потенційними покупцями, супроводжуємо покази та допомагаємо на етапі домовленостей." },
+            { title: "Угода і завершення продажу", text: "Супроводжуємо процес до фінального результату, щоб продаж пройшов впевнено, зрозуміло й без зайвого навантаження для вас." }
+          ]
+        each step, index in steps
+          .resale-process__step
+            span.resale-process__step-num= (index + 1) < 10 ? '0' + (index + 1) : (index + 1)
+            .resale-process__step-content
+              h3.resale-process__step-title= step.title
+              p.resale-process__step-text= step.text
+
+  section.resale-cta.container
+    .resale-cta__card
+      img.resale-cta__bg(src="/src/shared/images/resale/cta-bg.jpg" alt="" loading="lazy" data-parallax="image")
+      .resale-cta__gradient
+      .resale-cta__content
+        .resale-cta__title
+          span.resale-cta__title-main Ваша квартира вже має цінність.
+          span.resale-cta__title-sub Допоможемо реалізувати її правильно.
+        span.resale-cta__divider
+        p.resale-cta__text Коли продажем займається команда, яка знає сам продукт, його середовище та його переваги, процес стає зрозумілішим, спокійнішим і результативнішим. Залиште заявку — і ми допоможемо вам пройти цей шлях від першого звернення до фінішного кроку.
+        .resale-cta__buttons
+          button.resale-btn.resale-btn--accent(type="button" data-call-us-btn)
+            span Отримати консультацію
+          button.resale-btn.resale-btn--light(type="button" data-call-us-btn data-call-us-theme="Продати квартиру")
+            span Продати квартиру
+
+  section.resale-advantages.container
+    .resale-advantages__card
+      .resale-advantages__wrap
+        img.resale-advantages__bg(src="/src/shared/images/resale/advantages-bg.jpg" alt="" loading="lazy" data-parallax="image")
+        .resale-advantages__gradient
+      .resale-advantages__intro
+        h2.resale-advantages__title Чому власники обирають продаж через VAMBUD?
+        p.resale-advantages__lead Коли йдеться про перепродаж квартири, важливо не просто виставити об'єкт на продаж, а правильно подати його ринку, знайти реального покупця й провести угоду впевнено. Саме тут перевага офіційного сервісу VAMBUD перепродаж.
+      .resale-advantages__grid
+        -
+          var advantages = [
+            { title: "Ми знаємо цінність ваших квартир", text: "Добре розуміємо особливості власних житлових комплексів, планувань, переваг локації та середовища. Це допомагає максимально якісно презентувати квартиру покупцю." },
+            { title: "Допомагаємо сформувати ринкову ціну", text: "Щоб продаж був реалістичним і вигідним, важливо знайти правильний баланс між очікуванням власника та ситуацією на ринку. Ми допомагаємо визначити оптимальну стратегію продажу." },
+            { title: "Беремо на себе комунікацію з покупцями", text: "Консультації, уточнення, домовленості, покази, супровід на етапі переговорів — усе це проходить організовано й без хаосу." },
+            { title: "Супроводжуємо до самої угоди", text: "Допомагаємо пройти шлях до фінального результату: з чіткістю, увагою до деталей і людським підходом." },
+            { title: "Менше випадкових посередників — більше довіри", text: "Коли квартиру продає офіційний сервіс від VAMBUD, це працює на довіру до об'єкта і самого процесу." },
+            { title: "Можемо одразу допомогти з наступним кроком", text: "Якщо після продажу ви плануєте наступний крок: збільшення площі, інвестицію чи нову покупку — ми допоможемо рухатися далі в екосистемі VAMBUD." }
+          ]
+        each advantage, index in advantages
+          .resale-advantages__item
+            span.resale-advantages__item-num= (index + 1) < 10 ? '0' + (index + 1) : (index + 1)
+            .resale-advantages__item-text
+              h3.resale-advantages__item-title= advantage.title
+              p.resale-advantages__item-desc= advantage.text
+
+block footer
+  +footer
+
+block scripts
+  script(type="module" src="/src/pages/resale/resale.js")

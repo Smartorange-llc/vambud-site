@@ -16,7 +16,7 @@ export function paginationInit(containerSelector, cardSelector, paginationSelect
 
   const loadMoreBtn = paginationWrapper.querySelector(".pagination__more");
 
-  const perPage = 6;
+  const perPage = 12;
   const totalPages = Math.ceil(cards.length / perPage);
   let currentPage = 1;
 

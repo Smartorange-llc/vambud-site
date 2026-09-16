@@ -1,0 +1,345 @@
+// Compound selector so this beats .modal-form's own tablet+/laptop+
+// `flex-direction: row` (its default two-panel photo+panel layout, which
+// this modal repurposes for its own two-column main/side layout instead).
+//
+// `overflow: hidden` applies at every breakpoint (not just laptop): the base
+// .modal-form is itself a scrolling element (overflow-y: auto), and .close-btn
+// is positioned absolute against it — an absolutely positioned child of a
+// scrolling container scrolls away with the content instead of staying put.
+// Overriding overflow here turns .modal-form.vacancy-modal back into a
+// static frame, so .close-btn always stays anchored to its corner; the
+// actual scrolling moves to .vacancy-modal__body instead.
+.modal-form.vacancy-modal {
+  flex-direction: column;
+  padding: 12px;
+  align-items: stretch;
+  overflow: hidden;
+
+  @include tablet {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    max-width: vw(1600);
+    padding: vw(60);
+    border-radius: vw(40);
+    // Fixed height (Figma's popup is 880px at 1920, clamped so it never
+    // exceeds the viewport on shorter screens) instead of a max-height that
+    // grows with content — the two columns below scroll internally instead
+    // of the whole card growing/scrolling as one.
+    height: min(vw(880), calc(100dvh - vw(120)));
+    max-height: none;
+  }
+}
+
+// Owns the actual scrolling on mobile/tablet (.main + .side stacked as one
+// column) so the outer .modal-form.vacancy-modal above can stay static.
+.vacancy-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+  overflow-y: auto;
+  // Visible (if thin) scrollbar — this is the cue that tells people the
+  // area is scrollable at all, so it stays on unlike the site's other
+  // modals which hide it.
+  scrollbar-width: thin;
+  scrollbar-color: $accent-color-2 transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $accent-color-2;
+    border-radius: 100px;
+
+    &:hover {
+      background-color: $accent-color;
+    }
+  }
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+    gap: vw(60);
+    // Reverts to a plain flex container — .main/.side go back to scrolling
+    // independently instead (see below), matching the two-column layout.
+    overflow: visible;
+    scrollbar-width: auto;
+  }
+}
+
+.vacancy-modal__main,
+.vacancy-modal__side {
+  @include laptop {
+    min-height: 0;
+    overflow-y: auto;
+    // Visible (if thin) scrollbar — this is the cue that tells people the
+    // panel is scrollable at all, so it stays on unlike the site's other
+    // modals which hide it.
+    scrollbar-width: thin;
+    scrollbar-color: $accent-color-2 transparent;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $accent-color-2;
+      border-radius: 100px;
+
+      &:hover {
+        background-color: $accent-color;
+      }
+    }
+  }
+}
+
+.vacancy-modal__main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 12px;
+  border: 1px solid $accent-color;
+  border-radius: 24px;
+
+  @include tablet {
+    padding: 40px 20px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    gap: vw(32);
+    padding: vw(40);
+    border-radius: vw(32);
+  }
+}
+
+.vacancy-modal__title {
+  @include article-title;
+  color: $accent-color;
+  text-transform: uppercase;
+  text-align: center;
+  overflow-wrap: break-word;
+  margin: 0;
+}
+
+.vacancy-modal__description {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include laptop {
+    gap: vw(20);
+  }
+}
+
+.vacancy-modal__description-item {
+  @include general-text;
+  letter-spacing: -0.06em;
+  color: $text-color;
+  margin: 0;
+}
+
+.vacancy-modal__contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  @include laptop {
+    gap: vw(16);
+  }
+}
+
+.vacancy-modal__motivation {
+  @include subtitle-text;
+  letter-spacing: -0.08em;
+  color: $text-color;
+  text-align: center;
+  margin: 0;
+}
+
+.vacancy-modal__phone-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 56px;
+  padding: 0 24px;
+  border: 1px solid $accent-color-2;
+  border-radius: 100px;
+  background-color: rgba(79, 48, 127, 0.1);
+  text-decoration: none;
+
+  @include laptop {
+    height: vw(68);
+    gap: vw(20);
+  }
+
+  span:first-child {
+    @include btn-text;
+    letter-spacing: -0.06em;
+    color: $text-color;
+    white-space: nowrap;
+  }
+}
+
+.vacancy-modal__phone-value {
+  @include btn-text;
+  letter-spacing: -0.06em;
+  color: $accent-color;
+  white-space: nowrap;
+}
+
+.vacancy-modal__divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  span:not(.vacancy-modal__divider-line) {
+    @include tiny-text;
+    letter-spacing: -0.06em;
+    color: $grey-color;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+}
+
+.vacancy-modal__divider-line {
+  flex: 1 0 0;
+  height: 1px;
+  background-color: $accent-color;
+  opacity: 0.2;
+}
+
+.vacancy-modal__apply {
+  width: 100%;
+
+  span {}
+
+  // Bare .general-btn's default hover keeps the text white (meant for
+  // buttons that sit on dark/coloured backgrounds); here it needs to read
+  // against the revealed white background instead.
+  @media (hover: hover) {
+    &:hover {
+      border-color: $accent-color;
+
+      span {
+        color: $accent-color;
+      }
+
+      path {
+        fill: $accent-color;
+      }
+    }
+  }
+}
+
+.vacancy-modal__side {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  @include laptop {
+    flex: 1 0 0;
+    gap: vw(28);
+  }
+}
+
+.vacancy-modal__section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include laptop {
+    gap: vw(20);
+  }
+}
+
+.vacancy-modal__section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vacancy-modal__section-title {
+  @include subtitle-text;
+  letter-spacing: -0.08em;
+  color: $text-color;
+  white-space: nowrap;
+}
+
+.vacancy-modal__section-line {
+  flex: 1 0 0;
+  height: 1px;
+  background-color: $accent-color;
+  opacity: 0.2;
+}
+
+.vacancy-modal__groups {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @include laptop {
+    gap: vw(24);
+  }
+}
+
+.vacancy-modal__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vacancy-modal__group-heading {
+  @include general-text;
+  letter-spacing: -0.06em;
+  color: $accent-color;
+  font-weight: 700;
+  margin: 0;
+}
+
+.vacancy-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vacancy-modal__list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  span:last-child {
+    @include general-text;
+    letter-spacing: -0.06em;
+    color: $grey-color;
+  }
+}
+
+.vacancy-modal__dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background-color: $accent-color;
+}

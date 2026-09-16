@@ -1,68 +1,151 @@
 @use "./vars.scss" as *;
 @use "./mixins.scss" as *;
 
-html {
-  min-height: 100%;
+@layer base {
+  html {
+    min-height: 100%;
 
-
-}
-
-body {
-  min-height: 100%;
-  background-color: $bg-color;
-  overflow-x: hidden;
-
-
-}
-
-.page__inner {
-  &.no-scroll {
-    overflow: hidden !important;
 
   }
-}
 
-main {
-  // height: 100%;
-}
+  body {
+    min-height: 100%;
+    background-color: $bg-color;
+    overflow-x: hidden;
+    max-width: 100vw;
 
-.container {
-  padding-right: 12px;
-  padding-left: 12px;
-  margin-right: auto;
-  margin-left: auto;
-
-  @include tablet {
-    padding-right: 20px;
-    padding-left: 20px;
   }
 
-  @include laptop {
-    padding-right: vw(40);
-    padding-left: vw(40);
+  .page__inner {
+    &.no-scroll {
+      overflow: hidden !important;
+
+    }
   }
 
-  @include desktop {
-    padding-right: 40px;
-    padding-left: 40px;
+  main {
+    // height: 100%;
   }
 
-  &--mobile {
+  .container {
+    padding-right: 12px;
+    padding-left: 12px;
     margin-right: auto;
     margin-left: auto;
 
     @include tablet {
-      padding-right: 24px;
-      padding-left: 24px;
+      padding-right: 20px;
+      padding-left: 20px;
     }
 
     @include laptop {
-      padding-right: 30px;
-      padding-left: 30px;
+      padding-right: vw(40);
+      padding-left: vw(40);
+    }
+
+    @include desktop {
+      padding-right: 40px;
+      padding-left: 40px;
+    }
+
+    &--mobile {
+      margin-right: auto;
+      margin-left: auto;
+
+      @include tablet {
+        padding-right: 24px;
+        padding-left: 24px;
+      }
+
+      @include laptop {
+        padding-right: 30px;
+        padding-left: 30px;
+      }
     }
   }
-}
 
-#bingc-phone-button {
-  display: none !important;
+  #bingc-phone-button {
+    display: none !important;
+  }
+
+  .stats__card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    position: relative;
+    padding: 14px 20px;
+    border-radius: 100px;
+    border: 1px solid $wc;
+    background-color: transparent;
+    transition: opacity 0.3s ease;
+    margin: 0 auto;
+    overflow: hidden;
+
+    @include tablet {
+
+      padding: 22px 32px;
+    }
+
+    @include laptop {
+      padding: vw(22) vw(32);
+    }
+
+    span {
+      @include btn-text;
+      color: $text-color;
+      // text-transform: uppercase;
+      position: relative;
+      z-index: 2;
+      transition: color 0.3s ease-in-out;
+    }
+
+    svg {
+      position: relative;
+      z-index: 2;
+
+      path {
+        fill: $text-color;
+        transition: color 0.3s ease-in-out;
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2%;
+      left: 0;
+      width: 100%;
+      height: 104%;
+      background-color: $wc;
+
+      z-index: 1;
+
+      width: 120%;
+      left: -10%;
+      -webkit-transform: skew(30deg);
+      -ms-transform: skew(30deg);
+      transform: skew(30deg);
+      -webkit-transition: -webkit-transform .4s cubic-bezier(.3, 1, .8, 1);
+      transition: -webkit-transform .4s cubic-bezier(.3, 1, .8, 1);
+      transition: transform .4s cubic-bezier(.3, 1, .8, 1);
+      transition: transform .4s cubic-bezier(.3, 1, .8, 1), -webkit-transform .4s cubic-bezier(.3, 1, .8, 1)
+    }
+
+
+    @media (hover:hover) {
+      &:hover::before {
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0)
+      }
+
+      &:hover span {
+        color: $wc;
+      }
+
+      &:hover svg path {
+        fill: $wc;
+      }
+    }
+  }
 }

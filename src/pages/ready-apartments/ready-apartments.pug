@@ -1,0 +1,225 @@
+extends /../index.pug
+
+block variable
+  -
+    var title_page = 'Готові квартири'
+    var id_page = 'id-page-ready-apartments'
+
+block meta
+  title= title_page
+  meta(name='description', content='Готові квартири VAMBUD в Івано-Франківську: 1, 2 та 3-кімнатні квартири з базовим ремонтом VAMBUD box, доступні для заселення без очікування.')
+
+block header
+  +header
+
+block content
+  mixin readyArrow()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="white")
+
+  mixin readyNavArrow()
+    svg(xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none")
+      path(d="M12 5.99946C12 6.36751 11.701 6.66623 11.333 6.66645L2.27637 6.66645L6.4707 10.8608C6.73092 11.121 6.73064 11.5438 6.4707 11.8041C6.21039 12.0641 5.78858 12.0642 5.52832 11.8041L0.195313 6.47114C0.0702775 6.34612 1.20819e-06 6.17628 2.62245e-07 5.99946C0.000130409 5.82282 0.0703951 5.65269 0.195313 5.52778L5.52832 0.194773C5.7886 -0.0648427 6.21053 -0.0650054 6.4707 0.194773C6.7309 0.454998 6.73066 0.877761 6.4707 1.13813L2.27637 5.33247L11.333 5.33247C11.7008 5.33269 11.9997 5.63163 12 5.99946Z" fill="currentColor")
+
+  mixin readyPlusIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M8 2.5V13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round").ready-benefits__more-vbar
+      path(d="M2.5 8H13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round")
+
+  section.ready-banner
+    img.ready-banner__bg(src="/src/shared/images/ready-apartments/main-banner.jpg" alt="VAMBUD" loading="eager")
+    .ready-banner__overlay
+    .ready-banner__inner.container
+      +breadcrumbs([{ label: "VAMBUD", href: "/home.html" }, { label: "Готові квартири" }])
+      h1.ready-banner__title Готові квартири
+
+  -
+    var aptTypes = [
+      { rooms: "1-кімнатні", range: "37 – 45" },
+      { rooms: "2-кімнатні", range: "40 – 69" },
+      { rooms: "3-кімнатні", range: "90 – 112" }
+    ]
+
+  mixin readyAptTypes()
+    each apt in aptTypes
+      .ready-hero__type
+        .ready-hero__type-info
+          span.ready-hero__type-rooms= apt.rooms
+          p.ready-hero__type-area
+            span= apt.range
+            span.ready-hero__type-unit м²
+        button.ready-hero__type-btn.general-btn(data-call-us-btn)
+          span Дізнатись ціну
+          +readyArrow()
+
+  //- Below laptop the Figma mockup splits the photo card from the price
+  //- pills into two separate blocks (light pills on the plain page
+  //- background); from laptop up they're merged into one dark glass card.
+  //- Rendering the pills twice and toggling by breakpoint keeps both DOM
+  //- shapes intact instead of faking one with absolute positioning.
+  section.ready-hero.container
+    .ready-hero__card
+      img.ready-hero__bg(src="/src/shared/images/ready-apartments/hero.jpg" alt="Готова квартира VAMBUD" loading="eager")
+      .ready-hero__top
+        h2.ready-hero__title
+          | Готові квартири
+          br
+          | в Івано-Франківську
+        .ready-hero__lead
+          p Готова квартира — це можливість обрати житло без очікування завершення будівництва та швидше перейти до облаштування власної домівки.
+      .ready-hero__types.ready-hero__types--inside
+        +readyAptTypes()
+    .ready-hero__types.ready-hero__types--outside
+      +readyAptTypes()
+
+  section.ready-planning.container
+    h2.ready-planning__title Колекція доступних квартир
+    -
+      var projects = [
+        { key: "dolishniy", label: "Долішній", count: 8 },
+        { key: "krakivskyi", label: "Квартал Краківський", count: 12 },
+        { key: "prostir", label: "Prostir (Простір)", count: 9 },
+        { key: "wawel", label: "Wawel (Вавель)", count: 9 },
+        { key: "shepit", label: "Shepit (Шепіт)", count: 9 },
+        { key: "trivium", label: "Trivium (Трівіум)", count: 9 }
+      ]
+    .ready-planning__nav(role="tablist" aria-label="Житловий комплекс")
+      each project, index in projects
+        button.ready-planning__tab(class=index === 0 ? "is-active" : "" type="button" data-planning-tab=project.key role="tab" aria-selected=index === 0 ? "true" : "false")
+          span= project.label
+          span.ready-planning__tab-count= `(${project.count})`
+    p.ready-planning__group-title(data-planning-group-title)= projects[0].label
+    -
+      var photoPair1 = ["card-1.jpg", "card-2.jpg"]
+      var photoPair2 = ["card-2.jpg", "card-1.jpg"]
+      var planPhoto = ["/src/shared/images/single-project/floorplan-1.png"]
+      var flats = {
+        dolishniy: [
+          { title: "Планування 1к", photos: photoPair1, building: "5", floor: "5-8", total: "50 м²", living: "28 м²", rooms: "1", kitchen: "15.2 м²", bathroom: "4.6 м²" },
+          { title: "Планування 2к", photos: photoPair2, building: "3", floor: "2-4", total: "68 м²", living: "40 м²", rooms: "2", kitchen: "16.6 м²", bathroom: "4.8 м²" },
+          { title: "Планування 2к", photos: planPhoto, building: "5", floor: "6", total: "61 м²", living: "34 м²", rooms: "2", kitchen: "14.4 м²", bathroom: "4.2 м²" }
+        ],
+        krakivskyi: [
+          { title: "Планування 1к", photos: photoPair2, building: "2", floor: "3-5", total: "45 м²", living: "24 м²", rooms: "1", kitchen: "13.8 м²", bathroom: "4.1 м²" },
+          { title: "Планування 3к", photos: photoPair1, building: "1", floor: "7-9", total: "97 м²", living: "78 м²", rooms: "3", kitchen: "15.88 м²", bathroom: "5.78 м²" }
+        ],
+        prostir: [
+          { title: "Планування 1к", photos: photoPair1, building: "1", floor: "2-3", total: "39 м²", living: "20 м²", rooms: "1", kitchen: "12.6 м²", bathroom: "3.9 м²" },
+          { title: "Планування 2к", photos: planPhoto, building: "1", floor: "4", total: "58 м²", living: "32 м²", rooms: "2", kitchen: "14.1 м²", bathroom: "4.4 м²" }
+        ],
+        wawel: [
+          { title: "Планування 2к", photos: photoPair2, building: "2", floor: "5", total: "69 м²", living: "41 м²", rooms: "2", kitchen: "16.9 м²", bathroom: "5.0 м²" },
+          { title: "Планування 3к", photos: photoPair1, building: "2", floor: "6-8", total: "112 м²", living: "84 м²", rooms: "3", kitchen: "17.2 м²", bathroom: "6.1 м²" }
+        ],
+        shepit: [
+          { title: "Планування 1к", photos: photoPair1, building: "4", floor: "1-2", total: "37 м²", living: "19 м²", rooms: "1", kitchen: "12.1 м²", bathroom: "3.8 м²" },
+          { title: "Планування 2к", photos: photoPair2, building: "4", floor: "3", total: "62 м²", living: "36 м²", rooms: "2", kitchen: "15.0 м²", bathroom: "4.6 м²" }
+        ],
+        trivium: [
+          { title: "Планування 2к", photos: planPhoto, building: "1", floor: "5", total: "64 м²", living: "37 м²", rooms: "2", kitchen: "15.6 м²", bathroom: "4.7 м²" },
+          { title: "Планування 3к", photos: photoPair2, building: "1", floor: "6", total: "90 м²", living: "70 м²", rooms: "3", kitchen: "16.4 м²", bathroom: "5.5 м²" }
+        ]
+      }
+    .ready-planning__grid
+      each projectFlats, projectKey in flats
+        each flat in projectFlats
+          .ready-planning__card(data-planning-group=projectKey class=projectKey === "dolishniy" ? "" : "is-hidden-group")
+            .ready-planning__flat
+              .ready-planning__flat-slider.swiper(data-flat-slider)
+                .swiper-wrapper
+                  each photo in flat.photos
+                    .swiper-slide
+                      img(src=photo.startsWith("/") ? photo : "/src/shared/images/ready-apartments/" + photo alt=flat.title loading="lazy")
+              if flat.photos.length > 1
+                .ready-planning__flat-nav
+                  button.ready-planning__flat-arrow.ready-planning__flat-arrow--prev(type="button" aria-label="Попереднє фото планування")
+                    +readyNavArrow()
+                  button.ready-planning__flat-arrow.ready-planning__flat-arrow--next(type="button" aria-label="Наступне фото планування")
+                    +readyNavArrow()
+            .ready-planning__specs
+              h3.ready-planning__flat-title= flat.title
+              .ready-planning__spec-list
+                .ready-planning__spec
+                  span Будинок:
+                  span= flat.building
+                .ready-planning__spec
+                  span Поверх:
+                  span= flat.floor
+                .ready-planning__spec
+                  span Загальна площа:
+                  span= flat.total
+                .ready-planning__spec
+                  span Житлова площа:
+                  span= flat.living
+                .ready-planning__spec
+                  span Кімнат:
+                  span= flat.rooms
+                .ready-planning__spec
+                  span Кухня:
+                  span= flat.kitchen
+                .ready-planning__spec
+                  span Санвузол:
+                  span= flat.bathroom
+              button.ready-planning__cta.general-btn.general-btn--dark(type="button" data-call-us-btn)
+                span Дізнатися більше
+                +readyArrow()
+
+  section.ready-benefits.container
+    .ready-benefits__card
+      .ready-benefits__intro
+        h2.ready-benefits__title Переваги нашого житла
+        .ready-benefits__text(data-benefits-text)
+          p «Житлові комплекси VAMBUD створені для людей, які шукають більше, ніж просто квартиру.»
+          button.ready-benefits__more.general-btn(type="button" data-benefits-toggle aria-expanded="false")
+            span Читати весь опис
+            +readyPlusIcon()
+          p.ready-benefits__more-text Ми проектуємо простір навколо життя мешканців: із малоповерховими будинками, комфортною щільністю, великими відстанями між секціями, озелененими дворами, місцями для відпочинку та внутрішньою інфраструктурою.
+          p.ready-benefits__more-text Наші комплекси мають власний характер, архітектурну концепцію та продумані сценарії повсякденного життя. Тут важливо не лише те, якою є квартира всередині, а й те, що ви бачите з вікна, як потрапляєте до під'їзду, де відпочиваєте, гуляєте з дітьми чи зустрічаєтеся із сусідами.
+          p.ready-benefits__more-text Проєкти VAMBUD отримують українські та міжнародні відзнаки, що підтверджує якість архітектурних, будівельних та просторових рішень серед провідних будівельних компаній України.
+      .ready-benefits__grid
+        -
+          var benefits = [
+            { icon: "icon-energy.svg", label: "Енергоефективні технології" },
+            { icon: "icon-heating.svg", label: "Індивідуальне газове опалення" },
+            { icon: "icon-finishing.svg", label: "Якісні матеріали" },
+            { icon: "icon-planning.svg", label: "Продумане планування" },
+            { icon: "icon-parking.svg", label: "Зручні паркінги" },
+            { icon: "icon-location.svg", label: "Вдале розташування" },
+            { icon: "icon-infrastructure.svg", label: "Розвинена інфраструктура" },
+            { icon: "icon-comfort.svg", label: "Комфортне середовище" },
+            { icon: "icon-territory.svg", label: "Доглянута територія" },
+            { icon: "icon-playground.svg", label: "Безпечні дитячі майданчики" }
+          ]
+        each benefit in benefits
+          .ready-benefits__item
+            img.ready-benefits__icon(src="/src/shared/images/ready-apartments/" + benefit.icon alt="" loading="lazy")
+            p.ready-benefits__label= benefit.label
+
+  section.ready-box.container
+    .ready-box__card
+      .ready-box__media
+        img(src="/src/shared/images/ready-apartments/box-room.jpg" alt="Ремонт VAMBUD box" loading="lazy")
+        .ready-box__media-gradient
+        .ready-box__media-text
+          h2.ready-box__title Що входить до готової квартири?
+          p.ready-box__lead Готові квартири VAMBUD продаються з базовим ремонтом VAMBUD box. Це якісна підготовка квартири до наступного етапу облаштування. Основні чорнові роботи вже виконані, тому ви можете швидше перейти до створення власного інтер'єру.
+      .ready-box__info
+        h3.ready-box__info-title VAMBUD box включає:
+        ul.ready-box__list
+          li Штукатурку всіх стін
+          li Теплу підлогу в мокрих зонах
+          li Напівсуху стяжку підлоги
+        p.ready-box__note Також до готових 3-кімнатних квартир у ЖК Квартал Краківський та ЖК WAWEL ви отримуєте автономну станцію з інвертором та батареєю на 5 кВт. Вона забезпечує освітлення та підтримує стабільну роботу основної побутової техніки у квартирі під час відключень електроенергії.
+        a.ready-box__cta.general-btn(href="#" data-presentation-trigger)
+          span Отримати презентацію
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M12.5205 11.7715L12.5205 12.5215L11.0205 12.5215L11.0205 6.04004L4.22852 12.832L3.16797 11.7715L9.95996 4.97949L3.47852 4.97949L3.47852 3.47949L4.22852 3.47949L11.7715 3.47852C11.9702 3.47859 12.1612 3.55774 12.3018 3.69824C12.4423 3.83879 12.5214 4.02979 12.5215 4.22852L12.5205 11.7715Z" fill="white"/>
+          </svg>
+
+  +presentationModal
+
+block footer
+  +footer
+
+block scripts
+  script(type="module" src="/src/pages/ready-apartments/ready-apartments.js")

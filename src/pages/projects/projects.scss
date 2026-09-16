@@ -1,0 +1,1548 @@
+// ==========================================================================
+// Hero
+// ==========================================================================
+
+.projects-page-hero {
+  position: relative;
+
+  height: 300px;
+  min-height: 300px;
+  overflow: hidden;
+
+  @include tablet {
+    height: 340px;
+  }
+
+  @include laptop {
+    height: vw(601);
+  }
+}
+
+.projects-page-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.projects-page-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 16, 16, 0) 0%, rgba(91, 95, 104, 0.6) 80%, $bg-color 100%);
+
+  @include laptop {
+    background: linear-gradient(180deg, rgba(15, 16, 16, 0) 0%, rgba(91, 95, 104, 0.6) 60%, $bg-color 100%);
+  }
+}
+
+.projects-page-hero__inner {
+  position: relative;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+
+  @include laptop {
+    gap: vw(12);
+  }
+}
+
+.projects-page-hero__title {
+  @include section-title;
+  color: $wc;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.projects-page-hero__subtitle {
+  @include subtitle-text;
+  color: $wc;
+  font-weight: 500;
+  margin: 0;
+  max-width: 90%;
+}
+
+// ==========================================================================
+// Toolbar (filters + calculator button)
+// ==========================================================================
+
+.projects-page {
+  position: relative;
+  z-index: 2;
+  margin-top: -24px;
+
+  @include tablet {
+    margin-top: -32px;
+  }
+
+  @include laptop {
+    margin-top: -vw(60);
+  }
+}
+
+.projects-page__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  @include tablet {
+    margin-bottom: 32px;
+    gap: 16px;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+  }
+
+  @include laptop {
+    margin-bottom: vw(40);
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+}
+
+.projects-page__filters {
+  @include project-card-filters;
+}
+
+.projects-page__filter-btn {
+  @include project-card-filter-btn;
+}
+
+
+
+// Same sweep-fill hover mechanic as the shared .general-btn (header.scss):
+// a skewed panel covers the button by default and slides out on hover,
+// with text/icon colour inverting via `color` (icons use fill="currentColor").
+.projects-page__calc-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  overflow: hidden;
+  isolation: isolate;
+  color: $wc;
+  background-color: $wc;
+
+  border-radius: 100px;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: color 0.4s ease-in-out;
+  order: -1;
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    /* Розтягуємо на всю площу */
+    border-radius: 100px;
+    /* Повторюємо радіус картки */
+
+    /* 1. Задаємо товщину нашого бордера */
+    padding: 1px;
+
+    /* 2. Малюємо сам градієнт (він буде видно тільки там, де відпрацює маска) */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.05) 40%,
+        rgba(255, 255, 255, 0.05) 60%,
+        rgba(255, 255, 255, 0.4) 100%);
+
+    /* 3. Магія маскування: вирізаємо середину, залишаючи лише padding (наш 1px бордер) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    /* Щоб рамка не перехоплювала кліки */
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2%;
+    left: -10%;
+    z-index: 0;
+    width: 120%;
+    height: 104%;
+    background-color: $accent-color;
+    transform: skew(30deg);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+  }
+
+  svg,
+  span {
+    position: relative;
+    z-index: 1;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  span {
+    @include tiny-text;
+    text-transform: none;
+  }
+
+  @include tablet {
+    padding: 10px 20px;
+    order: 2;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @include laptop {
+    padding: vw(10) vw(20);
+
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: $accent-color;
+    }
+
+    &:hover::before {
+      transform: translate3d(100%, 0, 0) skew(30deg);
+    }
+  }
+}
+
+// ==========================================================================
+// Grid + cards
+// ==========================================================================
+
+.projects-page__grid {
+  @include project-card-grid($laptop-cols: 2);
+  margin-bottom: 24px;
+
+  @include tablet {
+    margin-bottom: 32px;
+  }
+
+  @include laptop {
+    margin-bottom: vw(48);
+  }
+}
+
+.projects-page__card {
+  @include project-card(351 / 354, 728 / 650, 900 / 600);
+}
+
+.projects-page__image {
+  @include project-card-image(".projects-page__card");
+}
+
+// Pinned to the card's own top edge (not a flex sibling of .projects-page__info)
+// — the card is a column flex with justify-content: flex-end, so a normal
+// -flow sibling here would get packed down against .projects-page__info
+// instead of sitting at the top like the Figma design.
+.projects-page__top {
+  @include project-card-top($stack-on-mobile: true);
+}
+
+.projects-page__price,
+.projects-page__badge {
+  @include project-card-price-badge;
+}
+
+.projects-page__price {
+  background-color: $wc;
+  color: $text-color;
+}
+
+.projects-page__badge {
+  background-color: $accent-color;
+  color: $wc;
+  max-width: fit-content;
+
+  @include tablet {
+    max-width: calc(50% - 4px);
+  }
+}
+
+.projects-page__info {
+  @include project-card-info;
+}
+
+.projects-page__text {
+  @include project-card-text;
+}
+
+.projects-page__name {
+  @include project-card-name;
+}
+
+.projects-page__location {
+  @include project-card-location;
+}
+
+.projects-page__arrow {
+  @include project-card-arrow(".projects-page__card");
+}
+
+.projects-page__pin {
+  @include project-card-pin;
+}
+
+.projects-page__empty {
+  @include project-card-empty;
+}
+
+// .projects-page .pagination {
+//   margin-bottom: 60px;
+
+//   @include tablet {
+//     margin-bottom: 80px;
+//   }
+
+//   @include laptop {
+//     margin-bottom: vw(100);
+//   }
+// }
+
+// ==========================================================================
+// Calculator
+// ==========================================================================
+
+.projects-calculator {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 60px 0;
+
+  @include tablet {
+    padding: 90px 0;
+  }
+
+  @include laptop {
+    padding: vw(120) 0;
+  }
+}
+
+// The Figma background is a self-contained vector (soft colour blobs, no
+// photo) exported straight from the design, so it's used as-is instead of
+// hand-approximated in CSS gradients. Its softness comes from an internal
+// backdrop-filter (inside an SVG foreignObject) which only renders for
+// inline SVG in the live document — loaded here as a plain <img src>, the
+// browser rasterizes it in isolation with no backdrop to sample, so that
+// blur silently drops. Blurring it here with `filter` instead reproduces
+// the same look; scale(1.1) keeps the blurred edges from creeping past the
+// image's own box and showing a sharp/unblurred sliver at the border.
+.projects-calculator__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: blur(80px);
+  transform: scale(1.1);
+}
+
+// Figma's own "Gradient" layer: fades from opaque $bg-color at the top down
+// to transparent, softening the seam into whatever section sits above this
+// one. Kept as its own unblurred overlay (rather than relying on the one
+// baked into the .svg) so it stays crisp regardless of how strong the blob
+// background's own blur/scale above ends up being.
+.projects-calculator__gradient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, $bg-color 0%, rgba(223, 222, 225, 0) 38%);
+  pointer-events: none;
+}
+
+.projects-calculator__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  @include laptop {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: vw(40);
+  }
+}
+
+.projects-calculator__head {
+  // DOM order is icon-then-title (matches the laptop column reading order);
+  // row-reverse flips that visually to title-left/icon-right at mobile+
+  // tablet without touching the markup, matching the Figma tablet frame.
+  display: flex;
+
+  align-items: center;
+  gap: 12px;
+
+  @include tablet {
+    gap: 20px;
+  }
+
+  @include laptop {
+    flex-direction: column;
+    align-items: flex-start;
+    // justify-content: center;
+    gap: vw(20);
+  }
+}
+
+.projects-calculator__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: $wc;
+  color: $accent-color;
+  flex-shrink: 0;
+  display: none;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  @include tablet {
+    display: flex;
+    width: 60px;
+    height: 60px;
+  }
+
+  @include laptop {
+    width: vw(60);
+    height: vw(60);
+  }
+}
+
+.projects-calculator__title {
+  @include article-title;
+  color: $accent-color;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+// No overflow:hidden here — the "Тип" dropdown's popup list (below) is an
+// absolutely positioned child that needs to be able to escape this box's
+// bounds instead of getting clipped by it. .panel has no background of its
+// own (this box's own bg shows through), so its corners never need explicit
+// rounding; .result paints an opaque background and rounds its own outer
+// corners to match instead.
+.projects-calculator__box {
+  display: flex;
+  flex-direction: column;
+  background: rgba(223, 222, 225, 0.6);
+  border-radius: 24px;
+
+  @include tablet {
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: vw(40);
+    max-width: 60%;
+  }
+}
+
+.projects-calculator__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 24px;
+  padding-bottom: 40px;
+
+  @include tablet {
+    gap: 48px;
+    padding: 60px 40px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    min-width: 0;
+    gap: vw(48);
+    padding: vw(60) vw(40);
+  }
+}
+
+.projects-calculator__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: $wc;
+  border-radius: 16px;
+  padding: 10px 12px;
+  position: relative;
+
+  &:last-child {
+    margin-top: 20px;
+  }
+
+  @include tablet {
+    border-radius: 20px;
+    padding: 12px 20px;
+  }
+
+  @include laptop {
+    border-radius: vw(20);
+    padding: vw(12) vw(20);
+  }
+
+  &--slider {
+    gap: 12px;
+  }
+}
+
+.projects-calculator__field-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.projects-calculator__field-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 0 0;
+  cursor: pointer;
+}
+
+.projects-calculator__label {
+  @include general-text;
+  letter-spacing: -0.06em;
+  color: $grey-color;
+  opacity: 0.6;
+}
+
+// Shared "big value" token (Figma H5: 24px Bold, -8% tracking, 1.2 line
+// height) — flat across every breakpoint, unlike the H3 title. Defaults to
+// near-black; the Type dropdown's value is the one exception (see below).
+.projects-calculator__value {
+  @include subtitle-text;
+  color: $bc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.projects-calculator__dropdown-trigger .projects-calculator__value {
+  color: $accent-color;
+}
+
+.projects-calculator__number {
+  @include subtitle-text;
+  color: $bc;
+  border: none;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+}
+
+.projects-calculator__currency {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  background: rgba(74, 88, 102, 0.1);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.projects-calculator__currency-btn {
+  @include btn-text;
+  letter-spacing: -0.06em;
+  color: $text-color;
+  padding: 8px 12px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  @include tablet {
+    padding: 9px 20px;
+  }
+
+  &.is-active {
+    background-color: $accent-color;
+    color: $wc;
+  }
+}
+
+// Custom "Тип" dropdown — a native <select> can't be restyled to match the
+// site's dropdown look, so the trigger is a plain button and the option
+// list is a positioned, hand-styled listbox (see projects.js for the
+// open/close/select wiring and keyboard support).
+.projects-calculator__dropdown {
+  position: relative;
+}
+
+.projects-calculator__dropdown-trigger {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  &[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+}
+
+.projects-calculator__dropdown-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+  background-color: $wc;
+  border: 1px solid $accent-color-2;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(15, 16, 16, 0.16);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.projects-calculator__dropdown-option {
+  @include general-text;
+  color: $text-color;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &+& {
+    margin-top: 2px;
+  }
+
+  &.is-selected {
+    background-color: $accent-color;
+    color: $wc;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-selected):hover {
+      background-color: rgba(79, 48, 127, 0.12);
+    }
+  }
+}
+
+.projects-calculator__range {
+  appearance: none;
+  position: absolute;
+  top: calc(100% - 4px);
+  width: calc(100% - 24px);
+  height: 10px;
+  border-radius: 100px;
+  background: linear-gradient(90deg, $accent-color var(--progress, 0%), $accent-color-2 var(--progress, 0%));
+  cursor: pointer;
+
+  // Squarish accent-colour thumb (small corner radius, not a circle) with a
+  // white drag-handle icon (two facing chevrons) — baked in as a
+  // background-image since range-thumb pseudo-elements can't have regular
+  // child elements.
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    border: none;
+    background-color: $accent-color;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10' fill='none'%3E%3Cpath d='M3.6 2L1.2 5L3.6 8Z' fill='%23FFFFFF'/%3E%3Cpath d='M6.4 2L8.8 5L6.4 8Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 2px 6px rgba(15, 16, 16, 0.25);
+    cursor: grab;
+  }
+
+  &::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+    background-color: $accent-color;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10' fill='none'%3E%3Cpath d='M3.6 2L1.2 5L3.6 8Z' fill='%23FFFFFF'/%3E%3Cpath d='M6.4 2L8.8 5L6.4 8Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 2px 6px rgba(15, 16, 16, 0.25);
+    cursor: grab;
+  }
+
+  &::-moz-range-track {
+    height: 10px;
+    border-radius: 100px;
+    background: transparent;
+  }
+
+  &:active::-webkit-slider-thumb,
+  &:active::-moz-range-thumb {
+    cursor: grabbing;
+  }
+}
+
+.projects-calculator__range-ends {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include general-text;
+  letter-spacing: -0.06em;
+  color: $grey-color;
+  padding: 15px 12px;
+  pointer-events: none;
+
+  @include tablet {
+    padding: 15px 20px;
+  }
+
+  @include laptop {
+    padding: vw(12) vw(20);
+  }
+}
+
+.projects-calculator__result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  color: $wc;
+  text-align: center;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  // Only the bottom corners round here (mobile/tablet stack the panel above
+  // this) — matches .projects-calculator__box's own radius since .box no
+  // longer clips its children (see the comment there).
+  border-radius: 24px;
+  background:
+    linear-gradient(-12deg, rgba(186, 91, 255, 0.6) 1.78%, rgba(79, 48, 127, 0) 22.11%),
+    linear-gradient(163deg, rgba(186, 91, 255, 0.6) 0.74%, rgba(79, 48, 127, 0) 40.08%),
+    rgba(79, 48, 127, 0.92);
+
+  @include tablet {
+    // Result content reads left/right here instead of stacked top/bottom —
+    // matches the Figma tablet frame specifically (both mobile and laptop
+    // keep the stacked column layout).
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 40px 20px;
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    // Row layout now (panel left, result right), so only the right corners
+    // round.
+    flex-direction: column;
+    align-items: stretch;
+    width: vw(464);
+    flex-shrink: 0;
+    padding: vw(60);
+    gap: vw(20);
+    border-radius: vw(40);
+  }
+}
+
+.projects-calculator__result-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  @include tablet {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+}
+
+.projects-calculator__result-label {
+  @include btn-text;
+  letter-spacing: -0.06em;
+  color: $wc;
+  margin: 0;
+}
+
+.projects-calculator__result-value {
+  @include article-title;
+  color: $wc;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.projects-calculator__result-note {
+  @include tiny-text;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  margin: 0;
+}
+
+.projects-calculator__divider {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, #ffffff00, rgba(255, 255, 255, 0.5), #ffffff00);
+
+  @include tablet {
+    // width: 1px;
+    height: 150px;
+    width: 1px;
+    align-self: stretch;
+    background: linear-gradient(0deg, #ffffff00, rgba(255, 255, 255, 0.5), #ffffff00);
+  }
+
+  @include laptop {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #ffffff00, rgba(255, 255, 255, 0.5), #ffffff00);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: $wc;
+  }
+}
+
+.projects-calculator__result-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  @include tablet {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+
+  @include laptop {
+    gap: vw(20);
+  }
+}
+
+.projects-calculator__result-text {
+  @include btn-text;
+  letter-spacing: -0.06em;
+  color: $wc;
+  margin: 0;
+}
+
+// Same sweep-fill hover mechanic as the shared .general-btn (header.scss),
+// mirrored: this pill rests white on the purple result card, so the panel
+// sweeps IN on hover instead of receding, with text/icon flipping to white.
+.projects-calculator__cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  color: $text-color;
+  background-color: transparent;
+  border-radius: 100px;
+  padding: 18px 24px;
+  text-decoration: none;
+
+  @include tablet {
+    padding: 24px 32px;
+    min-height: 68px;
+  }
+
+  @include laptop {
+    padding: vw(24) vw(32);
+    min-height: vw(68);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2%;
+    left: -10%;
+    z-index: 0;
+    width: 120%;
+    height: 104%;
+    background-color: $wc;
+    transform: skew(30deg) translate3d(0%, 0, 0);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+  }
+
+  span,
+  svg {
+    position: relative;
+    z-index: 1;
+  }
+
+  span {
+    @include btn-text;
+    letter-spacing: -0.06em;
+    color: $text-color;
+    text-transform: none;
+    transition: color 0.4s ease-in-out;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: $wc;
+      border: 1px solid $wc;
+    }
+
+    &:hover span {
+      color: $wc;
+    }
+
+    &:hover::before {
+      transform: skew(30deg) translate3d(120%, 0, 0);
+    }
+  }
+}
+
+// ==========================================================================
+// "Шукаєте якісне житло" price tables
+// ==========================================================================
+
+.projects-tables {
+  background-color: $accent-color;
+  padding: 60px 0;
+
+  @include tablet {
+    padding: 80px 0;
+  }
+
+  @include laptop {
+    padding: vw(120) 0;
+  }
+}
+
+.projects-tables__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  @include laptop {
+    gap: vw(60);
+  }
+}
+
+.projects-tables__head {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @include laptop {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: vw(40);
+  }
+}
+
+.projects-tables__title {
+  @include article-title;
+  color: $wc;
+  margin: 0;
+  text-transform: uppercase;
+
+  @include laptop {
+    flex: 1 0 0;
+  }
+}
+
+.projects-tables__text {
+  @include general-text;
+  color: rgba(223, 222, 225, 0.85);
+  margin: 0;
+
+  // Mobile only: clamped by default, .projects-tables__more toggles it open.
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+
+  &.is-expanded {
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
+
+  @include tablet {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+  }
+}
+
+.projects-tables__more {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 20px;
+  margin-top: 4px;
+  background: none;
+  border: 1px solid rgba(223, 222, 225, 0.4);
+  border-radius: 100px;
+  transition: border-color 0.3s ease;
+
+  span:first-child {
+    @include btn-text;
+    letter-spacing: -0.06em;
+    color: $wc;
+    white-space: nowrap;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $wc;
+    }
+  }
+
+  // Tablet+ always shows the full text, so the toggle has nothing to do.
+  @include tablet {
+    display: none;
+  }
+}
+
+.projects-tables__more-icon {
+  display: flex;
+  flex-shrink: 0;
+  color: $wc;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.projects-tables__more-vbar {
+  transition: opacity 0.2s ease;
+}
+
+.projects-tables__more[aria-expanded="true"] .projects-tables__more-vbar {
+  opacity: 0;
+}
+
+.projects-tables__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+    gap: vw(20);
+  }
+}
+
+.projects-tables__card {
+  flex: 1 0 0;
+  min-width: 0;
+  background-color: $bg-color;
+  border: 1px solid rgba(223, 222, 225, 0.2);
+  border-radius: 24px;
+  padding: 20px 16px;
+
+  @include tablet {
+    border-radius: 32px;
+    padding: 24px;
+  }
+
+  @include laptop {
+    border-radius: vw(40);
+    padding: vw(32);
+  }
+}
+
+.projects-tables__card-title {
+  @include subtitle-text;
+  color: $text-color;
+  text-transform: uppercase;
+  margin: 0 0 24px;
+}
+
+.projects-tables__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(15, 16, 16, 0.1);
+
+  &--head {
+    @include tiny-text;
+    color: $text-color;
+    text-transform: uppercase;
+    opacity: 0.5;
+    border-top: none;
+    padding-bottom: 8px;
+  }
+}
+
+.projects-tables__col-project {
+  @include general-text;
+  font-weight: 700;
+  color: $text-color;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.projects-tables__col-area,
+.projects-tables__col-price {
+  @include general-text;
+  color: $text-color;
+  flex-shrink: 0;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.projects-tables__col-area {
+  width: 72px;
+
+  @include tablet {
+    width: 96px;
+  }
+}
+
+.projects-tables__col-price {
+  width: 150px;
+
+  @include tablet {
+    width: 150px;
+  }
+
+  &.is-muted {
+    opacity: 0.5;
+  }
+}
+
+.projects-tables__row--head {
+
+  .projects-tables__col-project,
+  .projects-tables__col-area,
+  .projects-tables__col-price {
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
+}
+
+// ==========================================================================
+// Additional services
+// ==========================================================================
+
+.projects-services {
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(100);
+    padding-bottom: vw(100);
+  }
+}
+
+.projects-services__title {
+  @include article-title;
+  color: $accent-color;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+.projects-services__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include tablet {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  @include laptop {
+    grid-template-columns: repeat(4, 1fr);
+    gap: vw(8);
+  }
+}
+
+// Fixed total height per breakpoint (matches Figma exactly: 460 / 564 /
+// 564) — .media below is the only flex:1 child, so revealing .desc always
+// reallocates space FROM the photo TO the text instead of growing the
+// card itself (which would otherwise leave a ragged grid row height).
+.projects-services__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 400px;
+  background-color: $wc;
+  border-radius: 20px;
+  padding: 12px 12px 24px;
+
+  @include tablet {
+    height: 564px;
+    gap: 28px;
+    padding: 20px 20px 32px;
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    height: vw(564);
+    gap: vw(28);
+    padding: vw(20) vw(20) vw(32);
+    border-radius: vw(40);
+  }
+}
+
+.projects-services__media {
+  position: relative;
+  display: block;
+  flex: 1 1 0%;
+  min-height: 0;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+
+  @include tablet {
+    border-radius: 20px;
+  }
+
+  @include laptop {
+    border-radius: vw(20);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+}
+
+@media (hover: hover) {
+  .projects-services__card:hover .projects-services__media img {
+    transform: scale(1.08);
+  }
+}
+
+.projects-services__info {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 20px;
+  width: 100%;
+
+  @include laptop {
+    gap: 0;
+  }
+}
+
+.projects-services__text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+
+  @include laptop {
+    gap: 0;
+  }
+}
+
+.projects-services__name {
+  @include subtitle-text;
+  display: block;
+  color: $accent-color;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.projects-services__desc {
+  @include general-text;
+  letter-spacing: -0.06em;
+  color: $bc;
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+// Shared expanded state — laptop hover (mouse only, no touch phantom-hover)
+// and the mobile/tablet toggle button both reveal the same thing.
+.projects-services__card.is-expanded .projects-services__desc {
+  max-height: 320px;
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  @include laptop {
+    .projects-services__card:hover {
+      .projects-services__text {
+        gap: 12px;
+      }
+
+      .projects-services__info {
+        gap: 20px;
+      }
+
+      .projects-services__desc {
+        max-height: 320px;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Mobile/tablet: always visible right under the title (no hover on touch).
+// Laptop: hidden until hover, revealed below the description together with
+// it (same max-height/opacity technique as .projects-services__desc)
+// instead of being permanently display:none.
+.projects-services__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @include laptop {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+}
+
+@media (hover: hover) {
+  @include laptop {
+    .projects-services__card:hover .projects-services__actions {
+      max-height: 40px;
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+}
+
+.projects-services__card.is-expanded .projects-services__actions {
+  @include laptop {
+    max-height: 40px;
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.projects-services__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 0;
+  gap: 10px;
+  height: 40px;
+  padding: 0 16px;
+  background: none;
+  border: 1px solid #cfcfcf;
+  border-radius: 100px;
+  cursor: pointer;
+
+  @include laptop {
+    display: none;
+  }
+}
+
+.projects-services__toggle-text {
+  @include btn-text;
+  letter-spacing: -0.06em;
+  color: $bc;
+  white-space: nowrap;
+}
+
+.projects-services__toggle-icon {
+  display: flex;
+  flex-shrink: 0;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.projects-services__toggle-vbar {
+  transition: opacity 0.2s ease;
+}
+
+.projects-services__toggle[aria-expanded="true"] .projects-services__toggle-vbar {
+  opacity: 0;
+}
+
+.projects-services__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 0;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  background-color: $accent-color;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid $accent-color;
+
+  span {
+    @include btn-text;
+    letter-spacing: -0.06em;
+    color: $wc;
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: $wc;
+    position: relative;
+    z-index: 2;
+  }
+
+  @include laptop {
+    width: fit-content;
+    flex: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Розтягуємо на всю площу */
+    border-radius: 24px;
+    /* Повторюємо радіус картки */
+
+    /* 1. Задаємо товщину нашого бордера */
+    padding: 1px;
+
+    /* 2. Малюємо сам градієнт (він буде видно тільки там, де відпрацює маска) */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.05) 40%,
+        rgba(255, 255, 255, 0.05) 60%,
+        rgba(255, 255, 255, 0.4) 100%);
+
+    /* 3. Магія маскування: вирізаємо середину, залишаючи лише padding (наш 1px бордер) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    /* Щоб рамка не перехоплювала кліки */
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2%;
+    left: 0;
+    width: 100%;
+    height: 104%;
+    background-color: $accent-color;
+
+    z-index: 1;
+
+    width: 120%;
+    left: -10%;
+    -webkit-transform: skew(30deg);
+    -ms-transform: skew(30deg);
+    transform: skew(30deg);
+    -webkit-transition: -webkit-transform .4s cubic-bezier(.3, 1, .8, 1);
+    transition: -webkit-transform .4s cubic-bezier(.3, 1, .8, 1);
+    transition: transform .4s cubic-bezier(.3, 1, .8, 1);
+    transition: transform .4s cubic-bezier(.3, 1, .8, 1), -webkit-transform .4s cubic-bezier(.3, 1, .8, 1)
+  }
+
+  @media (hover:hover) {
+    &:hover {
+      background-color: transparent;
+      border-color: $accent-color;
+
+      &::before {
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0)
+      }
+
+      span {
+        color: $accent-color;
+      }
+
+      svg path {
+        fill: $accent-color;
+        transition: fill 0.4s ease-in-out;
+      }
+    }
+  }
+}

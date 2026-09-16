@@ -1,0 +1,606 @@
+extends /../index.pug
+
+block variable
+  -
+    var title_page = 'Wawel (Вавель)'
+    var id_page = 'id-page-single-project'
+
+block meta
+  title= title_page
+  meta(name='description', content='ЖК WAWEL (Вавель) — новий житловий комплекс VAMBUD в Івано-Франківську, р-н Позитрон. Ціни, планування, характеристики, розтермінування.')
+
+block header
+  +header
+
+block content
+  mixin arrowIcon()
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M12.5205 11.7715L12.5205 12.5215L11.0205 12.5215L11.0205 6.04004L4.22852 12.832L3.16797 11.7715L9.95996 4.97949L3.47852 4.97949L3.47852 3.47949L4.22852 3.47949L11.7715 3.47852C11.9702 3.47859 12.1612 3.55774 12.3018 3.69824C12.4423 3.83879 12.5214 4.02979 12.5215 4.22852L12.5205 11.7715Z" fill="#4F307F"/>
+    </svg>
+
+  mixin plusIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M8 2V14M2 8H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round")
+
+  mixin chevronDownIcon()
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="8" viewBox="0 0 14 8" fill="none">
+      <path d="M1.24976 0C0.744466 3.59363e-05 0.289088 0.304811 0.095459 0.771484C-0.0979967 1.23851 0.00859451 1.77629 0.365967 2.13379L5.69897 7.4668C5.93337 7.70121 6.25127 7.83298 6.58276 7.83301C6.91424 7.83296 7.23217 7.7012 7.46655 7.4668L12.7996 2.13379C13.1568 1.77629 13.2645 1.23844 13.071 0.771484C12.8775 0.304612 12.4212 6.34103e-05 11.9158 0H1.24976Z" fill="currentColor"/>
+    </svg>
+
+  mixin navArrowIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none")
+      path(d="M12 5.99946C12 6.36751 11.701 6.66623 11.333 6.66645L2.27637 6.66645L6.4707 10.8608C6.73092 11.121 6.73064 11.5438 6.4707 11.8041C6.21039 12.0641 5.78858 12.0642 5.52832 11.8041L0.195313 6.47114C0.0702775 6.34612 1.20819e-06 6.17628 2.62245e-07 5.99946C0.000130409 5.82282 0.0703951 5.65269 0.195313 5.52778L5.52832 0.194773C5.7886 -0.0648427 6.21053 -0.0650054 6.4707 0.194773C6.7309 0.454998 6.73066 0.877761 6.4707 1.13813L2.27637 5.33247L11.333 5.33247C11.7008 5.33269 11.9997 5.63163 12 5.99946Z" fill="currentColor")
+
+  mixin warningIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none")
+      path(d="M12 3L22 20H2L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round")
+      path(d="M12 10V14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round")
+      circle(cx="12" cy="17" r="1" fill="currentColor")
+
+  mixin offersPlusIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M8 2.5V13.5" stroke="#0F1010" stroke-width="1.6" stroke-linecap="round").single-project-offers__toggle-vbar
+      path(d="M2.5 8H13.5" stroke="#0F1010" stroke-width="1.6" stroke-linecap="round")
+
+  mixin advantagesPlusIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M8 2.5V13.5" stroke="#0F1010" stroke-width="1.6" stroke-linecap="round").single-project-advantages__toggle-vbar
+      path(d="M2.5 8H13.5" stroke="#0F1010" stroke-width="1.6" stroke-linecap="round")
+
+  mixin calcIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none")
+      rect(x="4" y="2" width="16" height="20" rx="3" stroke="currentColor" stroke-width="1.6")
+      path(d="M7 6.5H17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round")
+      circle(cx="8" cy="11" r="1.1" fill="currentColor")
+      circle(cx="12" cy="11" r="1.1" fill="currentColor")
+      circle(cx="16" cy="11" r="1.1" fill="currentColor")
+      circle(cx="8" cy="15" r="1.1" fill="currentColor")
+      circle(cx="12" cy="15" r="1.1" fill="currentColor")
+      circle(cx="16" cy="15" r="1.1" fill="currentColor")
+      circle(cx="8" cy="18.5" r="1.1" fill="currentColor")
+      circle(cx="12" cy="18.5" r="1.1" fill="currentColor")
+      circle(cx="16" cy="18.5" r="1.1" fill="currentColor")
+
+  //- На WP ця сторінка стає шаблоном CPT "Проєкт" — увесь вміст нижче
+  //- (галерея, ціни, планування, характеристики) прив'язується до полів
+  //- конкретного ЖК. Наразі захардкоджено на прикладі "Wawel (Вавель)".
+  section.single-project-hero
+    .single-project-hero__progress
+      .single-project-hero__progress-bar
+    .single-project-hero__slider.swiper
+      .swiper-wrapper
+        -
+          var heroPhotos = [
+            { src: "/src/shared/images/single-project/hero.jpg", categories: ["exterior"] },
+            { src: "/src/shared/images/projects/wawel.jpg", categories: ["yard"] },
+            { src: "/src/shared/images/single-project/panorama.jpg", categories: [ "terrace"] },
+            { src: "/src/shared/images/single-project/parking.jpg", categories: ["interior"] },
+            { src: "/src/shared/images/single-project/commercial.jpg", categories: ["lobby"] }
+          ]
+        each photo in heroPhotos
+          .swiper-slide(data-hero-categories=photo.categories.join(" "))
+            img.single-project-hero__bg(src=photo.src alt="ЖК Wawel (Вавель)" loading="eager")
+    .single-project-hero__gradient
+    button.single-project-hero__arrow.single-project-hero__arrow--prev(type="button" data-hero-prev aria-label="Попереднє фото")
+      +navArrowIcon()
+    button.single-project-hero__arrow.single-project-hero__arrow--next(type="button" data-hero-next aria-label="Наступне фото")
+      +navArrowIcon()
+    .single-project-hero__title.container
+      +breadcrumbs([{ label: "Головна", href: "/home.html" }, { label: "Проєкти", href: "/projects.html" }, { label: "Wawel (Вавель)" }])
+      h1 Wawel (Вавель)
+    .single-project-hero__bottom.container
+      .single-project-hero__nav(role="tablist" aria-label="Категорії фото")
+        -
+          var heroCategoryDefs = [ { key: "interior", label: "Інтер'єри" }, { key: "exterior", label: "Екстер'єри" }, { key: "yard", label: "Внутрішній двір" }, { key: "lobby", label: "Лоббі" }, { key: "terrace", label: "Тераси" } ]
+          var heroCategories = heroCategoryDefs.map(function (cat) {
+            return {
+              key: cat.key,
+              label: cat.label,
+              count: heroPhotos.filter(function (photo) { return photo.categories.indexOf(cat.key) !== -1; }).length,
+            };
+          })
+        each cat, catIndex in heroCategories
+          button.single-project-hero__nav-tab(type="button" class=catIndex === 0 ? "is-active" : "" role="tab" aria-selected=catIndex === 0 ? "true" : "false" data-hero-category=cat.key)
+            span= cat.label
+            span.single-project-hero__nav-count &nbsp;(#{cat.count})
+      button.single-project-hero__scroll-btn(type="button" data-hero-scroll aria-label="Прогорнути до наступної секції")
+        svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+          path(d="M7.79492 14.2734L12.1855 9.88281L11.4785 9.17578L8.29492 12.3594L8.29492 2L7.29492 2L7.29492 12.3594L4.11133 9.17578L3.40332 9.88281L7.79492 14.2734Z" fill="currentColor")
+        svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+          path(d="M7.79492 14.2734L12.1855 9.88281L11.4785 9.17578L8.29492 12.3594L8.29492 2L7.29492 2L7.29492 12.3594L4.11133 9.17578L3.40332 9.88281L7.79492 14.2734Z" fill="currentColor")
+
+    //- Fancybox needs a real <img>/hashed asset URL, not a raw /src/... pug
+    //- path (Vite only rewrites src/href on tags it recognizes as assets —
+    //- a plain <a href> to an image is treated as a navigation link and is
+    //- left untouched, so it 404s in the production build). Each entry here
+    //- points at an on-page <img> that Vite already resolved correctly; the
+    //- href is filled in from that image's live `src` at init time.
+    .single-project-hero__gallery(hidden data-gallery)
+      each photo, index in heroPhotos
+        a(data-fancybox="single-project" data-source=".single-project-hero__slider .swiper-slide:nth-child(" + (index + 1) + ") img" data-caption="Wawel (Вавель)")
+      a(data-fancybox="single-project" data-source="[alt='Комерційні приміщення ЖК Wawel']" data-caption="Wawel (Вавель) — комерційні приміщення")
+      a(data-fancybox="single-project" data-source="[alt='Паркінг ЖК Wawel']" data-caption="Wawel (Вавель) — паркінг")
+
+  section.single-project-info#single-project-info.container
+    .single-project-info__apartments
+      .single-project-info__head
+        h2.single-project-info__title Доступна нерухомість
+        p.single-project-info__subtitle Перегляньте наші вигідні пропозиції в новобудовах VAMBUD за привабливими цінами та з гнучкими умовами придбання.
+      .single-project-info__list
+        - var apartmentRows = [ { room: "1-кімнатні", area: "27-50 м²" }, { room: "2-кімнатні", area: "45-93 м²" }, { room: "3-кімнатні", area: "77-97 м²" }, { room: "Комерційні приміщення", area: "36 м²" } ]
+        each row in apartmentRows
+          .single-project-info__row
+            span.single-project-info__room= row.room
+            span.single-project-info__area= row.area
+            button.single-project-info__row-btn.general-btn(type="button" data-call-us-btn)
+              span Дізнатись ціну
+              +arrowIcon()
+      .single-project-info__buttons
+        button.single-project-info__cta.single-project-info__cta--outline(type="button" data-call-us-btn)
+          span Отримати презентацію
+          +arrowIcon()
+        .single-project-info__buttons-row
+          button.single-project-info__cta.general-btn(type="button" data-call-us-btn)
+            span Ціна та наявність
+            +arrowIcon()
+          a.single-project-info__cta.single-project-info__cta--outline(href="tel:+380504460638")
+            span Записатись на візит
+            +arrowIcon()
+
+    .single-project-info__about
+      .single-project-info__price-card
+        .single-project-info__price-top
+          img(src="/src/shared/images/single-project/project.png", alt="project").single-project-info__badge 
+          .single-project-info__price
+            span від
+            strong 44 400
+            span грн/м²
+        a.single-project-info__price-btn(href="#single-project-infra")
+          span м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 0C10.6397 2.0995e-05 12.9775 1.66036 12.9775 4.83008C12.9775 5.49423 12.6262 6.46565 12.4502 6.86816L8 16L3.5498 6.86816C3.37382 6.46565 3.02246 5.49423 3.02246 4.83008C3.02252 1.66034 5.3603 0 8 0ZM8 2.84473C6.82187 2.84473 5.86634 3.79944 5.86621 4.97754C5.86621 6.15575 6.82179 7.11133 8 7.11133C9.17817 7.11128 10.1328 6.15572 10.1328 4.97754C10.1327 3.79947 9.17808 2.84478 8 2.84473Z" fill="#0F1010"/>
+          </svg>
+      .single-project-info__text
+        p ЖК WAWEL (ЖК ВАВЕЛЬ) – новий житловий комплекс в Івано-Франківську. Так, ви не ослухались – WAWEL! Саме він покликаний стати серцем і окрасою нашого рідного міста.
+        p Мешканці нашого комплексу тільки-но опинившись на території, одразу підсвідомо «перетинають кордон» і думають – ми в Європі. А з іншого боку, ЖК WAWEL якраз і є частинкою Європи в нашому місті. Саме тому, архітектурне рішення дуже вирізняється серед усіх новобудов. І вже встигло стати візитівкою ВАМБУД.
+        button.single-project-info__more(type="button" data-description-trigger)
+          span Читати весь опис
+          +plusIcon()
+
+  //- "Pop-up description" — same .overflow/.modal-form chrome as the site's
+  //- other modals (vacancy-modal, partner-modal); this one's content is
+  //- static (one project description), so it's just inline here rather
+  //- than its own reusable widget.
+  .overflow(data-description-modal__overflow data-lenis-prevent).hidden
+    .modal-form.description-modal(data-description-modal)
+      button.description-modal__close(type="button" data-description-modal-close aria-label="Закрити")
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M0.928711 2.34375L8.58496 10.001L0.928711 17.6592L2.34277 19.0732L9.99902 11.415L17.6562 19.0732L18.3643 18.3662L19.0713 17.6592L11.4131 10.001L19.0713 2.34375L18.3643 1.63672L17.6562 0.929688L9.99902 8.58691L2.34277 0.929688L0.928711 2.34375Z" fill="#27292B"/>
+        </svg>
+      h3.description-modal__title Wawel (Вавель)
+      .description-modal__body
+        p ЖК WAWEL (ЖК ВАВЕЛЬ) – новий житловий комплекс в Івано-Франківську. Так, ви не ослухались – WAWEL! Саме він покликаний стати серцем і окрасою нашого рідного міста.
+        p Мешканці нашого комплексу тільки-но опинившись на території, одразу підсвідомо «перетинають кордон» і думають – ми в Європі. А з іншого боку, ЖК WAWEL якраз і є частинкою Європи в нашому місті. Саме тому, архітектурне рішення дуже вирізняється серед усіх новобудов. І вже встигло стати візитівкою ВАМБУД.
+        p Мешканці нашого комплексу отримують не просто квартиру, а цілісний простір для життя — з продуманим благоустроєм двору, власною інфраструктурою та архітектурою, що вирізняє WAWEL серед інших житлових комплексів міста. Кожна деталь — від матеріалів фасаду до планування прибудинкової території — підпорядкована одній ідеї: створити середовище, у якому приємно жити.
+        p Будівництво комплексу ведеться поетапно, чергами, що дозволяє контролювати якість на кожному з етапів. Технічний нагляд, сучасні будматеріали та досвід команди VAMBUD гарантують дотримання строків здачі та відповідність проєктній документації.
+
+  //- "Ключові переваги" — same visual pattern as "Умови придбання" (photo +
+  //- bold title card slider). Placeholder photos/titles pending the real
+  //- Figma content for this specific 5-card set.
+  section.single-project-advantages.container
+    h2.single-project-advantages__title Ключові переваги
+    .single-project-advantages__slider.swiper
+      .single-project-advantages__nav
+        button.single-project-advantages__arrow.single-project-advantages__arrow--prev(type="button" data-advantages-prev aria-label="Попередня перевага")
+          +navArrowIcon()
+        button.single-project-advantages__arrow.single-project-advantages__arrow--next(type="button" data-advantages-next aria-label="Наступна перевага")
+          +navArrowIcon()
+      .swiper-wrapper
+        -
+          var advantageCards = [
+            { title: "Європейська архітектура", image: "/src/shared/images/single-project/hero.jpg", description: "Фасади у сучасному стилі loft, продумані пропорції та якісні матеріали — архітектура, яка формує впізнаваний вигляд комплексу та підвищує його цінність у майбутньому." },
+            { title: "Розстрочка від забудовника", image: "/src/shared/images/projects/dolishniy.jpg", description: "Перший внесок від 30%, фіксована ціна за м² та комфортний графік платежів до 30 місяців — без переплат за банківськими кредитами." },
+            { title: "Готовий двір та інфраструктура", image: "/src/shared/images/single-project/panorama.jpg", description: "Благоустрій здається разом з будинком: дитячі й спортивні майданчики, ландшафтний дизайн та зони відпочинку — готові з першого дня заселення." },
+            { title: "Підземний паркінг", image: "/src/shared/images/single-project/parking.jpg", description: "Власне паркомісце в підземному паркінгу комплексу — авто завжди захищене від негоди, а до під'їзду можна дістатися, не виходячи на вулицю." },
+            { title: "Клубний формат проживання", image: "/src/shared/images/projects/wawel.jpg", description: "Малоповерхова забудова, закрита прибудинкова територія та обмежена кількість мешканців — атмосфера приватності та спокою в самому серці міста." }
+          ]
+        each card in advantageCards
+          .swiper-slide.single-project-advantages__card(data-advantages-card)
+            .single-project-advantages__media
+              img(src=card.image alt=card.title loading="lazy")
+            .single-project-advantages__info
+              .single-project-advantages__text
+                p.single-project-advantages__card-title= card.title
+                p.single-project-advantages__desc= card.description
+              button.single-project-advantages__toggle(type="button" data-advantages-toggle aria-expanded="false")
+                span.single-project-advantages__toggle-text Детальніше
+                span.single-project-advantages__toggle-icon
+                  +advantagesPlusIcon()
+
+  section.single-project-characteristics#single-project-characteristics.container
+    h2.single-project-characteristics__title Характеристики
+    .single-project-characteristics__grid
+      - var characteristics = [ { icon: "sport", title: "Спортивні майданчики" }, { icon: "class-business", title: "Нерухомість бізнес класу" }, { icon: "sections", title: "21 секція" }, { icon: "lowrise", title: "Малоповерхова забудова 5-6 поверхів" }, { icon: "facade", title: "Фасади у стилі loft" }, { icon: "apartments-count", title: "349 квартир" }, { icon: "patio", title: "Квартири з власними патіо" }, { icon: "terrace", title: "Квартири з терасами на даху" }, { icon: "trees", title: "Ландшафтний дизайн двору" } ]
+      each item in characteristics
+        .single-project-characteristics__card
+          .single-project-characteristics__icon
+            img(src="/src/shared/images/single-project/icons/" + item.icon + ".svg" alt="" loading="lazy")
+          p.single-project-characteristics__card-title= item.title
+    button.single-project-characteristics__more.general-btn(type="button" data-characteristics-more)
+      span Показати більше характеристик
+      +chevronDownIcon()
+
+  section.single-project-panorama.container
+    h2.single-project-panorama__title Панорама
+    .single-project-panorama__media
+      iframe.single-project-panorama__frame(src="https://kuula.co/share/LbKkX?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1" title="Панорама двору ЖК Wawel" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen loading="lazy")
+
+  section.single-project-infra#single-project-infra
+    h2.single-project-infra__title.container Інфраструктура комплексу
+    #single-project-infra-map.single-project-infra__map
+
+  section.single-project-planning#single-project-planning.container
+    h2.single-project-planning__title Колекція квартир
+    .single-project-planning__nav(role="tablist" aria-label="Кількість кімнат")
+      button.single-project-planning__tab.is-active(type="button" data-planning-tab="1" role="tab" aria-selected="true") 1-кімнатні
+      button.single-project-planning__tab(type="button" data-planning-tab="2" role="tab" aria-selected="false") 2-кімнатні
+      button.single-project-planning__tab(type="button" data-planning-tab="3" role="tab" aria-selected="false") 3-кімнатні
+
+    -
+      var flats = {
+        "1": [
+          { title: "Планування 1к", building: "5", floor: "5-8", total: "50 м²", living: "28 м²", rooms: "1", kitchen: "15.2 м²", bathroom: "4.6 м²" },
+          { title: "Планування 1к", building: "3", floor: "2-4", total: "42 м²", living: "22 м²", rooms: "1", kitchen: "13.8 м²", bathroom: "4.1 м²" }
+        ],
+        "2": [
+          { title: "Планування 2к", building: "5", floor: "5-8", total: "93 м²", living: "56 м²", rooms: "2", kitchen: "18.4 м²", bathroom: "5.2 м²" },
+          { title: "Планування 2к", building: "3", floor: "2-4", total: "68 м²", living: "40 м²", rooms: "2", kitchen: "16.6 м²", bathroom: "4.8 м²" }
+        ],
+        "3": [
+          { title: "Планування 3к", building: "5", floor: "5-8", total: "97 м²", living: "78 м²", rooms: "3", kitchen: "15.88 м²", bathroom: "5.78 м², пральня 5.46 м², гардероб 5.76 м²" },
+          { title: "Планування 3к", building: "3", floor: "2-4", total: "84 м²", living: "62 м²", rooms: "3", kitchen: "14.5 м²", bathroom: "5.1 м²" }
+        ]
+      }
+    .single-project-planning__slider.swiper
+      .single-project-planning__nav-arrows
+        button.single-project-planning__arrow.single-project-planning__arrow--prev(type="button" data-planning-prev aria-label="Попереднє планування")
+          +navArrowIcon()
+        button.single-project-planning__arrow.single-project-planning__arrow--next(type="button" data-planning-next aria-label="Наступне планування")
+          +navArrowIcon()
+      .swiper-wrapper
+        each roomFlats, roomKey in flats
+          each flat in roomFlats
+            .swiper-slide.single-project-planning__card(data-planning-group=roomKey)
+              .single-project-planning__flat
+                //- Each unit's own mini-slider of floor-plan angles (per WP
+                //- CPT field once real photos land per unit).
+                .single-project-planning__flat-media.swiper(data-flat-slider)
+                  .swiper-wrapper
+                    - var flatPhotos = [ "/src/shared/images/single-project/floorplan-1.png", "/src/shared/images/single-project/floorplan-1.png" ]
+                    each photo in flatPhotos
+                      .swiper-slide
+                        img(src=photo alt=flat.title loading="lazy")
+                if flatPhotos.length > 1
+                  .single-project-planning__flat-nav
+                    button.single-project-planning__flat-prev(type="button" aria-label="Попереднє фото планування")
+                      +navArrowIcon()
+                    button.single-project-planning__flat-next(type="button" aria-label="Наступне фото планування")
+                      +navArrowIcon()
+              .single-project-planning__specs
+                h3.single-project-planning__flat-title= flat.title
+                .single-project-planning__spec-list
+                  .single-project-planning__spec
+                    span Будинок:
+                    span= flat.building
+                  .single-project-planning__spec
+                    span Поверх:
+                    span= flat.floor
+                  .single-project-planning__spec
+                    span Загальна площа:
+                    span= flat.total
+                  .single-project-planning__spec
+                    span Житлова площа:
+                    span= flat.living
+                  .single-project-planning__spec
+                    span Кімнат:
+                    span= flat.rooms
+                  .single-project-planning__spec
+                    span Кухня:
+                    span= flat.kitchen
+                  .single-project-planning__spec
+                    span Санвузол:
+                    span= flat.bathroom
+                button.single-project-planning__cta.general-btn.general-btn--dark(type="button" data-call-us-btn)
+                  span Дізнатися більше
+                  +arrowIcon()
+
+  section.single-project-offers.container
+    h2.single-project-offers__title Умови придбання
+    .single-project-offers__slider.swiper
+      .single-project-offers__nav
+        button.single-project-offers__arrow.single-project-offers__arrow--prev(type="button" data-offers-prev aria-label="Попередня умова")
+          +navArrowIcon()
+        button.single-project-offers__arrow.single-project-offers__arrow--next(type="button" data-offers-next aria-label="Наступна умова")
+          +navArrowIcon()
+      .swiper-wrapper
+        -
+          var purchaseCards = [
+            { title: "Оплата 100%", image: "/src/shared/images/projects/wawel.jpg", description: "Купуючи житло за умови повної оплати, ви отримуєте найнижчу вартість квадратного метра та фіксуєте найкращу ціну на ринку." },
+            { title: "Розстрочка від забудовника", image: "/src/shared/images/projects/dolishniy.jpg", description: "Перший внесок від 30%, фіксована ціна за м² та комфортний графік платежів до 30 місяців — без переплат за банківськими кредитами." },
+            { title: "Мінімальний внесок", image: "/src/shared/images/projects/krakivskyi.jpg", description: "Оформіть договір з мінімальним стартовим платежем і сплачуйте решту вартості квартири зручними частинами протягом обраного терміну." },
+            { title: "Розстрочка 50/50", image: "/src/shared/images/projects/prostir.jpg", description: "Половину вартості вносите одразу, а другу — рівними частинами до завершення будівництва, без прихованих комісій." },
+            { title: "Держпрограма «єОселя»", image: "/src/shared/images/projects/wawel.jpg", description: "Пільгове іпотечне кредитування під 3% або 7% річних з першим внеском від 20% — доступне житло за підтримки держави." }
+          ]
+        each card in purchaseCards
+          .swiper-slide.single-project-offers__card(data-offers-card)
+            .single-project-offers__media
+              img(src=card.image alt=card.title loading="lazy")
+            .single-project-offers__info
+              .single-project-offers__text
+                p.single-project-offers__card-title= card.title
+                p.single-project-offers__desc= card.description
+              .single-project-offers__actions
+                button.single-project-offers__toggle(type="button" data-offers-toggle aria-expanded="false")
+                  span.single-project-offers__toggle-text Що входить?
+                  span.single-project-offers__toggle-icon
+                    +offersPlusIcon()
+                button.single-project-offers__link.general-btn(type="button" data-call-us-btn)
+                  span Детальніше
+                  +arrowIcon()
+
+  section.single-project-calculator
+    .single-project-calculator__bg
+      img.single-project-calculator__bg-image(src="/src/shared/images/single-project/calculator-bg.svg" alt="" loading="lazy")
+    .single-project-calculator__gradient
+    .single-project-calculator__inner.container
+      .single-project-calculator__top
+        .single-project-calculator__head
+          span.single-project-calculator__icon
+            +calcIcon()
+          h2.single-project-calculator__title
+            | Калькулятор
+            br
+            | розтермінування
+
+        .single-project-calculator__box
+          .single-project-calculator__form(data-calculator-form)
+            .single-project-calculator__field
+              .single-project-calculator__field-top
+                .single-project-calculator__field-text
+                  span.single-project-calculator__label Загальна вартість
+                  input.single-project-calculator__number(type="number" min="0" step="1000" value="3000000" inputmode="numeric" data-calc-total aria-label="Загальна вартість")
+                .single-project-calculator__currency(role="group" aria-label="Валюта розрахунку")
+                  button.single-project-calculator__currency-btn(type="button" data-calc-currency="USD") $ USD
+                  button.single-project-calculator__currency-btn.is-active(type="button" data-calc-currency="UAH") ₴ ГРН
+
+            .single-project-calculator__field
+              .single-project-calculator__dropdown(data-calc-type-dropdown)
+                button.single-project-calculator__field-top.single-project-calculator__dropdown-trigger(type="button" data-calc-type-trigger aria-haspopup="listbox" aria-expanded="false")
+                  .single-project-calculator__field-text
+                    span.single-project-calculator__label Тип
+                    span.single-project-calculator__value(data-calc-type-value) Розстрочка від забудовника (до 20 років)
+                  +chevronDownIcon()
+                ul.single-project-calculator__dropdown-list(role="listbox" data-calc-type-list hidden aria-label="Тип розтермінування")
+                  li.single-project-calculator__dropdown-option.is-selected(role="option" tabindex="0" aria-selected="true" data-down-min="30" data-term-max="20") Розстрочка від забудовника (0%, до 20 років)
+                  li.single-project-calculator__dropdown-option(role="option" tabindex="0" aria-selected="false" data-down-min="10" data-term-max="3") Розстрочка з мінімальним внеском (від 10%, до 3 років)
+                  li.single-project-calculator__dropdown-option(role="option" tabindex="0" aria-selected="false" data-down-min="50" data-term-max="5") Розстрочка 50/50 (внесок 50%, до 5 років)
+                  li.single-project-calculator__dropdown-option(role="option" tabindex="0" aria-selected="false" data-down-min="0" data-term-max="20") Держпрограма «єОселя» (пільгова, до 20 років)
+
+            .single-project-calculator__field.single-project-calculator__field--slider
+              .single-project-calculator__field-text
+                span.single-project-calculator__label Перший внесок (мін. #[span(data-calc-down-min-label) 30]%)
+                span.single-project-calculator__value(data-calc-down-value) 30%
+              input.single-project-calculator__range(type="range" min="30" max="90" step="1" value="30" data-calc-down aria-label="Перший внесок")
+              .single-project-calculator__range-ends
+                span(data-calc-down-min) 0 $
+                span(data-calc-down-max) 0 $
+
+            .single-project-calculator__field.single-project-calculator__field--slider
+              .single-project-calculator__field-text
+                span.single-project-calculator__label Термін (від 2 до 20 років)
+                span.single-project-calculator__value(data-calc-term-value) 19
+              input.single-project-calculator__range(type="range" min="2" max="20" step="1" value="19" data-calc-term aria-label="Термін розтермінування")
+              .single-project-calculator__range-ends
+                span(data-calc-term-min) 2
+                span(data-calc-term-max) 20
+
+          .single-project-calculator__result
+            .single-project-calculator__result-top
+              p.single-project-calculator__result-label Щомісячний платіж
+              p.single-project-calculator__result-value(data-calc-monthly) 0 $
+              p.single-project-calculator__result-note
+                | *Розрахунок орієнтовний.
+                br
+                | Точні умови розтермінування уточнюйте у менеджера
+            span.single-project-calculator__divider
+            .single-project-calculator__result-bottom
+              p.single-project-calculator__result-text Допоможемо розібратись із розтермінуванням та підібрати зручні умови оплати.
+              button.single-project-calculator__cta(type="button" data-call-us-btn)
+                span Залишити заявку
+                +arrowIcon()
+
+      .single-project-investitions
+        .single-project-investitions__chart(data-investitions-chart)
+          - var investYears = [ { year: "2022 р.", label: "Старт продажу", price: 610 }, { year: "2023 р.", label: "Будівництво", price: 710 }, { year: "2024 р.", label: "Будівництво", price: 830 }, { year: "2025 р.", label: "Будівництво", price: 895 }, { year: "2026 р.", label: "На даний момент", price: 980 } ]
+          each col in investYears
+            .single-project-investitions__col
+              span.single-project-investitions__price= "$ " + col.price
+              .single-project-investitions__bar(data-investitions-bar=col.price)
+              .single-project-investitions__col-text
+                span.single-project-investitions__year= col.year
+                span.single-project-investitions__year-label= col.label
+        .single-project-investitions__text
+          h3 Інвестиційна привабливість
+          p Зростання вартості метрів квадратних.
+          p З моменту старту продажів #[strong вартість зросла на 108%]
+          a.single-project-investitions__cta.general-btn(href="tel:+380504460638")
+            span Інвестувати у нерухомість
+            +arrowIcon()
+
+  section.single-project-construction#single-project-construction.container
+    .single-project-construction__grid
+      .single-project-construction__filters
+        h2.single-project-construction__title Стан будівництва
+        .single-project-construction__dropdown(data-construction-dropdown="stage")
+          button.single-project-construction__field.single-project-construction__dropdown-trigger(type="button" data-construction-trigger="stage" aria-haspopup="listbox" aria-expanded="false")
+            span.single-project-construction__label Черга
+            span.single-project-construction__value(data-construction-value="stage") Секція 1, черга 2
+            +chevronDownIcon()
+          ul.single-project-construction__dropdown-list(role="listbox" hidden data-construction-list="stage" aria-label="Черга будівництва")
+            li.single-project-construction__dropdown-option.is-selected(role="option" tabindex="0" aria-selected="true" data-stage-key="s1") Секція 1, черга 2
+            li.single-project-construction__dropdown-option(role="option" tabindex="0" aria-selected="false" data-stage-key="s2") Секція 2, черга 2
+            li.single-project-construction__dropdown-option(role="option" tabindex="0" aria-selected="false" data-stage-key="s3") Секція 3, черга 3
+
+        .single-project-construction__info
+          .single-project-construction__info-row
+            span Початок будівництва:
+            span 4 кв. 2022
+          .single-project-construction__info-row
+            span Кінець будівництва:
+            span Кінець 4 кв. 2026
+          .single-project-construction__info-row
+            span Дата здачі:
+            span 1 кв. 2027
+
+        .single-project-construction__dropdown(data-construction-dropdown="period")
+          button.single-project-construction__field.single-project-construction__dropdown-trigger(type="button" data-construction-trigger="period" aria-haspopup="listbox" aria-expanded="false")
+            span.single-project-construction__label Період
+            span.single-project-construction__value(data-construction-value="period") Березень 2026
+            +chevronDownIcon()
+          ul.single-project-construction__dropdown-list(role="listbox" hidden data-construction-list="period" aria-label="Період звіту")
+            li.single-project-construction__dropdown-option.is-selected(role="option" tabindex="0" aria-selected="true" data-period-key="2026-03") Березень 2026
+            li.single-project-construction__dropdown-option(role="option" tabindex="0" aria-selected="false" data-period-key="2026-02") Лютий 2026
+            li.single-project-construction__dropdown-option(role="option" tabindex="0" aria-selected="false" data-period-key="2026-01") Січень 2026
+
+      .single-project-construction__media
+        .single-project-construction__slider.swiper
+          .swiper-wrapper
+            each n in [1, 2, 3, 4]
+              .swiper-slide
+                img(src="/src/shared/images/single-project/parking.jpg" alt="Хід будівництва — фото " + n loading="lazy")
+        .single-project-construction__slider-nav
+          button.single-project-construction__slider-arrow.single-project-construction__slider-arrow--prev(type="button" data-construction-prev aria-label="Попереднє фото")
+            +navArrowIcon()
+          span.single-project-construction__slider-counter(data-construction-counter) 1 / 4
+          button.single-project-construction__slider-arrow.single-project-construction__slider-arrow--next(type="button" data-construction-next aria-label="Наступне фото")
+            +navArrowIcon()
+
+      .single-project-construction__report(data-lenis-prevent)
+        p.single-project-construction__report-title(data-construction-report-title) Будівельний звіт: Секція 1, черга 2 — березень 2026 року
+        ul.single-project-construction__report-list(data-construction-report-list)
+          li На 100% виконані роботи з кладки цегли стін на 1-му поверсі
+          li На 100% виконано монтаж елементів нарощування балконів (Західна сторона)
+          li На 97% виконано скління вікон (Південна сторона)
+          li На 75% виконано скління вікон (Східна сторона)
+          li На 55% виконані роботи з монтажу клапанів димовидалення
+          li На 40% виконані роботи по влаштуванню мінеральної вати на фасаді (Західна сторона)
+          li На 10% виконані роботи з монтажу спринклерної системи пожежогасіння
+          li Розпочато монтаж елементів нарощування балконів (Південна сторона)
+          li Розпочаті роботи з монтажу ліфтів
+          li Розпочаті роботи з монтажу системи опалення
+
+  section.single-project-card.container
+    .single-project-card__inner
+      .single-project-card__text
+        h2 Паркінг
+        p.single-project-card__lead Площі паркінгів від 14 м²
+        p Ми врахували сучасні тенденції та потреби мешканців — просторі паркомісця з зручним заїздом та відеоспостереженням. Раціональне планування дозволяє ефективно використати кожен рівень підземного паркінгу.
+        a.single-project-card__cta.general-btn(href="#footer")
+          span Переглянути пропозиції
+          +arrowIcon()
+      img.single-project-card__media.single-project-card__media--rounded(src="/src/shared/images/single-project/parking.jpg" alt="Паркінг ЖК Wawel" loading="lazy")
+
+  section.single-project-card.single-project-card--reverse.container
+    .single-project-card__inner
+      .single-project-card__text
+        h2 Комерційна нерухомість
+        p.single-project-card__lead Площі приміщень від 36 м²
+        p Ми врахували сучасні тенденції та потреби мешканців — саме компактні комерційні приміщення у таких комплексах, як WAWEL, користуються найбільшим попитом і швидко знаходять своїх власників. Раціональні планування дозволяють ефективно використовувати кожен метр — це ідеальне рішення для кав'ярні, магазину, салону краси чи аптеки.
+        a.single-project-card__cta.general-btn(href="#footer")
+          span Переглянути пропозиції
+          +arrowIcon()
+      img.single-project-card__media(src="/src/shared/images/single-project/commercial.jpg" alt="Комерційні приміщення ЖК Wawel" loading="lazy")
+
+  section.single-project-documents#single-project-documents.container
+    h2.single-project-documents__title Документи
+    .single-project-documents__list
+      -
+        var documents = [
+          {
+            title: "Документи на земельну ділянку",
+            warning: "Зверніть увагу, в цілях безпеки, з 24.02.2022 всі посилання на Кадастрову карту України не працюють, сервіс недоступний для перегляду.",
+            tabs: [
+              { label: "Земельна ділянка", cadastre: "2610190501:09:003:0127", purpose: "(02.07 Для іншої житлової забудови)" },
+              { label: "Кадастровий номер земельної ділянки", cadastre: "2610190501:09:003:0114", purpose: "(03.15 Для будівництва та обслуговування інших будівель громадської забудови для комплексної забудови території з об'єктами соціальної сфери та житлового будівництва)" }
+            ]
+          },
+          {
+            title: "Дозвільна документація",
+            items: [
+              { cadastre: "Дозвіл на виконання будівельних робіт", purpose: "№ ІФ 115251920123 від 12.05.2022" }
+            ]
+          },
+          {
+            title: "Проєктна документація",
+            items: [
+              { cadastre: "Експертний звіт щодо проєктної документації", purpose: "затверджено ДП «Івано-Франківськдержбудекспертиза»" }
+            ]
+          }
+        ]
+      each doc, index in documents
+        .single-project-documents__item(data-doc-item class=index === 0 ? "is-open" : "")
+          button.single-project-documents__head(type="button" data-doc-trigger aria-expanded=index === 0 ? "true" : "false")
+            span.single-project-documents__head-title= doc.title
+            +chevronDownIcon()
+          .single-project-documents__body(data-doc-body)
+            if doc.tabs
+              .single-project-documents__tabs(role="tablist" data-doc-tabs)
+                each tab, tabIndex in doc.tabs
+                  button.single-project-documents__tab(type="button" role="tab" class=tabIndex === 0 ? "is-active" : "" aria-selected=tabIndex === 0 ? "true" : "false" data-doc-tab=tabIndex)= tab.label
+              if doc.warning
+                .single-project-documents__warning
+                  +warningIcon()
+                  p= doc.warning
+              each tab, tabIndex in doc.tabs
+                .single-project-documents__doc(data-doc-tab-panel=tabIndex class=tabIndex === 0 ? "" : "hidden")
+                  p.single-project-documents__doc-title= tab.cadastre
+                  p.single-project-documents__doc-purpose= tab.purpose
+                  a.single-project-documents__doc-btn(href="#")
+                    span Дивитись документ
+                    +arrowIcon()
+            else
+              each item in doc.items
+                .single-project-documents__doc
+                  p.single-project-documents__doc-title= item.cadastre
+                  p.single-project-documents__doc-purpose= item.purpose
+                  a.single-project-documents__doc-btn(href="#")
+                    span Дивитись документ
+                    +arrowIcon()
+
+  section.single-project-others.container
+    h2.single-project-others__title Інші проєкти
+    .single-project-others__slider.swiper
+      .single-project-others__nav
+        button.single-project-others__arrow.single-project-others__arrow--prev(type="button" data-others-prev aria-label="Попередній проєкт")
+          +navArrowIcon()
+        button.single-project-others__arrow.single-project-others__arrow--next(type="button" data-others-next aria-label="Наступний проєкт")
+          +navArrowIcon()
+      .swiper-wrapper
+        - var otherProjects = [ { title: "Долішній", price: "від 45 700 грн/м²", location: "м. Івано-Франківськ, р-н міського озера", image: "/src/shared/images/projects/dolishniy.jpg" }, { title: "Квартал Краківський", price: "від 42 200 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/projects/krakivskyi.jpg" }, { title: "PROSTIR (ПРОСТІР)", price: "від 45 300 грн/м²", location: "м. Івано-Франківськ, вул. Петлюри-Польова", image: "/src/shared/images/projects/prostir.jpg" } ]
+        each project in otherProjects
+          .swiper-slide.single-project-others__card
+            img.single-project-others__image(src=project.image alt=project.title loading="lazy")
+            .single-project-others__info
+              .single-project-others__text
+                h3= project.title
+                p
+                  span= project.location
+              a.single-project-others__arrow-btn(href="/projects.html")
+                +arrowIcon()
+            .single-project-others__price= project.price
+
+block footer
+  +footer()
+
+block scripts
+  script(type="module" src="/src/pages/single-project/single-project.js")

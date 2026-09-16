@@ -3,76 +3,116 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 20px;
+
+  @include tablet {
+    gap: 28px;
+  }
 
   &__utility {
     display: flex;
     align-items: center;
-    gap: 4px;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 343px;
+    gap: 20px;
+    justify-content: center;
 
     @include tablet {
-      gap: 32px;
+      gap: 40px;
     }
 
     @include laptop {
-      gap: vw(48);
+      gap: vw(40);
     }
   }
 
-  &__input {
+  &__prev,
+  &__next {
     display: flex;
-    padding: 4px 28px;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: $accent-color;
     color: $wc;
-    border-radius: 100px;
-    background: $accent-color;
-    @include general-text;
-    width: 86px;
-    pointer-events: none;
+    transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    @include tablet {
+      width: 60px;
+      height: 60px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    @include laptop {
+      width: vw(60);
+      height: vw(60);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    @media (hover: hover) {
+      &:not(:disabled):hover {
+        background-color: $wc;
+        color: $accent-color;
+      }
+    }
   }
 
   &__more {
-    @include general-text;
-    margin-top: 16px;
-    text-transform: uppercase;
-    text-decoration: underline;
-    text-underline-position: from-font;
+    @include btn-text;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: $bc;
+    // text-transform: uppercase;
 
-    @include tablet {
-      margin-top: 32px;
+    svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
     }
 
-    @include laptop {
-      margin-top: 40px;
+    &.is-full svg {
+      transform: rotate(180deg);
     }
   }
 
   .pagination-count {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+  }
 
-    &__current {
-      @include general-text;
-      padding: 12px 24px;
-      background-color: $text-color;
-      border-radius: 100px;
-      color: $accent-color;
+  .pagination-count__current,
+  .pagination-count__max {
+    @include btn-text;
+    color: $bc;
+    white-space: nowrap;
+  }
 
-      @include tablet {
-        padding: 22px 48px;
-      }
-    }
+  .pagination-count__divider {
+    display: block;
+    width: 1px;
+    height: 24px;
+    flex-shrink: 0;
+    background-color: rgba(74, 88, 102, 0.3);
 
-    &__max {
-      @include general-text;
-      color: $text-color;
-      text-wrap: nowrap;
+    @include tablet {
+      height: 32px;
     }
   }
 }

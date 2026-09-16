@@ -1,0 +1,932 @@
+// ==========================================================================
+// Hero
+// ==========================================================================
+
+.one-room-hero {
+  position: relative;
+  height: 240px;
+  min-height: 240px;
+  overflow: hidden;
+
+  @include tablet {
+    height: 340px;
+  }
+
+  @include laptop {
+    height: vw(601);
+  }
+}
+
+.one-room-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.one-room-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 16, 16, 0) 0%, rgba(91, 95, 104, 0.55) 80%, $bg-color 100%);
+}
+
+.one-room-hero__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+
+  @include laptop {
+    gap: vw(8);
+  }
+}
+
+.one-room-hero__title {
+  @include section-title;
+  color: $wc;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
+
+  @include laptop {
+    font-size: vw(100);
+  }
+}
+
+.one-room-hero__subtitle {
+  @include subtitle-text;
+  color: $wc;
+  font-weight: 500;
+  margin: 0;
+  max-width: 90%;
+  font-size: 24px;
+
+  @include laptop {
+    font-size: vw(40);
+  }
+}
+
+// ==========================================================================
+// Intro ("Різноманітність вибору" + comparison table)
+// ==========================================================================
+
+.one-room-intro {
+  position: relative;
+  overflow: hidden;
+  background-color: $accent-color;
+  padding: 60px 0;
+
+  @include tablet {
+    padding: 80px 0;
+  }
+
+  @include laptop {
+    padding: vw(120) 0;
+  }
+}
+
+// Giant faint "VAMBUD" wordmark sitting behind the content, bottom-anchored
+// — a decorative echo of the same logo used in the loader, per the Figma
+// background treatment for this section (the source file uses per-letter
+// vector assets that aren't reachable outside the design tool; plain text
+// at low opacity reproduces the same effect).
+.one-room-intro__watermark {
+  position: absolute;
+  left: 50%;
+  bottom: -15%;
+  transform: translateX(-50%);
+  z-index: 0;
+  width: 100%;
+  text-align: center;
+  color: $wc;
+  opacity: 0.1;
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  font-size: 20vw;
+  letter-spacing: -0.04em;
+
+  @include laptop {
+    font-size: vw(384);
+
+  }
+}
+
+.one-room-intro__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @include laptop {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: vw(60);
+  }
+}
+
+.one-room-intro__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+
+  @include laptop {
+    flex: 1 0 0;
+    gap: vw(40);
+  }
+}
+
+.one-room-intro__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $wc;
+  margin: 0;
+}
+
+.one-room-intro__body {
+  @include general-text;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.one-room-intro__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 24px;
+  background-color: $wc;
+  border-radius: 100px;
+  color: $bc;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+
+  @include laptop {
+    height: vw(68);
+    padding: 0 vw(32);
+  }
+
+  span {
+    @include btn-text;
+    color: $bc;
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: $bc;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.one-room-intro__table {
+  display: flex;
+  flex-direction: column;
+  background-color: $bg-color;
+  border: 1px solid rgba(223, 222, 225, 0.2);
+  border-radius: 24px;
+  padding: 20px;
+
+  @include laptop {
+    flex: 1 0 0;
+    border-radius: vw(40);
+    padding: vw(32);
+  }
+}
+
+.one-room-intro__table-title {
+  @include subtitle-text;
+  color: $bc;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+
+  @include laptop {
+    margin-bottom: vw(24);
+  }
+}
+
+.one-room-intro__table-headers,
+.one-room-intro__table-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.one-room-intro__table-headers {
+  @include tiny-text;
+  color: $bc;
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.one-room-intro__table-row {
+  @include general-text;
+  color: $bc;
+  padding: 14px 0;
+
+  @include tablet {
+    padding: 18px 0;
+  }
+}
+
+// Mobile keeps project/area as fixed-width columns so short project names
+// still line up under "Проект"/"Площа" — from tablet up the price/area
+// widths grow and project switches to flexible instead (matches the two
+// different column layouts in the Figma 375 vs 768/1920 frames).
+.one-room-intro__col-project {
+  flex-shrink: 0;
+  width: 112px;
+
+  @include tablet {
+    flex: 1 0 0;
+    width: auto;
+    min-width: 0;
+  }
+}
+
+.one-room-intro__table-row .one-room-intro__col-project {
+  font-weight: 700;
+}
+
+.one-room-intro__col-area {
+  flex-shrink: 0;
+  width: 68px;
+
+  @include tablet {
+    width: 120px;
+  }
+
+  @include laptop {
+    width: vw(140);
+  }
+}
+
+.one-room-intro__col-price {
+  flex: 1 0 0;
+  min-width: 0;
+
+  @include tablet {
+    flex: none;
+    width: 150px;
+    text-align: right;
+  }
+
+  @include laptop {
+    width: vw(200);
+  }
+
+  &.is-muted {
+    opacity: 0.5;
+  }
+}
+
+.one-room-intro__divider {
+  border: none;
+  height: 1px;
+  margin: 0;
+  background-color: rgba(15, 16, 16, 0.1);
+}
+
+// ==========================================================================
+// Projects grid + filters (same pattern as projects-page__*)
+// ==========================================================================
+
+.one-room-projects {}
+
+.one-room-projects__toolbar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  @include tablet {
+    margin-bottom: 32px;
+  }
+
+  @include laptop {
+    margin-bottom: vw(40);
+  }
+}
+
+.one-room-projects__filters {
+  @include project-card-filters;
+}
+
+.one-room-projects__filter-btn {
+  @include project-card-filter-btn;
+}
+
+.one-room-projects__filter-count {
+  @include project-card-filter-count;
+}
+
+.one-room-projects__grid {
+  @include project-card-grid($tablet-cols: 2, $laptop-cols: 2, $laptop-gap: vw(40));
+}
+
+.one-room-projects__card {
+  @include project-card(351 / 354, 364 / 400, 900 / 600, $tablet-radius: 28px, $laptop-radius: vw(40));
+}
+
+.one-room-projects__image {
+  @include project-card-image(".one-room-projects__card");
+}
+
+.one-room-projects__top {
+  @include project-card-top($stack-on-mobile: true);
+}
+
+.one-room-projects__price,
+.one-room-projects__badge {
+  @include project-card-price-badge;
+}
+
+.one-room-projects__price {
+  background-color: $wc;
+  color: $text-color;
+}
+
+.one-room-projects__badge {
+  background-color: $accent-color;
+  color: $wc;
+}
+
+.one-room-projects__info {
+  @include project-card-info;
+}
+
+.one-room-projects__text {
+  @include project-card-text;
+}
+
+.one-room-projects__name {
+  @include project-card-name;
+}
+
+.one-room-projects__location {
+  @include project-card-location;
+}
+
+.one-room-pin {
+  @include project-card-pin;
+}
+
+.one-room-projects__arrow {
+  @include project-card-arrow(".one-room-projects__card");
+}
+
+.one-room-projects__empty {
+  @include project-card-empty;
+}
+
+// ==========================================================================
+// Cards ("1-кімнатні квартири" / "Інвестиційна привабливість")
+// ==========================================================================
+
+.one-room-card {
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(100);
+    padding-bottom: vw(100);
+  }
+}
+
+.one-room-card__inner {
+  display: flex;
+  flex-direction: column;
+
+  background-color: $wc;
+  border-radius: 24px;
+  overflow: hidden;
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    border-radius: vw(40);
+  }
+}
+
+.one-room-card__media {
+  width: 100%;
+  aspect-ratio: 351 / 240;
+  object-fit: cover;
+  display: block;
+  border-radius: 24px;
+
+  @include tablet {
+    aspect-ratio: 728 / 340;
+  }
+
+  @include laptop {
+    width: vw(1180);
+    border-radius: vw(40);
+    flex-shrink: 0;
+  }
+
+  &--plan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $wc;
+    padding: 20px;
+
+    @include laptop {
+      padding: vw(40);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}
+
+.one-room-card__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: 20px;
+
+  @include tablet {
+    padding: 32px;
+  }
+
+  @include laptop {
+
+    justify-content: center;
+
+    padding: vw(60);
+  }
+
+  h2 {
+    @include article-title;
+    font-size: 28px;
+    color: $accent-color;
+    margin: 0;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+
+    @include tablet {
+      font-size: 36px;
+      margin-bottom: 28px;
+    }
+
+    @include laptop {
+      font-size: vw(60);
+      margin-bottom: vw(28);
+    }
+  }
+
+  p {
+    @include general-text;
+    color: $grey-color;
+    margin: 0;
+    margin-bottom: 20px;
+
+    @include tablet {
+      margin-bottom: 40px;
+    }
+  }
+}
+
+.one-room-card__text .one-room-card__lead {
+  @include subtitle-text;
+  font-size: 16px;
+  font-weight: 700;
+  color: $bc;
+  margin-bottom: 8px;
+
+  @include tablet {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+}
+
+.one-room-card__cta {
+  span {
+    text-transform: none;
+  }
+}
+
+// ==========================================================================
+// Benefits ("Переваги нашого житла")
+// ==========================================================================
+
+.one-room-benefits {
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.one-room-benefits__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: $wc;
+  border-radius: 24px;
+
+
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+    gap: vw(40);
+    border-radius: vw(40);
+    padding: vw(40);
+  }
+}
+
+.one-room-benefits__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 20px;
+
+  @include tablet {
+    padding: 32px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    justify-content: center;
+    padding: vw(40);
+  }
+}
+
+.one-room-benefits__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0;
+  margin-bottom: 4px;
+
+  @include tablet {
+    margin-bottom: 12px;
+  }
+
+  @include laptop {
+    margin-bottom: 20px;
+  }
+
+}
+
+.one-room-benefits__body {
+  @include general-text;
+  color: $grey-color;
+  margin: 0;
+}
+
+.one-room-benefits__cta {
+  max-width: 100%;
+
+  span {
+    text-transform: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  margin-top: 12px;
+
+  @include tablet {
+    margin-top: 26px;
+  }
+
+  @include laptop {
+    margin-top: 32px;
+  }
+}
+
+.one-room-benefits__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: $wc;
+  border-top: 1px solid $accent-color-2;
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+
+
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    border-radius: vw(40);
+    border: 1px solid $accent-color-2;
+  }
+}
+
+.one-room-benefits__card {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+
+
+  @include tablet {
+    border-bottom: 1px solid $accent-color-2;
+
+    &:nth-child(odd) {
+      border-right: 1px solid $accent-color-2;
+    }
+  }
+
+  @include laptop {
+    min-height: vw(100);
+  }
+}
+
+.one-room-benefits__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 72px;
+  height: 100%;
+  color: $accent-color;
+
+  @include laptop {
+    width: vw(100);
+  }
+
+  svg {
+    width: 32px;
+    height: 32px;
+
+    @include tablet {
+      width: 54px;
+      height: 54px;
+    }
+
+    @include laptop {
+      width: vw(54);
+      height: vw(54);
+    }
+  }
+}
+
+.one-room-benefits__card-title {
+  @include general-text;
+  font-weight: 700;
+  color: $bc;
+  margin: 0;
+  padding: 12px 16px 12px 0;
+
+  @include laptop {
+    padding: vw(12) vw(20) vw(12) 0;
+  }
+}
+
+// ==========================================================================
+// Cross-sell planning slider
+// ==========================================================================
+
+.one-room-planning {
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  @include tablet {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+    padding-bottom: vw(120);
+  }
+}
+
+.one-room-planning__title {
+  @include subtitle-text;
+  color: $bc;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 20px;
+
+  @include laptop {
+    margin-bottom: vw(40);
+  }
+}
+
+.one-room-planning__slider {
+  position: relative;
+  overflow: visible;
+
+  // Below laptop the mockup lists both plans stacked, so the disabled
+  // Swiper wrapper falls back to a plain column.
+  .swiper-wrapper {
+    flex-direction: column;
+    gap: 8px;
+
+    @include laptop {
+      flex-direction: row;
+      gap: 0;
+    }
+  }
+}
+
+.one-room-planning__nav-arrows {
+  position: absolute;
+  top: -76px;
+  right: 0;
+  z-index: 2;
+  display: none;
+  gap: 8px;
+
+  @include laptop {
+    display: flex;
+  }
+
+  @include laptop {
+    top: vw(-76);
+  }
+}
+
+.one-room-planning__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.one-room-planning__arrow--next svg {
+  transform: rotate(180deg);
+}
+
+.one-room-planning__card {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: $wc;
+  border-radius: 24px;
+
+  @include laptop {
+    border-radius: vw(40);
+    padding: vw(60);
+    gap: vw(24);
+  }
+
+  h3 {
+    @include article-title;
+
+    color: $accent-color;
+    text-transform: uppercase;
+    margin: 0;
+
+
+  }
+}
+
+.one-room-planning__content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @include tablet {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  @include laptop {
+    gap: vw(60);
+  }
+}
+
+.one-room-planning__flat {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  aspect-ratio: 327 / 273;
+  border-radius: 16px;
+  overflow: hidden;
+
+
+  @include tablet {
+    width: 60%;
+
+    aspect-ratio: 368 / 437;
+  }
+
+  @include laptop {
+    aspect-ratio: 476 / 440;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+  }
+}
+
+.one-room-planning__specs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.one-room-planning__area {
+  @include section-title;
+  font-size: 24px;
+  font-weight: 700;
+  color: $bc;
+
+  @include laptop {
+    font-size: vw(29);
+  }
+}
+
+.one-room-planning__points {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    @include general-text;
+    position: relative;
+    color: $grey-color;
+    padding-left: 16px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: $accent-color;
+      flex-shrink: 0;
+    }
+
+    &:first-child {
+      color: $bc;
+      font-weight: 700;
+    }
+  }
+}
+
+.one-room-planning__cta {
+  width: fit-content;
+  margin-top: auto;
+
+  span {
+    text-transform: none;
+  }
+}

@@ -1,0 +1,1074 @@
+@use "../../app/styles/vars.scss" as *;
+@use "../../app/styles/mixins.scss" as *;
+
+// ==========================================================================
+// Shared page tokens
+// ==========================================================================
+
+.ready-hero,
+.ready-planning,
+.ready-benefits,
+.ready-box {
+  margin-top: 60px;
+
+  @include tablet {
+    margin-top: 100px;
+  }
+
+  @include laptop {
+    margin-top: vw(100);
+  }
+}
+
+.ready-box {
+  margin-bottom: 60px;
+
+  @include tablet {
+    margin-bottom: 100px;
+  }
+
+  @include laptop {
+    margin-bottom: vw(100);
+  }
+}
+
+@mixin ready-h2 {
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0;
+  font-size: 32px;
+
+  @include tablet {
+    font-size: 48px;
+  }
+
+  @include laptop {
+    font-size: vw(60);
+  }
+}
+
+@mixin ready-body {
+  font-family: $default-font;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.03em;
+  color: $grey-color;
+  margin: 0;
+  font-size: 14px;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+@mixin ready-card-glow {
+  box-shadow: inset 0 0 40px 0 rgba(79, 48, 127, 0.1);
+}
+
+// ==========================================================================
+// Banner
+// ==========================================================================
+
+.ready-banner {
+  position: relative;
+  height: 240px;
+  min-height: 240px;
+  overflow: hidden;
+
+  @include tablet {
+    height: 340px;
+  }
+
+  @include laptop {
+    height: vw(601);
+  }
+}
+
+.ready-banner__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ready-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 3, 17, 0.48) 0% 60%, rgba(91, 95, 104, 0.7) 79.62%, $bg-color 100%);
+}
+
+.ready-banner__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+
+  @include laptop {
+    gap: vw(12);
+  }
+}
+
+.ready-banner__title {
+  font-family: $default-font;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: $wc;
+  margin: 0;
+  font-size: 32px;
+
+  @include tablet {
+    font-size: 60px;
+  }
+
+  @include laptop {
+    font-size: vw(100);
+  }
+}
+
+// ==========================================================================
+// Hero card (photo collage + area filters)
+// ==========================================================================
+
+.ready-hero {
+  // No z-index here on purpose: it used to sit above `.ready-banner` with
+  // an explicit stacking context, which is exactly the kind of ancestor
+  // Chromium's backdrop-filter can fail to see through — the laptop menu's
+  // blurred backdrop rendered as a dead no-op over this section specifically.
+  // Plain DOM order already paints this section over the banner above it
+  // (both are `position: relative` with z-index:auto), so no z-index is needed.
+  position: relative;
+  z-index: 2;
+  margin-top: -40px;
+
+  @include tablet {
+    margin-top: -60px;
+  }
+
+  @include laptop {
+    margin-top: vw(-120);
+  }
+}
+
+.ready-hero__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 12px;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 600px;
+
+  @include tablet {
+    padding: 40px 20px;
+    border-radius: 40px;
+    min-height: 860px;
+  }
+
+  @include laptop {
+    padding: vw(60) vw(40) vw(8);
+    border-radius: vw(40);
+    min-height: vw(860);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.00) 51.16%);
+  }
+}
+
+.ready-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ready-hero__top {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include laptop {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: vw(24);
+  }
+}
+
+.ready-hero__title {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: $wc;
+  text-shadow: 0 0 40px #424240;
+  margin: 0;
+  font-size: 32px;
+  text-align: center;
+
+  @include tablet {
+    font-size: 48px;
+  }
+
+  @include laptop {
+    font-size: vw(60);
+    text-align: start;
+  }
+}
+
+.ready-hero__lead {
+  flex-shrink: 0;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+
+  @include laptop {
+    border-radius: vw(40);
+    padding: vw(40);
+    width: vw(580);
+  }
+
+  p {
+    @include general-text;
+    color: $wc;
+    font-weight: 700;
+    margin: 0;
+
+    @include laptop {
+      font-size: vw(24);
+      letter-spacing: -0.08em;
+      line-height: 1.2;
+    }
+  }
+}
+
+// Below laptop, Figma splits the price pills into their own block below
+// the photo card (light pills, dark text, row layout). From laptop up
+// they move inside the card (dark glass, white text, stacked column) —
+// see the `readyAptTypes()` mixin call sites in the pug for why the
+// pills are rendered twice rather than reflowed with one shared markup.
+.ready-hero__types--inside {
+  display: none;
+
+  @include laptop {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: vw(8);
+  }
+}
+
+.ready-hero__types--outside {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+
+  @include tablet {
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  @include laptop {
+    display: none;
+  }
+
+  .ready-hero__type {
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.40);
+    padding: 12px;
+    gap: 8px;
+
+    @include tablet {
+      padding: 32px;
+      gap: 28px;
+
+    }
+  }
+}
+
+.ready-hero__type {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .ready-hero__types--inside & {
+    background-color: rgba(255, 255, 255, 0.01);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border-radius: 20px;
+    padding: 12px;
+    justify-content: center;
+
+    @include tablet {
+      gap: 28px;
+      border-radius: 40px;
+      padding: 32px 36px;
+    }
+  }
+
+  .ready-hero__types--inside & {
+    flex: 1 0 0;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: vw(28);
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: vw(40);
+    padding: vw(32) vw(36);
+  }
+}
+
+.ready-hero__type-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .ready-hero__types--outside & {
+    flex: 1 0 0;
+    min-width: 0;
+
+  }
+
+  .ready-hero__types--inside & {
+    width: 100%;
+  }
+}
+
+.ready-hero__type-rooms {
+  font-family: $default-font;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  font-size: 16px;
+
+  .ready-hero__types--outside & {
+    color: $bc;
+  }
+
+  .ready-hero__types--inside & {
+    color: $wc;
+    font-size: vw(18);
+  }
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.ready-hero__type-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  margin: 4px 0 0;
+  font-size: 32px;
+  white-space: nowrap;
+
+  .ready-hero__types--outside & {
+    color: $bc;
+  }
+
+  .ready-hero__types--inside & {
+    color: $wc;
+    letter-spacing: -0.04em;
+    font-size: vw(60);
+  }
+
+  @include tablet {
+    font-size: 48px;
+  }
+}
+
+.ready-hero__type-unit {
+  .ready-hero__types--inside & {
+    letter-spacing: -0.08em;
+  }
+}
+
+.ready-hero__type-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 10px;
+  background-color: $accent-color;
+  border: none;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+  width: fit-content;
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    /* Розтягуємо на всю площу */
+    border-radius: 100px;
+    /* Повторюємо радіус картки */
+
+    /* 1. Задаємо товщину нашого бордера */
+    padding: 1px;
+
+    /* 2. Малюємо сам градієнт (він буде видно тільки там, де відпрацює маска) */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.05) 40%,
+        rgba(255, 255, 255, 0.05) 60%,
+        rgba(255, 255, 255, 0.4) 100%);
+
+    /* 3. Магія маскування: вирізаємо середину, залишаючи лише padding (наш 1px бордер) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    /* Щоб рамка не перехоплювала кліки */
+  }
+
+  span {
+    @include btn-text;
+    color: $wc;
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .ready-hero__types--outside & {
+    height: 48px;
+    padding: 0 20px;
+
+    @include tablet {
+      height: 68px;
+      padding: 0 32px;
+    }
+  }
+
+
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $wc;
+      border-color: $accent-color;
+    }
+  }
+}
+
+// ==========================================================================
+// Planning / collection
+// ==========================================================================
+
+.ready-planning__title {
+  @include ready-h2;
+  margin-bottom: 20px;
+  text-align: center;
+
+  @include laptop {
+    margin-bottom: vw(20);
+    text-align: start;
+  }
+}
+
+.ready-planning__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 12px;
+
+  @include laptop {
+    justify-content: flex-start;
+    margin-bottom: 20px;
+  }
+}
+
+.ready-planning__tab {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  @include tiny-text;
+  color: $text-color;
+  background-color: $wc;
+  border: 1px solid $accent-color-2;
+  border-radius: 100px;
+  padding: 6px 14px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+  @include tablet {
+    padding: 10px 20px;
+  }
+
+  &.is-active {
+    background-color: $accent-color;
+    border-color: $accent-color;
+    color: $wc;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-active):hover {
+      border-color: $accent-color;
+    }
+  }
+}
+
+.ready-planning__group-title {
+  @include subtitle-text;
+  color: $text-color;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+  text-align: center;
+
+  @include tablet {
+    margin: 0 0 20px;
+  }
+
+  @include laptop {
+    margin-bottom: vw(20);
+    text-align: start;
+  }
+}
+
+.ready-planning__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ready-planning__card {
+  flex: 1 1 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 12px;
+  background-color: $wc;
+  border-radius: 24px;
+
+  &.is-hidden-group {
+    display: none;
+  }
+
+  @include tablet {
+    flex-direction: row;
+    padding: 20px;
+    gap: 32px;
+  }
+
+  @include laptop {
+    flex: 0 1 calc(50% - 4px);
+    border-radius: vw(40);
+    padding: vw(60);
+    gap: vw(60);
+  }
+}
+
+.ready-planning__flat {
+  flex-shrink: 0;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include tablet {
+    width: 55%;
+  }
+
+  @include laptop {
+    gap: vw(20);
+  }
+}
+
+.ready-planning__flat-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 0.8;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: $bg-color;
+
+  @include tablet {
+    aspect-ratio: 368 / 448;
+  }
+
+  @include laptop {
+    aspect-ratio: 476 / 368;
+  }
+
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.ready-planning__flat-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.ready-planning__flat-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.ready-planning__flat-arrow--next svg {
+  transform: rotate(180deg);
+}
+
+.ready-planning__specs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1 0 0;
+  min-width: 0;
+  padding: 0 40px;
+}
+
+.ready-planning__flat-title {
+  @include subtitle-text;
+  color: $text-color;
+  margin: 0;
+}
+
+.ready-planning__spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ready-planning__spec {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  @include general-text;
+  color: $text-color;
+  font-weight: 500;
+
+  span:first-child {
+    color: $grey-color;
+    flex: 1 0 0;
+  }
+
+  span:last-child {
+    text-align: right;
+    flex-shrink: 0;
+  }
+}
+
+.ready-planning__cta {
+  width: 100%;
+
+
+  @include tablet {
+    margin-top: 32px;
+    width: fit-content;
+  }
+
+  @include laptop {
+    margin-top: vw(32);
+  }
+
+  span {
+    text-transform: none;
+  }
+}
+
+// ==========================================================================
+// Benefits
+// ==========================================================================
+
+.ready-benefits__card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: $wc;
+  border-radius: 20px;
+  padding: 20px 12px 12px;
+
+  @include tablet {
+    gap: 40px;
+    border-radius: 40px;
+    padding: 40px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    gap: vw(64);
+    border-radius: vw(40);
+    padding: vw(60) vw(40);
+  }
+}
+
+.ready-benefits__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include tablet {
+    gap: 28px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    min-width: 0;
+    gap: vw(40);
+  }
+}
+
+.ready-benefits__title {
+  @include ready-h2;
+}
+
+.ready-benefits__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+
+  p {
+    @include ready-body;
+  }
+}
+
+// Mobile only: the three detail paragraphs stay collapsed behind the
+// button; tablet+ always shows the full text (matches the Figma "mobile"
+// frame — no equivalent collapsed state exists at larger breakpoints).
+.ready-benefits__more-text {
+  display: none;
+}
+
+.ready-benefits__more.general-btn {
+  span {
+    font-size: 12px;
+  }
+
+
+  svg path {
+    stroke: $wc;
+  }
+}
+
+.ready-benefits__text.is-expanded .ready-benefits__more-text {
+  display: block;
+}
+
+.ready-benefits__more-vbar {
+  transition: opacity 0.2s ease;
+}
+
+.ready-benefits__more[aria-expanded="true"] .ready-benefits__more-vbar {
+  opacity: 0;
+}
+
+@include tablet {
+  .ready-benefits__more {
+    display: none;
+  }
+
+  .ready-benefits__more-text {
+    display: block;
+  }
+}
+
+.ready-benefits__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+}
+
+.ready-benefits__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 12px;
+  border-radius: 20px;
+
+  @include ready-card-glow;
+
+  @include tablet {
+    gap: 40px;
+    padding: 28px 40px;
+  }
+
+  @include laptop {
+    gap: vw(40);
+    padding: vw(28) vw(40);
+  }
+}
+
+.ready-benefits__icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+
+  @include tablet {
+    width: 54px;
+    height: 54px;
+  }
+
+  @include laptop {
+    width: vw(54);
+    height: vw(54);
+  }
+}
+
+.ready-benefits__label {
+  @include general-text;
+  color: $bc;
+  font-weight: 500;
+  margin: 0;
+}
+
+// ==========================================================================
+// VAMBUD box
+// ==========================================================================
+
+.ready-box__card {
+  display: flex;
+  flex-direction: column;
+  background-color: $wc;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 8px;
+  gap: 8px;
+
+  @include tablet {
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    border-radius: vw(40);
+    padding: vw(8);
+  }
+}
+
+.ready-box__media {
+  position: relative;
+  display: flex;
+  min-height: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+
+  @include tablet {
+    min-height: 564px;
+    border-radius: 40px;
+
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    min-width: 0;
+    min-height: vw(564);
+
+    border-radius: vw(40);
+    align-items: flex-start;
+  }
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.5);
+    object-position: left;
+  }
+}
+
+.ready-box__media-gradient {
+  position: absolute;
+  inset: 0;
+
+  @include laptop {
+    background: linear-gradient(0deg, rgba(9, 10, 12, 0.75) 0%, rgba(9, 10, 12, 0) 55%);
+  }
+}
+
+.ready-box__media-text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  color: $wc;
+
+  @include tablet {
+    padding: 32px;
+    gap: 20px;
+    max-width: 380px;
+  }
+
+  @include laptop {
+    padding: vw(40);
+    gap: vw(32);
+    max-width: vw(560);
+
+  }
+}
+
+.ready-box__title {
+  @include ready-h2;
+  color: $wc;
+}
+
+.ready-box__lead {
+  @include general-text;
+  color: $wc;
+  font-weight: 500;
+  margin: 0;
+}
+
+.ready-box__info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(223, 222, 225, 0.01);
+  box-shadow: 0 0 40px 0 rgba(79, 48, 127, 0.10) inset;
+
+  @include tablet {
+    padding: 32px;
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    flex: 0 0 vw(500);
+    gap: vw(20);
+    padding: vw(40);
+    border-radius: vw(32);
+  }
+}
+
+.ready-box__info-title {
+  @include subtitle-text;
+  color: $accent-color;
+  margin: 0;
+}
+
+.ready-box__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: -12px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    @include general-text;
+    color: $grey-color;
+    font-weight: 500;
+    padding-left: 16px;
+    position: relative;
+
+    &::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: $accent-color;
+      font-weight: 700;
+    }
+  }
+}
+
+.ready-box__note {
+  @include general-text;
+  color: $grey-color;
+  font-weight: 500;
+  margin: 0;
+}
+
+.ready-box__cta.general-btn {
+  width: fit-content;
+
+  span {
+    text-transform: none;
+  }
+
+
+}

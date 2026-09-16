@@ -1,0 +1,3797 @@
+// ==========================================================================
+// Hero
+// ==========================================================================
+
+.single-project-hero {
+  position: relative;
+  height: 638px;
+  min-height: 638px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 24px;
+
+  @include tablet {
+    height: 1024px;
+    padding-bottom: 40px;
+  }
+
+  @include laptop {
+    height: vw(901);
+    padding-bottom: vw(40);
+  }
+}
+
+.single-project-hero__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.single-project-hero__progress-bar {
+  width: 100%;
+  height: 100%;
+  background-color: $accent-color;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.single-project-hero__slider {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  .swiper-wrapper,
+  .swiper-slide {
+    height: 100%;
+  }
+}
+
+.single-project-hero__bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.single-project-hero__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 16, 16, 0.15) 0%, rgba(15, 16, 16, 0.35) 60%, rgba(15, 16, 16, 0.85) 100%);
+}
+
+.single-project-hero__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  @include tablet {
+    width: 48px;
+    height: 48px;
+  }
+
+  &--prev {
+    left: 16px;
+
+    @include laptop {
+      left: vw(40);
+    }
+  }
+
+  &--next {
+    right: 16px;
+
+    @include laptop {
+      right: vw(40);
+    }
+
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.single-project-hero__title {
+  // .container's margin-left/right: auto centers a flex item along the
+  // cross axis unless it's told to take the full width itself — without
+  // this the title block drifts to the middle of the hero instead of
+  // sitting flush left.
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  @include laptop {
+    gap: vw(12);
+    margin-bottom: vw(40);
+  }
+
+  h1 {
+    @include section-title;
+    color: $wc;
+    margin: 0;
+  }
+}
+
+.single-project-hero__bottom {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.single-project-hero__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.single-project-hero__nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 100px;
+  border: 1px solid #cfcfcf;
+  background-color: $wc;
+  color: $bc;
+  font-family: $default-font;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.72px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+
+  &.is-active {
+    border-color: transparent;
+    background-color: $accent-color;
+    color: $wc;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-active):hover {
+      border-color: $accent-color;
+    }
+  }
+}
+
+.single-project-hero__nav-count {
+  opacity: 0.7;
+}
+
+.single-project-hero__scroll-btn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid $wc;
+  color: $wc;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.16);
+    transform: translateY(104%);
+    transition: transform 0.4s ease-in-out;
+  }
+
+  svg {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translate(-50%, -200%);
+    animation: single-project-hero-arrow-drop 2s infinite;
+
+    &:nth-child(2) {
+      animation-delay: 1s;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover::before {
+      transform: translateY(0);
+    }
+  }
+}
+
+@keyframes single-project-hero-arrow-drop {
+  0% {
+    transform: translate(-50%, -200%);
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  52% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
+  80% {
+    transform: translate(-50%, 80%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(-50%, 80%);
+    opacity: 0;
+  }
+}
+
+// ==========================================================================
+// Info block (apartments list + about card)
+// ==========================================================================
+
+.single-project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 40px;
+
+  @include tablet {
+    padding-top: 60px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+
+    padding-top: vw(80);
+  }
+}
+
+.single-project-info__apartments {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: $wc;
+  border-radius: 24px;
+  padding: 20px;
+
+  @include laptop {
+    flex: 1 0 0;
+    gap: vw(40);
+    border-radius: vw(40);
+    padding: vw(28);
+  }
+}
+
+.single-project-info__head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include laptop {
+    gap: vw(20);
+  }
+}
+
+.single-project-info__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0;
+  text-align: center;
+
+  @include tablet {
+    text-align: start;
+  }
+}
+
+.single-project-info__subtitle {
+  @include general-text;
+  color: $grey-color;
+  margin: 0;
+  max-width: 560px;
+  text-align: center;
+
+  @include tablet {
+    text-align: start;
+  }
+}
+
+.single-project-info__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @include laptop {
+    gap: vw(4);
+  }
+}
+
+.single-project-info__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 16px;
+  padding-top: 12px;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:not(:first-child) {
+    border-top: 1px solid $bg-color;
+  }
+
+  @include tablet {
+    justify-content: start;
+  }
+
+  @include laptop {
+    flex-wrap: nowrap;
+    padding-top: vw(4);
+  }
+}
+
+.single-project-info__room {
+  @include subtitle-text;
+  color: $text-color;
+
+
+
+  @include tablet {
+    flex: 1 0 auto;
+    min-width: 160px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+  }
+}
+
+.single-project-info__area {
+  @include subtitle-text;
+  color: $text-color;
+
+  @include tablet {
+    flex: 1 0 auto;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+  }
+}
+
+.single-project-info__row-btn {
+  height: 44px;
+  padding: 0 20px;
+
+  @include tablet {
+    margin-left: auto;
+  }
+
+  span {
+    @include tiny-text;
+    color: $wc;
+    text-transform: none;
+  }
+
+  // .general-btn's default (purple) state paints white text via its own
+  // `span` rule, but `btn-text` (below) hard-codes a dark color meant for
+  // buttons on light backgrounds — reasserted here so it doesn't blot out
+  // the white. Same for the svg: currentColor has nothing to inherit but
+  // <body>'s dark text color unless something in this chain sets it.
+  svg {
+    color: $wc;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    height: vw(68);
+    margin-left: 0;
+
+    span {
+      @include btn-text;
+      color: $wc;
+      text-transform: none;
+    }
+  }
+}
+
+.single-project-info__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+
+  @include laptop {
+    gap: vw(4);
+  }
+}
+
+.single-project-info__buttons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  @include tablet {
+    flex-wrap: nowrap;
+    gap: vw(4);
+
+    >* {
+      flex: 1 0 0;
+    }
+  }
+}
+
+.single-project-info__cta {
+  width: 100%;
+
+  @include tablet {}
+
+  span {
+    text-transform: none;
+  }
+
+  // .general-btn's default (purple) state: text is white via its own
+  // `span` rule, but nothing sets `color` on the button itself for the
+  // arrow icon's `currentColor` to pick up, so it falls back to <body>'s
+  // dark text color unless reasserted here.
+  &.general-btn svg {
+    color: $wc;
+  }
+
+  &--outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 48px;
+    padding: 0 20px;
+    background-color: $wc;
+    border-radius: 100px;
+    border: 1px solid $bg-color;
+    color: $text-color;
+    text-decoration: none;
+    transition: border-color 0.3s ease;
+
+    @include tablet {
+      height: 68px;
+      padding: 0 32px;
+    }
+
+    @include laptop {
+      height: auto;
+      padding: vw(21) vw(32);
+    }
+
+    span {
+      @include btn-text;
+      color: $text-color;
+    }
+
+    svg {
+      flex-shrink: 0;
+      color: $text-color;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        border-color: $accent-color;
+      }
+    }
+  }
+}
+
+.single-project-info__about {
+  // `display: contents` flattens this wrapper on mobile/tablet so its
+  // children (price-card, text) become flex items of .single-project-info
+  // itself, alongside .single-project-info__apartments — letting
+  // price-card's `order: -1` below place it before .apartments too, giving
+  // price-card -> apartments -> text. Laptop reverts to a real grid box.
+  display: contents;
+
+  @include laptop {
+    // Grid, not flex: .single-project-info is already `align-items: stretch`
+    // at this breakpoint, so this column matches .single-project-info__apartments'
+    // height — but a flex-column's children stay content-sized, leaving dead
+    // space below .single-project-info__text. A two-row grid (matching the
+    // 1:1 split in the design) makes both cards actually fill that height.
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    flex: 1 0 0;
+    row-gap: 8px;
+  }
+}
+
+.single-project-info__price-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px 12px;
+  background-color: $wc;
+  border-radius: 24px;
+  order: -1;
+
+  @include laptop {
+
+    gap: vw(40);
+    border-radius: vw(40);
+    padding: vw(28);
+    justify-content: space-between;
+    min-height: 0;
+  }
+}
+
+.single-project-info__price-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+
+  @include tablet {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @include laptop {
+    gap: vw(20);
+  }
+}
+
+.single-project-info__badge {
+  @include laptop {
+    max-width: vw(400);
+    max-height: vw(200);
+  }
+}
+
+.single-project-info__price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  color: $text-color;
+  width: 100%;
+
+  span {
+    @include general-text;
+    color: $text-color;
+    font-weight: 700;
+  }
+
+  strong {
+    @include article-title;
+    color: $accent-color;
+  }
+}
+
+.single-project-info__price-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+
+  padding: 8px 24px;
+  background-color: $wc;
+  border: 1px solid $bg-color;
+  border-radius: 100px;
+  color: $bc;
+  text-decoration: none;
+  transition: border-color 0.3s ease;
+
+  @include laptop {
+    height: vw(68);
+    padding: 0 vw(32);
+    margin-top: auto;
+  }
+
+  span {
+    @include btn-text;
+    color: $bc;
+    text-transform: none;
+    white-space: normal;
+    text-align: center;
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: $bc;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $accent-color;
+    }
+  }
+}
+
+.single-project-info__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background-color: $wc;
+  border-radius: 24px;
+
+  @include laptop {
+    gap: vw(28);
+    padding: vw(28);
+    border-radius: vw(40);
+    min-height: 0;
+  }
+
+  p {
+    @include general-text;
+    color: $text-color;
+    margin: 0;
+  }
+}
+
+.single-project-info__more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  height: 48px;
+  padding: 0 20px;
+  background-color: $wc;
+  border: 1px solid $accent-color;
+  border-radius: 100px;
+  color: $text-color;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+
+  @include tablet {
+    height: 68px;
+    padding: 0 32px;
+  }
+
+  @include laptop {
+    background-color: $wc;
+    border: 1px solid $bg-color;
+    height: auto;
+    padding: vw(21) vw(32);
+  }
+
+  span {
+    @include btn-text;
+    color: $text-color;
+    text-transform: none;
+
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: $text-color;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $accent-color;
+    }
+  }
+}
+
+// ==========================================================================
+// Description popup ("Читати весь опис")
+// ==========================================================================
+
+.description-modal {
+  position: absolute;
+  padding: 24px;
+  gap: 16px;
+
+  @include laptop {
+    max-width: vw(760);
+    padding: vw(48);
+    gap: vw(20);
+    border-radius: vw(40);
+  }
+}
+
+.description-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: $bg-color;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $accent-color-2;
+    }
+  }
+}
+
+.description-modal__title {
+  @include subtitle-text;
+  color: $accent-color;
+  text-transform: uppercase;
+  margin: 0;
+  padding-right: 40px;
+}
+
+.description-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 60vh;
+  overflow-y: auto;
+
+  @include laptop {
+    gap: vw(16);
+  }
+
+  p {
+    @include general-text;
+    color: $text-color;
+    margin: 0;
+  }
+}
+
+// ==========================================================================
+// Advantages (Ключові переваги) — same card pattern as Offers below
+// ==========================================================================
+
+.single-project-advantages {
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.single-project-advantages__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0 0 20px;
+  text-align: center;
+
+  @include tablet {
+    text-align: start;
+  }
+
+  @include laptop {
+    margin-bottom: vw(20);
+  }
+}
+
+.single-project-advantages__slider {
+  position: relative;
+
+  @include tablet {
+    overflow: visible;
+  }
+}
+
+// Mobile/tablet: arrows sit at the sides of the slider, vertically centered
+// (same pattern as .single-project-planning__nav-arrows). Laptop keeps the
+// original pair-above-the-slider layout.
+.single-project-advantages__nav {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+
+  @include laptop {
+    inset: auto;
+    top: vw(-76);
+    right: 0;
+    display: flex;
+    gap: 8px;
+    pointer-events: auto;
+  }
+}
+
+.single-project-advantages__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  &--prev {
+    left: 0;
+  }
+
+  &--next {
+    right: 0;
+
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  @include laptop {
+    position: static;
+    transform: none;
+  }
+}
+
+// Fixed total height per breakpoint (same technique as
+// .single-project-offers__card / the Projects page's .projects-services__card)
+// — .media below is the only flex:1 child, so revealing .desc/.toggle always
+// reallocates space FROM the photo TO the text instead of growing the card
+// itself (which would otherwise change the swiper slide height).
+.single-project-advantages__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 460px;
+  padding: 12px 12px 24px;
+  background-color: $wc;
+  border-radius: 20px;
+
+  @include tablet {
+    height: 564px;
+    gap: 28px;
+    padding: 20px 20px 32px;
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    height: vw(564);
+    gap: vw(28);
+    padding: vw(20) vw(20) vw(32);
+    border-radius: vw(40);
+  }
+}
+
+.single-project-advantages__media {
+  position: relative;
+  display: block;
+  flex: 1 1 0%;
+  min-height: 0;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+
+  @include tablet {
+    border-radius: 20px;
+  }
+
+  @include laptop {
+    border-radius: vw(20);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.single-project-advantages__info {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 20px;
+  width: 100%;
+
+  @include laptop {
+    gap: 0;
+  }
+}
+
+.single-project-advantages__text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+
+  @include laptop {
+    gap: 0;
+  }
+}
+
+.single-project-advantages__card-title {
+  @include subtitle-text;
+  color: $accent-color;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.single-project-advantages__desc {
+  @include general-text;
+  color: $bc;
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+// Shared expanded state — laptop hover (mouse only, no touch phantom-hover)
+// and the mobile/tablet toggle button both reveal the same thing.
+.single-project-advantages__card.is-expanded .single-project-advantages__desc {
+  max-height: 320px;
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  @include laptop {
+    .single-project-advantages__card:hover {
+      .single-project-advantages__text {
+        gap: 12px;
+      }
+
+      .single-project-advantages__info {
+        gap: 20px;
+      }
+
+      .single-project-advantages__desc {
+        max-height: 320px;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Mobile/tablet: always visible right under the title (no hover on touch).
+// Laptop: no button at all — the Figma "1920 Hover" state has none, so the
+// image itself just shrinks to reveal the description on hover.
+.single-project-advantages__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  gap: 10px;
+  height: 40px;
+  padding: 0 20px;
+  background: none;
+  border: 1px solid #cfcfcf;
+  border-radius: 100px;
+  cursor: pointer;
+
+  @include laptop {
+    display: none;
+  }
+}
+
+.single-project-advantages__toggle-text {
+  @include btn-text;
+  color: $bc;
+  white-space: nowrap;
+}
+
+.single-project-advantages__toggle-icon {
+  display: flex;
+  flex-shrink: 0;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.single-project-advantages__toggle-vbar {
+  transition: opacity 0.2s ease;
+}
+
+.single-project-advantages__toggle[aria-expanded="true"] .single-project-advantages__toggle-vbar {
+  opacity: 0;
+}
+
+// ==========================================================================
+// Characteristics
+// ==========================================================================
+
+.single-project-characteristics {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    gap: vw(20);
+    padding-top: vw(120);
+  }
+}
+
+.single-project-characteristics__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  text-align: center;
+  margin: 0;
+  align-self: flex-start;
+  width: 100%;
+  text-align: center;
+
+  @include tablet {
+    text-align: start;
+  }
+}
+
+.single-project-characteristics__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  background-color: $wc;
+  border-radius: 24px;
+  overflow: hidden;
+
+  @include tablet {
+    // grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include laptop {
+    grid-template-columns: repeat(3, 1fr);
+    border-radius: vw(40);
+  }
+}
+
+.single-project-characteristics__card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  // border-bottom: 1px solid $accent-color-2;
+
+
+  @include laptop {
+    padding: vw(20);
+    border-bottom: 1px solid $accent-color-2;
+    border-right: 1px solid $accent-color-2;
+  }
+}
+
+.single-project-characteristics__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+
+  img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+}
+
+.single-project-characteristics__card-title {
+  @include subtitle-text;
+  font-size: 16px;
+  color: $text-color;
+  margin: 0;
+
+  @include tablet {
+    font-size: 18px;
+  }
+
+  @include laptop {
+    font-size: vw(18);
+  }
+}
+
+.single-project-characteristics__more {
+  span {
+    text-transform: none;
+
+  }
+
+  svg {
+    color: $wc;
+    transition: transform 0.3s ease;
+  }
+
+  &.is-open svg {
+    transform: rotate(180deg);
+  }
+}
+
+// ==========================================================================
+// Planning (Колекція квартир)
+// ==========================================================================
+
+.single-project-planning {
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.single-project-planning__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0 0 20px;
+  text-align: center;
+
+
+
+  @include laptop {
+    margin-bottom: vw(20);
+    text-align: start;
+  }
+}
+
+.single-project-planning__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 20px;
+
+  @include laptop {
+    justify-content: flex-start;
+    margin-bottom: vw(24);
+  }
+}
+
+.single-project-planning__tab {
+  @include btn-text;
+  color: $text-color;
+  background-color: $wc;
+  border: 1px solid $accent-color-2;
+  border-radius: 100px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+  &.is-active {
+    background-color: $accent-color;
+    border-color: $accent-color;
+    color: $wc;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-active):hover {
+      border-color: $accent-color;
+    }
+  }
+}
+
+.single-project-planning__slider {
+  position: relative;
+  overflow: visible;
+}
+
+// Unlike the other sliders on this page (arrows paired above the slider),
+// this one's arrows sit at the sides of the cards, vertically centered on
+// the slider — each positions itself independently rather than as a pair.
+.single-project-planning__nav-arrows {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.single-project-planning__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(50%);
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  @include tablet {
+    transform: translateY(-50%);
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.single-project-planning__arrow--prev {
+  left: 0;
+}
+
+.single-project-planning__arrow--next {
+  right: 0;
+
+  svg {
+    transform: rotate(180deg);
+  }
+}
+
+.single-project-planning__card {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+  background-color: $wc;
+  border-radius: 24px;
+
+  @include tablet {
+    flex-direction: row;
+    padding: 32px;
+    gap: 32px;
+  }
+
+  @include laptop {
+    border-radius: vw(40);
+    padding: vw(60);
+    gap: vw(60);
+  }
+}
+
+.single-project-planning__flat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+
+  @include tablet {
+    flex: 1 0 0;
+    gap: 20px;
+  }
+}
+
+.single-project-planning__flat-media {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: $bg-color;
+
+  @include tablet {
+    height: 320px;
+  }
+
+  @include laptop {
+    height: vw(368);
+  }
+
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+  }
+}
+
+.single-project-planning__flat-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 4px;
+}
+
+.single-project-planning__flat-prev,
+.single-project-planning__flat-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  // background-color: $accent-color;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  @include tablet {
+    background-color: $accent-color;
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.single-project-planning__flat-next svg {
+  transform: rotate(180deg);
+
+
+
+}
+
+.single-project-planning__flat-prev svg path,
+.single-project-planning__flat-next svg path {
+  @media screen and (max-width: 768px) {
+    fill: $bc;
+  }
+}
+
+
+
+.single-project-planning__specs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  min-width: 0;
+
+  @include tablet {
+    flex: 0 0 240px;
+  }
+
+  @include laptop {
+    flex: 0 0 vw(260);
+    gap: vw(32);
+  }
+}
+
+.single-project-planning__flat-title {
+  font-family: $default-font;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.08em;
+  color: $text-color;
+  margin: 0;
+  padding: 0 40px;
+
+  @include tablet {
+    padding: 0;
+    font-size: 24px;
+  }
+}
+
+.single-project-planning__spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 40px;
+
+  @include tablet {
+    padding: 0;
+  }
+}
+
+.single-project-planning__spec {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  @include general-text;
+  color: $text-color;
+
+  span:first-child {
+    flex: 1 0 0;
+  }
+
+  span:last-child {
+    flex-shrink: 0;
+  }
+}
+
+.single-project-planning__cta {
+  width: 100%;
+  margin-top: auto;
+
+  @include tablet {
+    width: fit-content;
+  }
+
+  svg path {
+    fill: $wc;
+  }
+
+  span {
+    text-transform: none;
+  }
+}
+
+.single-project-planning__card.swiper-slide-hidden-group {
+  display: none;
+}
+
+// ==========================================================================
+// Panorama
+// ==========================================================================
+
+.single-project-panorama {
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.single-project-panorama__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0 0 20px;
+  text-align: center;
+
+  @include tablet {
+    text-align: start;
+  }
+
+  @include laptop {
+    margin-bottom: vw(20);
+  }
+}
+
+.single-project-panorama__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 351 / 540;
+  border-radius: 20px;
+  overflow: hidden;
+
+  @include tablet {
+    aspect-ratio: 728 / 700;
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    aspect-ratio: 1840 / 700;
+    border-radius: vw(40);
+  }
+}
+
+.single-project-panorama__frame {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
+}
+
+// ==========================================================================
+// Infrastructure
+// ==========================================================================
+
+.single-project-infra {
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.single-project-infra__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0 0 20px;
+  text-align: center;
+
+  @include tablet {
+    padding: 0 40px;
+  }
+
+  @include laptop {
+    padding: 0;
+    text-align: start;
+    margin-bottom: vw(20);
+  }
+}
+
+.single-project-infra__map {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: $accent-color-2;
+
+  // MapboxBlock's own CSS hardcodes the map + its filter/zoom controls to
+  // 80vh/80svh (it was built as a full-height hero embed for location.html).
+  // Force it to fill this smaller, page-embedded container instead —
+  // otherwise the filter and "unlock zoom" buttons, anchored to the bottom
+  // of that internal 80vh box, render below our clipped viewport and are
+  // never visible.
+  .mapbox-block {
+    padding: 0;
+  }
+
+  .mapbox-block__map-container,
+  .mapbox-block__map {
+    height: 100%;
+    min-height: 0;
+  }
+
+  @include tablet {
+    height: 620px;
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    height: vw(660);
+    border-radius: vw(40);
+  }
+}
+
+// ==========================================================================
+// Offers (Умови придбання)
+// ==========================================================================
+
+.single-project-offers {
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.single-project-offers__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0 0 20px;
+  text-align: center;
+
+  @include laptop {
+    margin-bottom: vw(20);
+    text-align: start;
+  }
+}
+
+.single-project-offers__slider {
+  position: relative;
+
+  @include tablet {
+    overflow: visible;
+  }
+
+}
+
+// Mobile/tablet: arrows sit at the sides of the slider, vertically centered
+// (same pattern as .single-project-planning__nav-arrows). Laptop keeps the
+// original pair-above-the-slider layout.
+.single-project-offers__nav {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+
+  @include laptop {
+    inset: auto;
+    top: vw(-76);
+    right: 0;
+    display: flex;
+    gap: 8px;
+    pointer-events: auto;
+  }
+}
+
+.single-project-offers__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  &--prev {
+    left: 0;
+  }
+
+  &--next {
+    right: 0;
+
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  @include laptop {
+    position: static;
+    transform: none;
+  }
+}
+
+// Fixed total height per breakpoint (same technique as the Projects page's
+// .projects-services__card) — .media below is the only flex:1 child, so
+// revealing .desc/.actions always reallocates space FROM the photo TO the
+// text instead of growing the card itself (which would otherwise change the
+// swiper slide height).
+.single-project-offers__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 400px;
+  padding: 12px 12px 24px;
+  background-color: $wc;
+  border-radius: 20px;
+
+  @include tablet {
+    height: 564px;
+    gap: 28px;
+    padding: 20px 20px 32px;
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    height: vw(564);
+    gap: vw(28);
+    padding: vw(20) vw(20) vw(32);
+    border-radius: vw(40);
+  }
+}
+
+.single-project-offers__media {
+  position: relative;
+  display: block;
+  flex: 1 1 0%;
+  min-height: 0;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+
+  @include tablet {
+    border-radius: 20px;
+  }
+
+  @include laptop {
+    border-radius: vw(20);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.single-project-offers__info {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 20px;
+  width: 100%;
+
+  @include laptop {
+    gap: 0;
+  }
+}
+
+.single-project-offers__text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+
+  @include laptop {
+    gap: 0;
+  }
+}
+
+.single-project-offers__card-title {
+  @include subtitle-text;
+  color: $accent-color;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.single-project-offers__desc {
+  @include general-text;
+  color: $text-color;
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+// Shared expanded state — laptop hover (mouse only, no touch phantom-hover)
+// and the mobile/tablet toggle button both reveal the same thing.
+.single-project-offers__card.is-expanded .single-project-offers__desc {
+  max-height: 320px;
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  @include laptop {
+    .single-project-offers__card:hover {
+      .single-project-offers__text {
+        gap: 12px;
+      }
+
+      .single-project-offers__info {
+        gap: 20px;
+      }
+
+      .single-project-offers__desc {
+        max-height: 320px;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Mobile/tablet: always visible right under the title (no hover on touch).
+// Laptop: hidden until hover, revealed below the description together with
+// it (same max-height/opacity technique as .single-project-offers__desc)
+// instead of being permanently display:none.
+.single-project-offers__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @include laptop {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+}
+
+@media (hover: hover) {
+  @include laptop {
+    .single-project-offers__card:hover .single-project-offers__actions {
+      max-height: 68px;
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+}
+
+.single-project-offers__card.is-expanded .single-project-offers__actions {
+  @include laptop {
+    max-height: 68px;
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.single-project-offers__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 0;
+  gap: 10px;
+  height: 48px;
+  padding: 0 20px;
+  background: none;
+  border: 1px solid #cfcfcf;
+  border-radius: 100px;
+  cursor: pointer;
+
+  @include laptop {
+    display: none;
+  }
+}
+
+.single-project-offers__toggle-text {
+  @include btn-text;
+  color: $bc;
+  white-space: nowrap;
+}
+
+.single-project-offers__toggle-icon {
+  display: flex;
+  flex-shrink: 0;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.single-project-offers__toggle-vbar {
+  transition: opacity 0.2s ease;
+}
+
+.single-project-offers__toggle[aria-expanded="true"] .single-project-offers__toggle-vbar {
+  opacity: 0;
+}
+
+.single-project-offers__link {
+  flex: 1 0 0;
+
+  span {
+    text-transform: none;
+  }
+
+  svg path {
+    fill: $wc;
+  }
+
+  // .general-btn bumps to a 68px/wider-padding variant at tablet, meant for
+  // buttons that are the only CTA in view — here it sits right next to the
+  // 48px toggle, so pin it back to that height until laptop's hover reveal.
+  &.general-btn {
+    @include tablet {
+      height: 48px;
+      padding: 0 20px;
+    }
+  }
+
+  @include laptop {
+    flex: none;
+    width: fit-content;
+  }
+}
+
+// ==========================================================================
+// Calculator (identical mechanics to the Projects listing page's calculator)
+// ==========================================================================
+
+.single-project-calculator {
+  position: relative;
+  overflow: hidden;
+  padding-top: 60px;
+  isolation: isolate;
+
+
+  @include tablet {
+    padding-top: 100px;
+
+  }
+
+  @include laptop {
+    padding-top: vw(100);
+  }
+}
+
+.single-project-calculator__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  overflow: hidden;
+}
+
+.single-project-calculator__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  // Scaled up so the blur's soft edges never reveal the sharp source
+  // photo's boundary inside the section.
+  transform: scale(1.15);
+  filter: blur(30px);
+
+  @include laptop {
+    filter: blur(vw(50));
+  }
+}
+
+// Single top-and-bottom vignette: dark at both edges, clearer through the
+// middle where the calculator card sits.
+.single-project-calculator__gradient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, $bg-color 0%, rgba(150, 120, 180, 0) 30% 100%, $bg-color 100%);
+}
+
+.single-project-calculator__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  @include laptop {
+    gap: vw(40);
+  }
+}
+
+.single-project-calculator__top {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @include laptop {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: vw(40);
+  }
+}
+
+.single-project-calculator__head {
+  display: flex;
+
+  align-items: center;
+  gap: 12px;
+
+  @include tablet {
+
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+
+  @include laptop {
+    flex-direction: column;
+    align-items: center;
+    flex: 1 0 0;
+    gap: vw(20);
+  }
+}
+
+.single-project-calculator__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: $wc;
+  color: $accent-color;
+  flex-shrink: 0;
+  display: none;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  @include tablet {
+    display: flex;
+  }
+
+  @include laptop {
+    width: vw(60);
+    height: vw(60);
+  }
+}
+
+.single-project-calculator__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+
+  @include tablet {
+    width: auto;
+    text-align: start;
+  }
+}
+
+.single-project-calculator__box {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  background: rgba(223, 222, 225, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 20px 12px;
+
+  @include tablet {
+    border-radius: 32px;
+    padding: 24px;
+
+  }
+
+  @include laptop {
+    width: vw(1000);
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    background: rgba(223, 222, 225, 0.6);
+    border-radius: vw(40);
+    padding: 0;
+  }
+}
+
+.single-project-calculator__form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  flex: 1 0 0;
+  min-width: 0;
+
+  @include tablet {
+    gap: 48px;
+  }
+
+  @include laptop {
+    gap: vw(48);
+    padding: vw(60) vw(40);
+  }
+}
+
+.single-project-calculator__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: $wc;
+  border-radius: 16px;
+  padding: 10px 12px;
+  position: relative;
+
+  @include tablet {
+    padding: 12px 20px;
+  }
+
+  @include laptop {
+    border-radius: vw(20);
+    padding: vw(12) vw(20);
+  }
+
+  &--slider {
+    gap: 12px;
+  }
+
+  &:last-child {
+    margin-top: 20px;
+  }
+}
+
+.single-project-calculator__field-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.single-project-calculator__field-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 0 0;
+  cursor: pointer;
+}
+
+.single-project-calculator__label {
+  @include general-text;
+  color: $grey-color;
+  opacity: 0.7;
+}
+
+.single-project-calculator__value {
+  @include subtitle-text;
+  color: $accent-color;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.single-project-calculator__number {
+  @include subtitle-text;
+  color: $text-color;
+  border: none;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+}
+
+.single-project-calculator__currency {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  background: rgba(74, 88, 102, 0.1);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.single-project-calculator__currency-btn {
+  @include btn-text;
+  color: $text-color;
+  padding: 8px 12px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  @include tablet {
+    padding: 9px 20px;
+  }
+
+  &.is-active {
+    background-color: $accent-color;
+    color: $wc;
+  }
+}
+
+// Custom "Тип" dropdown — same pattern as the Projects listing page.
+.single-project-calculator__dropdown {
+  position: relative;
+}
+
+.single-project-calculator__dropdown-trigger {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  &[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+}
+
+.single-project-calculator__dropdown-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+  background-color: $wc;
+  border: 1px solid $accent-color-2;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(15, 16, 16, 0.16);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.single-project-calculator__dropdown-option {
+  @include general-text;
+  color: $text-color;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &+& {
+    margin-top: 2px;
+  }
+
+  &.is-selected {
+    background-color: $accent-color;
+    color: $wc;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-selected):hover {
+      background-color: rgba(79, 48, 127, 0.12);
+    }
+  }
+}
+
+.single-project-calculator__range {
+  appearance: none;
+  height: 10px;
+  border-radius: 100px;
+  background: linear-gradient(90deg, $accent-color var(--progress, 0%), $accent-color-2 var(--progress, 0%));
+  cursor: pointer;
+  position: absolute;
+  top: calc(100% - 4px);
+  width: calc(100% - 24px);
+
+  // Squarish accent-colour thumb (small corner radius, not a circle) with a
+  // white filled drag-handle icon (two facing triangles) — baked in as a
+  // background-image since range-thumb pseudo-elements can't have regular
+  // child elements. Kept in sync with .projects-calculator__range.
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    border: none;
+    background-color: $accent-color;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10' fill='none'%3E%3Cpath d='M3.6 2L1.2 5L3.6 8Z' fill='%23FFFFFF'/%3E%3Cpath d='M6.4 2L8.8 5L6.4 8Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 2px 6px rgba(15, 16, 16, 0.25);
+    cursor: grab;
+  }
+
+  &::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+    background-color: $accent-color;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10' fill='none'%3E%3Cpath d='M3.6 2L1.2 5L3.6 8Z' fill='%23FFFFFF'/%3E%3Cpath d='M6.4 2L8.8 5L6.4 8Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 2px 6px rgba(15, 16, 16, 0.25);
+    cursor: grab;
+  }
+
+  &::-moz-range-track {
+    height: 10px;
+    border-radius: 100px;
+    background: transparent;
+  }
+
+  &:active::-webkit-slider-thumb,
+  &:active::-moz-range-thumb {
+    cursor: grabbing;
+  }
+}
+
+.single-project-calculator__range-ends {
+  position: absolute;
+  top: 100%;
+  width: calc(100% - 24px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include general-text;
+  color: $grey-color;
+  pointer-events: none;
+  padding: 15px 12px;
+
+
+  @include tablet {
+    padding: 15px 20px;
+  }
+
+  @include laptop {
+    padding: vw(12) vw(20);
+  }
+}
+
+.single-project-calculator__result {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  color: $wc;
+  text-align: center;
+  padding: 24px;
+  border-radius: 20px;
+  background: linear-gradient(200deg, rgba(186, 91, 255, 0.5) 0%, rgba(79, 48, 127, 0.92) 40%), $accent-color;
+
+  @include tablet {
+    padding: 32px;
+    border-radius: 32px;
+    flex-direction: row;
+  }
+
+  @include laptop {
+    flex-direction: column;
+    width: vw(464);
+    flex-shrink: 0;
+    padding: vw(60);
+    border-radius: vw(40);
+    gap: vw(20);
+  }
+}
+
+.single-project-calculator__result-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  @include tablet {
+    width: 45%
+  }
+
+  @include laptop {
+    width: 100%
+  }
+}
+
+.single-project-calculator__result-label {
+  @include subtitle-text;
+  color: $wc;
+  margin: 0;
+}
+
+.single-project-calculator__result-value {
+  @include super-title;
+  font-size: 40px;
+  text-transform: uppercase;
+  margin: 0;
+
+  @include tablet {
+    font-size: 56px;
+  }
+
+  @include laptop {
+    font-size: vw(60);
+  }
+}
+
+.single-project-calculator__result-note {
+  @include tiny-text;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  margin: 0;
+}
+
+.single-project-calculator__divider {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, #ffffff00, rgba(255, 255, 255, 0.5), #ffffff00);
+  flex-shrink: 0;
+
+  @include tablet {
+    width: 1px;
+    height: 150px;
+    background: linear-gradient(0deg, #ffffff00, rgba(255, 255, 255, 0.5), #ffffff00);
+  }
+
+  @include laptop {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #ffffff00, rgba(255, 255, 255, 0.5), #ffffff00);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: $wc;
+  }
+}
+
+.single-project-calculator__result-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  @include tablet {
+    width: 45%;
+  }
+
+  @include laptop {
+    gap: vw(20);
+    width: 100%
+  }
+}
+
+.single-project-calculator__result-text {
+  @include general-text;
+  color: $wc;
+  margin: 0;
+  font-weight: 700;
+}
+
+// Same sweep-fill hover mechanic as the shared .general-btn (header.scss),
+// mirrored: this pill rests white on the purple result card, so the panel
+// sweeps IN on hover instead of receding, with text/icon flipping to white.
+.single-project-calculator__cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  color: $text-color;
+  background-color: $accent-color;
+  border-radius: 100px;
+  padding: 18px 24px;
+  text-decoration: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2%;
+    left: -10%;
+    z-index: 0;
+    width: 120%;
+    height: 104%;
+    background-color: $wc;
+    transform: skew(30deg) translate3d(0%, 0, 0);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+  }
+
+  span,
+  svg {
+    position: relative;
+    z-index: 1;
+
+    path {
+      fill: $bc;
+      transition: all 0.3s ease-in-out
+    }
+  }
+
+  span {
+    @include btn-text;
+    color: $text-color;
+    text-transform: none;
+    transition: color 0.4s ease-in-out;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: $wc;
+      border: 1px solid $wc;
+
+      svg path {
+        fill: $wc;
+      }
+    }
+
+    &:hover span {
+      color: $wc;
+    }
+
+    &:hover::before {
+      transform: skew(30deg) translate3d(120%, 0, 0);
+    }
+  }
+}
+
+// ==========================================================================
+// Investitions infographic
+// ==========================================================================
+
+.single-project-investitions {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 32px;
+  margin-top: 32px;
+  padding-top: 32px;
+
+
+  @include laptop {
+    flex-direction: row;
+    align-items: center;
+    gap: vw(60);
+    margin-top: vw(40);
+    padding-top: vw(40);
+  }
+}
+
+.single-project-investitions__chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 220px;
+
+  @include tablet {
+    gap: 20px;
+    height: 499px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    gap: vw(24);
+    height: vw(499);
+  }
+}
+
+.single-project-investitions__col {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-width: 0;
+  position: relative;
+}
+
+.single-project-investitions__price {
+  @include subtitle-text;
+  font-size: 14px;
+  color: $bc;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+// Height is set in JS as an exact pixel value (see initInvestitionsChart),
+// not a percentage of the column — a percentage here competed with the
+// price/label text for the column's height via flex-shrink once the taller
+// bars' basis overflowed it, clamping every bar past ~70% of the price
+// range to the same rendered height. An exact px value that already
+// accounts for the price/label height never overflows, so it never shrinks,
+// which also keeps the price sitting flush against its own bar's top edge
+// instead of pinned to a shared row above every column.
+.single-project-investitions__bar {
+  width: 100%;
+  flex-shrink: 0;
+  min-height: 4px;
+  border-radius: 20px 20px 0 0;
+  background: linear-gradient(190deg, $accent-color 0%, rgba(135, 90, 204, 0) 100%);
+  box-shadow: inset 0 4px 0 0 #9a81c2;
+}
+
+.single-project-investitions__col-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+  background-color: $wc;
+  border-radius: 20px 20px 0 0;
+  padding: 12px 4px;
+  text-align: center;
+  width: 100%;
+
+  @include tablet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+  }
+}
+
+.single-project-investitions__year {
+  @include general-text;
+  font-weight: 700;
+  color: $bc;
+  text-transform: none;
+}
+
+.single-project-investitions__year-label {
+  @include tiny-text;
+  color: $bc;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.single-project-investitions__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+
+  @include laptop {
+    flex: 1 0 0;
+    gap: vw(16);
+  }
+
+  h3 {
+    @include article-title;
+    font-size: 28px;
+    color: $accent-color;
+    text-transform: uppercase;
+    margin: 0;
+
+    @include tablet {
+      font-size: 36px;
+      max-width: 60%;
+    }
+
+    @include laptop {
+      font-size: vw(60);
+      max-width: none;
+    }
+  }
+
+  p {
+    @include general-text;
+    color: $bc;
+    font-weight: 700;
+    margin: 0;
+
+    &:last-of-type {
+      color: $grey-color;
+      font-weight: 500;
+    }
+  }
+
+  strong {
+    color: $bc;
+    font-weight: 700;
+  }
+}
+
+.single-project-investitions__cta {
+  margin-top: 12px;
+
+
+  svg path {
+    fill: $wc;
+  }
+
+  span {
+    text-transform: none;
+  }
+
+  @include laptop {
+    margin-top: vw(24);
+  }
+}
+
+// Mobile only (< 768px, i.e. below the .single-project-investitions__chart's
+// own `@include tablet` step) — bars grow horizontally, one per row, instead
+// of the vertical/upward bars used from tablet up. Written as an explicit
+// max-width query after the base (mobile-first) rules above, overriding only
+// what mobile needs and leaving every un-touched property (colours, the
+// tablet/laptop rules themselves, etc.) exactly as they already were, so
+// tablet and laptop keep today's vertical chart unchanged.
+@media screen and (width < 768px) {
+  .single-project-investitions__chart {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    gap: 16px;
+    width: calc(100% - 24px);
+    margin-left: -12px;
+    padding-bottom: 60px;
+  }
+
+  .single-project-investitions__col {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+    width: 100%;
+  }
+
+  // Width is set in JS (see initInvestitionsChart) the same way height is
+  // for the vertical chart — proportional to price, scaled against the
+  // space left over once the price label's own width is reserved.
+  .single-project-investitions__bar {
+    order: 1;
+    width: 0;
+    height: 48px;
+    min-height: 0;
+    min-width: 32px;
+    border-radius: 0 12px 12px 0;
+    background: linear-gradient(187deg, #4F307F 0%, rgba(135, 90, 204, 0.00) 100%);
+    box-shadow: -4px 0 0 0 #9A81C2 inset;
+  }
+
+  // Floats over the bar's left edge as a standalone chip instead of sitting
+  // in-flow as the column's base — position: relative on .col (set above,
+  // unconditionally) anchors it.
+  .single-project-investitions__col-text {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    align-items: flex-start;
+    width: auto;
+    max-width: calc(100% - 64px);
+    border-radius: 0 12px 12px 0;
+    padding: 4px 16px;
+    text-align: left;
+    box-shadow: 4px 0px 16px rgba(15, 16, 16, 0.14);
+  }
+
+  .single-project-investitions__price {
+    order: 2;
+    margin: 0 0 0 auto;
+    padding-left: 12px;
+    flex-shrink: 0;
+  }
+}
+
+// ==========================================================================
+// Construction status
+// ==========================================================================
+
+.single-project-construction {
+  overflow: visible;
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.single-project-construction__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+
+  margin: 0 0 20px;
+
+  @include laptop {
+    margin-bottom: vw(20);
+  }
+}
+
+.single-project-construction__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+    gap: vw(24);
+  }
+}
+
+.single-project-construction__filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid $grey-color;
+  border-radius: 24px;
+
+  @include laptop {
+    width: vw(500);
+    flex-shrink: 0;
+    gap: vw(16);
+    padding: vw(60) vw(20);
+    border-radius: vw(40);
+  }
+}
+
+.single-project-construction__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 16px;
+  background-color: $wc;
+  border-radius: 16px;
+  text-align: left;
+
+  svg {
+    flex-shrink: 0;
+    fill: $bc;
+    transition: transform 0.3s ease;
+  }
+
+  &[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+}
+
+.single-project-construction__label {
+  @include general-text;
+  display: block;
+  color: $grey-color;
+  opacity: 0.7;
+}
+
+.single-project-construction__value {
+  @include subtitle-text;
+  font-size: 16px;
+  display: block;
+  color: $text-color;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.single-project-construction__dropdown {
+  position: relative;
+}
+
+.single-project-construction__dropdown-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  background-color: $wc;
+  border: 1px solid $accent-color-2;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(15, 16, 16, 0.16);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.single-project-construction__dropdown-option {
+  @include general-text;
+  color: $text-color;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &+& {
+    margin-top: 2px;
+  }
+
+  &.is-selected {
+    background-color: $accent-color;
+    color: $wc;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-selected):hover {
+      background-color: rgba(79, 48, 127, 0.12);
+    }
+  }
+}
+
+.single-project-construction__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 20px;
+}
+
+.single-project-construction__info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  @include btn-text;
+
+  span:first-child {
+    color: $grey-color;
+  }
+
+  span:last-child {
+    color: $text-color;
+  }
+}
+
+.single-project-construction__media {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+
+  @include laptop {
+    flex: 1 0 0;
+    min-width: 0;
+    gap: vw(16);
+  }
+}
+
+// Explicit heights, not aspect-ratio: Swiper reads the container's
+// offsetHeight synchronously on init, and racing that against the browser's
+// own aspect-ratio box resolution produced a nonsensical multi-million-
+// pixel height instead of a stable one.
+.single-project-construction__slider {
+  width: 100%;
+  height: 260px;
+  border-radius: 20px;
+  overflow: hidden;
+
+  @include tablet {
+    height: 340px;
+  }
+
+  @include laptop {
+    height: vw(579);
+    border-radius: vw(32);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.single-project-construction__slider-nav {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 100px;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+
+  @include laptop {
+    bottom: vw(24);
+  }
+}
+
+.single-project-construction__slider-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  position: relative;
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    /* Розтягуємо на всю площу */
+    border-radius: 100px;
+    /* Повторюємо радіус картки */
+
+    /* 1. Задаємо товщину нашого бордера */
+    padding: 1px;
+
+    /* 2. Малюємо сам градієнт (він буде видно тільки там, де відпрацює маска) */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.05) 40%,
+        rgba(255, 255, 255, 0.05) 60%,
+        rgba(255, 255, 255, 0.4) 100%);
+
+    /* 3. Магія маскування: вирізаємо середину, залишаючи лише padding (наш 1px бордер) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    /* Щоб рамка не перехоплювала кліки */
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.single-project-construction__slider-arrow--next svg {
+  transform: rotate(180deg);
+}
+
+.single-project-construction__slider-counter {
+  @include btn-text;
+  color: $wc;
+  min-width: 40px;
+  padding: 0 4px;
+  text-align: center;
+}
+
+.single-project-construction__report {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+  padding: 20px;
+
+  background-color: $wc;
+  border-radius: 20px;
+
+  @include laptop {
+    width: vw(500);
+    flex-shrink: 0;
+    height: vw(579);
+    padding: vw(60);
+    border-radius: vw(40);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100px;
+    border-radius: 0 0 20px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $wc 70% 100%);
+    pointer-events: none;
+
+    @include laptop {
+      height: vw(100);
+      border-radius: 0 0 vw(40) vw(40);
+    }
+  }
+}
+
+.single-project-construction__report-title {
+  @include subtitle-text;
+  font-size: 16px;
+  color: $accent-color;
+  margin: 0 0 16px;
+  flex-shrink: 0;
+}
+
+// flex: 1 (not a guessed height like 80%) so this always takes exactly
+// whatever's left in the report card's fixed height after the title —
+// which can run 1-3 lines depending on the selected stage/period — instead
+// of a fixed proportion that's wrong whenever the title wraps differently.
+.single-project-construction__report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 3px;
+  }
+
+  li {
+    @include general-text;
+    color: $text-color;
+    position: relative;
+    padding-left: 16px;
+
+    &:last-child {
+      margin-bottom: 40px;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: $accent-color;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ==========================================================================
+// Commercial / Parking cards
+// ==========================================================================
+
+.single-project-card {
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.single-project-card__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: $wc;
+  border-radius: 24px;
+  overflow: hidden;
+
+  @include laptop {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    border-radius: vw(40);
+  }
+}
+
+.single-project-card--reverse .single-project-card__inner {
+  @include laptop {
+    flex-direction: row-reverse;
+  }
+}
+
+.single-project-card__media {
+  width: 100%;
+  aspect-ratio: 351 / 240;
+  object-fit: cover;
+  display: block;
+
+  @include tablet {
+    aspect-ratio: 728 / 340;
+  }
+
+  @include laptop {
+    width: vw(1240);
+    height: vw(580);
+    flex-shrink: 0;
+  }
+}
+
+.single-project-card__media--rounded {
+  border-radius: 24px;
+
+  @include tablet {
+    border-radius: 28px;
+  }
+
+  @include laptop {
+    border-radius: vw(32);
+  }
+}
+
+.single-project-card__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+
+  @include tablet {
+    padding: 32px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    justify-content: center;
+    gap: vw(20);
+    padding: vw(60);
+  }
+
+  h2 {
+    @include article-title;
+    font-size: 28px;
+    color: $accent-color;
+    margin: 0;
+    text-transform: uppercase;
+
+    @include tablet {
+      font-size: 36px;
+    }
+
+    @include laptop {
+      font-size: vw(60);
+    }
+  }
+
+  p {
+    @include general-text;
+    color: $grey-color;
+    margin: 0;
+  }
+}
+
+.single-project-card__text .single-project-card__lead {
+  @include subtitle-text;
+  font-size: 16px;
+  font-weight: 700;
+  color: $bc;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.single-project-card__cta {
+  color: $wc;
+
+  span {
+    text-transform: none;
+  }
+}
+
+// ==========================================================================
+// Documents accordion
+// ==========================================================================
+
+.single-project-documents {
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.single-project-documents__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0 0 20px;
+
+  @include laptop {
+    margin-bottom: vw(20);
+  }
+}
+
+.single-project-documents__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.single-project-documents__item {
+  background-color: $wc;
+  border-radius: 20px;
+  overflow: hidden;
+
+  box-shadow: 0 3px 0 0 rgba(115, 91, 151, 0.40) inset;
+
+  @include tablet {
+    border-radius: 40px;
+  }
+}
+
+.single-project-documents__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+
+
+  box-shadow: 0 3px 0 0 rgba(115, 91, 151, 0.40) inset;
+
+  @include laptop {
+    padding: vw(24) vw(28);
+  }
+
+  svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    color: $accent-color;
+  }
+}
+
+.single-project-documents__item.is-open .single-project-documents__head svg {
+  transform: rotate(180deg);
+}
+
+.single-project-documents__head-title {
+  @include subtitle-text;
+  font-size: 16px;
+  color: $text-color;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.single-project-documents__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 20px 20px;
+
+  @include laptop {
+    padding: 0 vw(28) vw(28);
+  }
+}
+
+.single-project-documents__item:not(.is-open) .single-project-documents__body {
+  display: none;
+}
+
+.single-project-documents__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.single-project-documents__tab {
+  @include tiny-text;
+  color: $text-color;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 100px;
+  border: 1px solid $bg-color;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &.is-active {
+    background-color: $accent-color;
+    color: $wc;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-active):hover {
+      background-color: rgba(79, 48, 127, 0.12);
+    }
+  }
+}
+
+.single-project-documents__warning {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: $accent-color;
+
+  svg {
+    flex-shrink: 0;
+
+
+    path {
+      stroke: red;
+    }
+  }
+
+  p {
+    @include general-text;
+    color: $grey-color;
+    margin: 0;
+  }
+}
+
+.single-project-documents__doc {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding-top: 16px;
+
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.single-project-documents__doc-title {
+  @include subtitle-text;
+  font-size: 16px;
+  color: $text-color;
+  margin: 0;
+}
+
+.single-project-documents__doc-purpose {
+  @include general-text;
+  color: $grey-color;
+  margin: 0;
+}
+
+.single-project-documents__doc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 40px;
+  padding: 0 20px;
+  background: none;
+  border: 1px solid $accent-color;
+  border-radius: 100px;
+  color: $accent-color;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  span {
+    @include tiny-text;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  svg {
+    flex-shrink: 0;
+
+    path {
+      transition: all 0.3s ease-in-out
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $accent-color;
+      color: $wc;
+
+      svg path {
+        fill: $wc;
+      }
+    }
+
+
+  }
+}
+
+// ==========================================================================
+// Other projects
+// ==========================================================================
+
+.single-project-others {
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+    padding-bottom: vw(120);
+  }
+}
+
+.single-project-others__title {
+  @include article-title;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0 0 20px;
+  text-align: center;
+
+  @include laptop {
+    text-align: start;
+    margin-bottom: vw(20);
+  }
+}
+
+.single-project-others__slider {
+  position: relative;
+  overflow: visible;
+}
+
+// Mobile/tablet: arrows sit at the sides of the slider, vertically centered
+// (same pattern as .single-project-planning__nav-arrows). Laptop keeps the
+// original pair-above-the-slider layout.
+.single-project-others__nav {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+
+  @include laptop {
+    inset: auto;
+    top: vw(-76);
+    right: 0;
+    display: flex;
+    gap: 8px;
+    pointer-events: auto;
+  }
+}
+
+.single-project-others__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  &--prev {
+    left: 0;
+  }
+
+  &--next {
+    right: 0;
+
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  @include laptop {
+    position: static;
+    transform: none;
+  }
+}
+
+.single-project-others__card {
+  position: relative;
+  height: auto;
+  aspect-ratio: 351 / 354;
+  border-radius: 20px;
+  overflow: hidden;
+
+  @include tablet {
+    aspect-ratio: 728 / 551;
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    aspect-ratio: 900 / 600;
+    border-radius: vw(40);
+  }
+}
+
+.single-project-others__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.single-project-others__price {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1;
+  @include tiny-text;
+  background-color: $wc;
+  color: $text-color;
+  padding: 6px 14px;
+  border-radius: 100px;
+  text-transform: uppercase;
+
+  @include laptop {
+    top: vw(20);
+    left: vw(20);
+  }
+}
+
+.single-project-others__info {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 48px 16px 16px;
+  background: linear-gradient(180deg, rgba(15, 16, 16, 0.00) 0% 50%, #0F1010 100%);
+
+  @include laptop {
+    padding: vw(120) vw(40) vw(40);
+    gap: vw(20);
+  }
+}
+
+.single-project-others__text {
+  flex: 1 0 0;
+  min-width: 0;
+
+  h3 {
+    font-family: $default-font;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.06em;
+    color: $wc;
+    margin: 0 0 4px;
+    font-size: 20px;
+
+    @include tablet {
+      font-size: 26px;
+    }
+
+    @include laptop {
+      font-size: vw(32);
+    }
+  }
+
+  p {
+    @include tiny-text;
+    text-transform: uppercase;
+    color: $bg-color;
+    margin: 0;
+  }
+}
+
+.single-project-others__arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  position: relative;
+  color: $wc;
+  transition: transform 0.3s ease;
+
+  svg {
+    width: 16px;
+    height: 16px;
+
+    path {
+      fill: $wc;
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    /* Розтягуємо на всю площу */
+    border-radius: 100px;
+    /* Повторюємо радіус картки */
+
+    /* 1. Задаємо товщину нашого бордера */
+    padding: 1px;
+
+    /* 2. Малюємо сам градієнт (він буде видно тільки там, де відпрацює маска) */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.05) 40%,
+        rgba(255, 255, 255, 0.05) 60%,
+        rgba(255, 255, 255, 0.4) 100%);
+
+    /* 3. Магія маскування: вирізаємо середину, залишаючи лише padding (наш 1px бордер) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    /* Щоб рамка не перехоплювала кліки */
+  }
+}
+
+@media (hover: hover) {
+  .single-project-others__card:hover .single-project-others__arrow-btn {
+    transform: rotate(45deg);
+  }
+}

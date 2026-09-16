@@ -1,0 +1,319 @@
+extends /../index.pug
+
+block variable
+  -
+    var title_page = 'Комерційна нерухомість'
+    var id_page = 'id-page-commercial'
+
+block meta
+  title= title_page
+  meta(name='description', content='Комерційна нерухомість в новобудовах VAMBUD в Івано-Франківську: приміщення в продажі та в оренду, площі від 34 м² до 420 м².')
+
+block header
+  +header
+
+block content
+  mixin arrowIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="currentColor")
+
+  mixin chevronDownIcon()
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M2.56613 4.51758C2.06085 4.51766 1.60542 4.82237 1.41183 5.28906C1.2184 5.75603 1.32508 6.29386 1.68234 6.65137L7.01535 11.9844C7.24972 12.2188 7.56768 12.3505 7.89913 12.3506C8.23067 12.3506 8.5485 12.2188 8.78292 11.9844L14.1159 6.65137C14.4733 6.29387 14.5809 5.75607 14.3874 5.28906C14.1938 4.8222 13.7376 4.51758 13.2321 4.51758H2.56613Z" fill="#0F1010"/>
+    </svg>
+
+  mixin navArrowIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none")
+      path(d="M12 5.99946C12 6.36751 11.701 6.66623 11.333 6.66645L2.27637 6.66645L6.4707 10.8608C6.73092 11.121 6.73064 11.5438 6.4707 11.8041C6.21039 12.0641 5.78858 12.0642 5.52832 11.8041L0.195313 6.47114C0.0702775 6.34612 1.20819e-06 6.17628 2.62245e-07 5.99946C0.000130409 5.82282 0.0703951 5.65269 0.195313 5.52778L5.52832 0.194773C5.7886 -0.0648427 6.21053 -0.0650054 6.4707 0.194773C6.7309 0.454998 6.73066 0.877761 6.4707 1.13813L2.27637 5.33247L11.333 5.33247C11.7008 5.33269 11.9997 5.63163 12 5.99946Z" fill="currentColor")
+
+  mixin pinIcon()
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M23.5 18.4492C23.4997 18.8518 23.3899 19.2479 23.1816 19.5938C22.9993 19.8965 22.7468 20.1517 22.4443 20.335L22.3115 20.4092L17 23.1367C16.5357 23.3749 16.0216 23.5 15.5 23.5C14.9784 23.5 14.4643 23.3749 14 23.1367L9.08594 20.6143L9.08594 20.6133C8.9028 20.5194 8.70204 20.4717 8.5 20.4717C8.29769 20.4717 8.09643 20.5192 7.91309 20.6133L7.91406 20.6143L3.64551 22.8066L3.64453 22.8066C3.31207 22.9772 2.94055 23.0585 2.56641 23.041C2.19215 23.0234 1.82968 22.9075 1.51465 22.707C1.19993 22.5067 0.943101 22.2287 0.766601 21.9023C0.590182 21.576 0.499148 21.21 0.499999 20.8398L0.499998 5.55078C0.500267 5.1482 0.61002 4.75211 0.818358 4.40625C1.02686 4.06019 1.32686 3.7764 1.68847 3.59082L7 0.863282C7.46428 0.625083 7.97835 0.500001 8.5 0.500001C8.95648 0.500035 9.40679 0.595792 9.82324 0.779297L10 0.863282L14.9141 3.38574C15.0973 3.47969 15.2978 3.52832 15.5 3.52832C15.7022 3.52828 15.9027 3.47971 16.0859 3.38574L20.3555 1.19336C20.6878 1.02292 21.0596 0.941495 21.4336 0.958984C21.8075 0.976592 22.1696 1.09279 22.4844 1.29297C22.799 1.49313 23.0558 1.77055 23.2324 2.09668C23.4088 2.42253 23.5004 2.78759 23.5 3.15723L23.5 18.4492ZM2.60156 5.37012C2.57579 5.38335 2.5506 5.40639 2.53125 5.43848C2.5119 5.4707 2.50009 5.50986 2.5 5.55176L2.5 20.8447C2.49996 20.8833 2.50963 20.9202 2.52637 20.9512C2.54302 20.9818 2.56547 21.0046 2.58887 21.0195C2.61213 21.0343 2.63682 21.0419 2.66016 21.043C2.68338 21.044 2.70807 21.0393 2.73144 21.0273L7 18.835L7.17676 18.751C7.28237 18.7044 7.39049 18.664 7.5 18.6289L7.5 2.85449L2.60156 5.37012ZM14.5 5.37012C14.329 5.31529 14.1609 5.2476 14 5.16504L9.5 2.85449L9.5 18.6289C9.6095 18.664 9.71763 18.7044 9.82324 18.751L10 18.835L14.5 21.1445L14.5 5.37012ZM21.5 3.15527C21.5 3.11669 21.4904 3.07978 21.4736 3.04883C21.457 3.01819 21.4345 2.99541 21.4111 2.98047C21.3879 2.96571 21.3631 2.95819 21.3398 2.95703C21.3281 2.95648 21.3157 2.95735 21.3037 2.95996L21.2686 2.97266L17 5.16504C16.8391 5.24761 16.671 5.31528 16.5 5.37012L16.5 21.1445L21.3984 18.6299C21.4242 18.6166 21.4494 18.5936 21.4687 18.5615C21.4881 18.5293 21.4999 18.4901 21.5 18.4482L21.5 3.15527Z" fill="#0F1010"/>
+    </svg>
+
+  mixin plusIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M8 2.5V13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round").commercial-promo__more-vbar
+      path(d="M2.5 8H13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round")
+
+  mixin flatIcon()
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M1.50195 1.50171V17.6863H6.18945V22.491H20.7148V13.8757H22.5V1.50171H1.50195ZM20.25 3.75171V11.6257H17.25C16.629 11.626 16.1252 12.1297 16.125 12.7507C16.1252 13.3717 16.629 13.8755 17.25 13.8757H18.4648V20.241H8.43945V17.6863H11.3408V13.8757H12.4814C13.1024 13.8755 13.6062 13.3717 13.6064 12.7507C13.6063 12.1297 13.1025 11.626 12.4814 11.6257H11.3408V10.5017C11.3408 9.88062 10.8368 9.37708 10.2158 9.37671C9.5945 9.37671 9.09082 9.88039 9.09082 10.5017V15.4363H3.75195V3.75171H9.09082V4.96948C9.09123 5.59046 9.59475 6.09448 10.2158 6.09448C10.8366 6.09411 11.3404 5.59023 11.3408 4.96948V3.75171H20.25Z" fill="#0F1010"/>
+    </svg>
+
+  //- На WP ця сторінка — лендинг категорії "Комерційна нерухомість" (спільний
+  //- для всіх ЖК VAMBUD, за тією ж схемою, що й "1-кімнатні"). Дані проєктів —
+  //- ті самі реальні комплекси, що й в інших місцях сайту (projects.pug).
+  section.commercial-hero
+    img.commercial-hero__bg(src="/src/shared/images/commercial/hero.jpg" alt="Комерційна нерухомість VAMBUD" loading="eager")
+    .commercial-hero__overlay
+    .commercial-hero__inner.container
+      +breadcrumbs([{ label: "VAMBUD", href: "/home.html" }, { label: "Комерційна нерухомість" }])
+      h1.commercial-hero__title Комерційна нерухомість
+
+  section.commercial-promo-wrap.container
+    .commercial-promo
+      .commercial-promo__overlay 
+      img.commercial-promo__bg(src="/src/shared/images/commercial/promo.jpg" alt="" loading="lazy")
+      .commercial-promo__text(data-promo-text)
+        h2.commercial-promo__title Оренда комерційних приміщень в Івано-Франківську від VAMBUD
+        p.commercial-promo__body VAMBUD пропонує ексклюзивну оренду комерційних приміщень у складі житлових комплексів.
+        p.commercial-promo__body.commercial-promo__body--more Компанія ретельно добирає орендарів, які покращують житнє середовище — пропонуючи рішення для бізнесу, що шукає «сильне місце, видиму фасадну частину, сучасне середовище та готовий потік клієнтів поруч».
+        .commercial-promo__buttons
+          button.commercial-promo__cta.general-btn(type="button" data-call-us-btn)
+            span Отримати консультацію
+            +arrowIcon()
+          button.commercial-promo__more(type="button" data-promo-toggle aria-expanded="false")
+            span Розгорнути більше
+            +plusIcon()
+
+  section.commercial-list.container
+    -
+      // Реальні планування й фото з макета (Card 2/3/4) — той самий набір
+      // трьох приміщень повторюється в макеті для кожного проєкту (секції
+      // Квартал Краківський/WAWEL використовують ті самі приховані картки).
+      var realUnits = [
+        { area: "420", floor: "1-й поверх", description: "Просторе приміщення з двома входами, стелею 4,6 м, панорамними вікнами на вул. Мазепи та міське озеро. Підходить для бізнесу, що потребує масштабу, видимості та сильної локаційної присутності.", suitableFor: [ "Преміум супермаркет", "Ресторан", "Фітнес-студія", "Медичний / wellness центр", "Представницький офіс", "Шоурум" ], plans: ["/src/shared/images/commercial/unit-1.jpg", "/src/shared/images/commercial/property-a.jpg", "/src/shared/images/commercial/promo.jpg"] },
+        { area: "210", floor: "1-й поверх", description: "Панорамний вітраж, стеля 4,6 м, виграшна локація. Призначений для іміджевого бізнесу, що робить акцент на сервісі та клієнтському досвіді.", suitableFor: [ "Салон краси", "Медична клініка / кабінет", "Шоурум", "Офіс продажів", "Кафе", "Преміум формат магазин" ], plans: ["/src/shared/images/commercial/unit-2.jpg", "/src/shared/images/commercial/property-wawel.jpg"] },
+        { area: "193", floor: "2-й поверх", description: "Висока стеля та великі вітражні вікна створюють простір з відчуттям статусу і відкритості. Престижна адреса для клієнтоорієнтованого бізнесу.", suitableFor: [ "Представницький офіс", "Дизайн-студія", "Освітній простір", "Салон", "Центр косметології", "Приватна клініка" ], plans: ["/src/shared/images/commercial/unit-3.jpg", "/src/shared/images/commercial/hero.jpg", "/src/shared/images/commercial/promo.jpg", "/src/shared/images/commercial/property-a.jpg"] }
+      ]
+      var properties = [
+        {
+          key: "trivium",
+          dealType: "sale",
+          title: "TRIVIUM (ТРІВІУМ)",
+          classLabel: "Клас нерухомості: Еліт",
+          location: "вул. Мазепи, 142, Івано-Франківськ",
+          areaRange: "Доступні площі від 34 м² до 134 м²",
+          description: "Житловий комплекс у виключній локації навпроти парку Шевченка біля міського озера. Витончена архітектура, панорамні вітражі, висока стеля та фасади на одній з найожвавленіших вулиць міста.",
+          features: [ "Панорамні вітражні вікна", "Стеля до 4,6 м", "Навпроти парку Шевченка", "Поруч міське озеро", "Фасад на вул. Мазепи", "Висока автомобільна прохідність", "Активний пішохідний потік" ],
+          priceFrom: "від 46 800 грн/м²",
+          image: "/src/shared/images/commercial/property-a.jpg",
+          photos: [ "/src/shared/images/commercial/property-a.jpg", "/src/shared/images/investors/project-trivium.jpg" ],
+          units: realUnits
+        },
+        {
+          key: "krakivskyi",
+          dealType: "sale",
+          title: "Квартал Краківський",
+          classLabel: "Клас нерухомості: Комфорт",
+          location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)",
+          areaRange: "Доступні площі від 28 м² до 210 м²",
+          description: "Житловий комплекс поруч з ТРЦ Veles Mall — одна з найпожвавленіших торговельних локацій міста. Окремі входи з вулиці, високий пішохідний та автомобільний трафік.",
+          features: [ "Окремі входи з вулиці", "Поруч ТРЦ Veles Mall", "Великий парковий простір", "Розвинена інфраструктура району", "Зручний під'їзд для клієнтів", "Енергонезалежні приміщення" ],
+          priceFrom: "від 42 200 грн/м²",
+          image: "/src/shared/images/projects/krakivskyi.jpg",
+          photos: [ "/src/shared/images/projects/krakivskyi.jpg", "/src/shared/images/commercial/property-a.jpg" ],
+          units: realUnits
+        },
+        {
+          key: "wawel",
+          dealType: "rent",
+          title: "WAWEL (ВАВЕЛЬ)",
+          classLabel: "Клас нерухомості: Комфорт+",
+          location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)",
+          areaRange: "Доступні площі від 36 м² до 160 м²",
+          description: "Комплекс у зданих будинках з готовою прибудинковою інфраструктурою. Компактні комерційні приміщення користуються найбільшим попитом і швидко знаходять власників.",
+          features: [ "Готові здані будинки", "Розвинений двір та інфраструктура", "Компактні планування", "Зручний під'їзд та парковка", "Поруч ТРЦ Veles Mall", "Високий пішохідний трафік" ],
+          priceFrom: "від 44 400 грн/м²",
+          image: "/src/shared/images/commercial/property-wawel.jpg",
+          photos: [ "/src/shared/images/commercial/property-wawel.jpg", "/src/shared/images/projects/wawel.jpg" ],
+          units: realUnits
+        }
+      ]
+      var dealFilters = [
+        { key: "sale", label: "Продаж", count: properties.filter(function (p) { return p.dealType === "sale"; }).length, active: true },
+        { key: "rent", label: "Оренда", count: properties.filter(function (p) { return p.dealType === "rent"; }).length }
+      ]
+    .commercial-list__nav(role="tablist" aria-label="Продаж чи оренда")
+      each filter in dealFilters
+        button.commercial-list__nav-tab(type="button" class=filter.active ? "is-active" : "" role="tab" aria-selected=filter.active ? "true" : "false" data-commercial-filter=filter.key)
+          span= filter.label
+          span.commercial-list__nav-count &nbsp;(#{filter.count})
+
+    .commercial-list__items(data-commercial-accordion)
+      each property, propertyIndex in properties
+        .commercial-item(data-doc-item data-deal-type=property.dealType class=propertyIndex === 0 ? "is-open" : "")
+          .commercial-item__slider
+            .commercial-item__gallery.swiper(data-property-gallery)
+              .swiper-wrapper
+                each photo in property.photos
+                  .swiper-slide
+                    img(src=photo alt=property.title loading="lazy")
+              if property.photos.length > 1
+                .commercial-item__gallery-nav
+                  button.commercial-item__gallery-arrow.commercial-item__gallery-arrow--prev(type="button" aria-label="Попереднє фото")
+                    +navArrowIcon()
+                  span.commercial-item__gallery-counter(data-gallery-counter)
+                  button.commercial-item__gallery-arrow.commercial-item__gallery-arrow--next(type="button" aria-label="Наступне фото")
+                    +navArrowIcon()
+            .commercial-item__badge
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="50" viewBox="0 0 19 50" fill="none">
+                <path d="M7.6 50C2.98548 48.1756 4.76837e-07 45.2715 4.76837e-07 42C4.76837e-07 38.7284 2.9851 35.8237 7.6 33.9993V50Z" fill="#A13C00"/>
+                <path d="M12.3813 0.624023C5.15142 2.03839 0.000391006 5.70237 0.000391006 10V42C0.000391006 38.7284 2.98525 35.8234 7.6 33.999V15C7.6 9.60774 9.37911 4.63112 12.3813 0.624023Z" fill="#F3752B"/>
+                <path d="M17.1004 0.0296251C17.7253 0.0100317 18.3591 0 19.0004 0V9L0.500391 8.86602C0.500391 5.75482 7.49908 0.33066 17.1004 0.0296251Z" fill="#F3752B"/>
+                <path d="M7.6 34C10.7756 32.7445 14.7228 32 19.0004 32V8H7.6V34Z" fill="#F3752B"/>
+              </svg>
+              span= property.classLabel
+            //- .commercial-item__price-badge= property.priceFrom
+
+          .commercial-item__main
+            .commercial-item__title-row
+              h3.commercial-item__title= property.title
+              button.commercial-item__toggle(type="button" data-doc-trigger aria-expanded=propertyIndex === 0 ? "true" : "false")
+                span.commercial-item__toggle-label(data-toggle-open-label) Показати менше
+                span.commercial-item__toggle-label(data-toggle-closed-label) Показати ще
+                +chevronDownIcon()
+
+            .commercial-item__bottom
+              p.commercial-item__location
+                +pinIcon()
+                span= property.location
+              p.commercial-item__info
+                +flatIcon()
+                span= property.areaRange
+
+          .commercial-item__body(data-doc-body)
+            .commercial-item__columns
+              .commercial-item__left
+                p.commercial-item__description= property.description
+                button.commercial-item__cta.general-btn(type="button" data-call-us-btn)
+                  span Отримати консультацію
+                  +arrowIcon()
+              .commercial-item__right
+                p.commercial-item__features-title Ключові переваги
+                ul.commercial-item__features
+                  each feature in property.features
+                    li= feature
+
+            .commercial-item__units
+              h4.commercial-item__units-title Доступні комерційні приміщення
+              .commercial-item__units-list
+                each unit, unitIndex in property.units
+                  .commercial-unit
+                    .commercial-unit__info
+                      .commercial-unit__left
+                        .commercial-unit__title-row
+                          p.commercial-unit__area
+                            span= unit.area
+                            |
+                            |  м²
+                          span.commercial-unit__floor= unit.floor
+                        p.commercial-unit__description= unit.description
+                        button.commercial-unit__cta(type="button" data-call-us-btn)
+                          span Дізнатися ціну
+                          +arrowIcon()
+                      .commercial-unit__right
+                        p.commercial-unit__suitable-title Підійде для:
+                        ul.commercial-unit__suitable
+                          each item in unit.suitableFor
+                            li= item
+                    .commercial-unit__plan
+                      //- Array-driven so the WP gallery can supply several
+                      //- views per unit; arrows appear as soon as there is
+                      //- more than one image, matching the mockup.
+                      - var unitPlans = unit.plans || [unit.image]
+                      .commercial-unit__plan-slider.swiper(data-unit-plans)
+                        .swiper-wrapper
+                          each plan in unitPlans
+                            .swiper-slide
+                              img(src=plan alt="Планування " + unit.area + " м²" loading="lazy")
+                      if unitPlans.length > 1
+                        button.commercial-unit__plan-arrow.commercial-unit__plan-arrow--prev(type="button" aria-label="Попереднє планування")
+                          +navArrowIcon()
+                        button.commercial-unit__plan-arrow.commercial-unit__plan-arrow--next(type="button" aria-label="Наступне планування")
+                          +navArrowIcon()
+
+  section.commercial-seo.container
+    -
+      var seoSections = [
+        {
+          items: [
+            { text: "Нежитлові приміщення - чудовий варіант для розвитку бізнесу. Ринок пропонує безліч варіантів у новобудовах. Від невеликих офісів до просторих торгових площ - вибір величезний." },
+            { text: "Продаж здійснюється в споруджуваних і готових об'єктах. Можна вибрати приміщення з оздобленням або без, з окремим входом. Важливо враховувати висоту стель, наявність паркування та інженерних комунікацій." },
+            { text: "При виборі зверніть увагу на розташування і транспортну доступність. Оцініть перспективи розвитку району. Це допоможе зробити вигідне вкладення і забезпечити стабільний дохід." }
+          ]
+        },
+        {
+          title: "Ключові моменти",
+          list: [ "Широкий вибір нежитлових приміщень різного призначення", "Можливість купівлі на етапі будівництва або в готовому об'єкті", "Наявність великої кількості паркомісць в багатьох новобудовах", "Висота стель у середньому становить 2.9-3 метри", "Популярна форма угоди - купівля-продаж майнового права", "Важливість аналізу розташування та перспектив розвитку району" ],
+          items: [
+            { text: "Інвестиції в нерухомість відкривають широкі можливості для бізнесу. Нежитловий фонд пропонує різні варіанти - від складів до офісів. Купівля приміщень у новобудовах має низку переваг для підприємців." }
+          ]
+        },
+        {
+          title: "Короткий опис пропозиції",
+          items: [
+            { text: "Бізнес-нерухомість включає об'єкти різного призначення і площі. Ви можете купити готовий бізнес або частку в ньому. Нові комплекси пропонують сучасні приміщення зі зручним розташуванням." }
+          ]
+        },
+        {
+          title: "Переваги",
+          intro: "Інвестиції в комерційну нерухомість у нових об'єктах мають низку плюсів:",
+          list: [ "Сучасні планування та інженерні системи", "Висока енергоефективність", "Можливість створення «розумного» офісу", "Гнучкі простори під коворкінги", "Екологічність і відповідність зеленим стандартам" ]
+        },
+        {
+          title: "Коротка інформація про будівельну компанію",
+          items: [
+            { text: "Наша компанія використовує передові технології цегляного та монолітного будівництва. Наш досвід допомагає створювати якісні приміщення для бізнесу будь-якого масштабу." }
+          ]
+        },
+        {
+          title: "Об'єкти та їхні характеристики",
+          items: [
+            { text: "Комерційна нерухомість відкриває широкі можливості для бізнесу. Вона включає різні типи об'єктів з унікальними параметрами. Розглянемо їхні основні характеристики та інвестиційний потенціал." }
+          ]
+        },
+        {
+          title: "Доступні типи комерційної нерухомості",
+          intro: "Ринок комерційної нерухомості багатий різноманітністю об'єктів.",
+          list: [ "Офісні приміщення (30 - 200 м²)", "Торгові площі (30 - 40 м²)", "Банківські відділення", "Конференц-зали", "Приміщення для сфери послуг" ]
+        },
+        {
+          title: "Ключові параметри об'єктів",
+          intro: "Під час вибору комерційної нерухомості важливо враховувати кілька ключових параметрів.",
+          list: [ "Площа приміщення", "Цільове призначення", "Розташування в будівлі", "Транспортна доступність" ]
+        },
+        {
+          title: "Інвестиційна привабливість",
+          intro: "Інвестиційний потенціал комерційної нерухомості залежить від декількох факторів.",
+          list: [ "Швидкий запуск бізнесу з мінімальними додатковими вкладеннями", "Окупність протягом 5-7 років при придбанні для бізнесу", "Збільшення дохідності від 20% і більше щороку", "Високий попит на якісні об'єкти у великих містах" ],
+          items: [
+            { text: "Ціна комерційної нерухомості на 25-30% вища за житлову. Це створює нові можливості для інвесторів. Особливо в період зростання ринку та інтересу до торгових центрів." }
+          ]
+        },
+        {
+          title: "Переваги розташування",
+          items: [
+            { text: "Розташування відіграє важливу роль при виборі комерційної нерухомості. Вдала локація приваблює клієнтів і збільшує потік відвідувачів. Це може значно підвищити успіх вашого бізнесу." }
+          ]
+        },
+        {
+          title: "Транспортна доступність",
+          items: [
+            { text: "Доступність транспорту - ключ до успіху комерційного об'єкта. Близькість до розвинених мікрорайонів, об'їзних і зупинок зручна для клієнтів і співробітників." },
+            { text: "Це особливо важливо для роздрібної торгівлі та офісних приміщень. Хороша транспортна мережа забезпечує постійний потік людей." }
+          ]
+        },
+        {
+          title: "Інфраструктура району",
+          items: [
+            { text: "Розвинена інфраструктура підвищує цінність комерційної нерухомості. Житлові комплекси, школи та лікарні поруч створюють потік потенційних клієнтів." },
+            { text: "Це вигідно для кафе і сфери послуг. Різноманітність об'єктів поблизу приваблює більше відвідувачів." }
+          ]
+        },
+        {
+          title: "Перспективи розвитку території",
+          items: [
+            { text: "Під час вибору нерухомості оцініть перспективи розвитку району. Плани з будівництва нових об'єктів можуть підвищити цінність вашої власності." },
+            { text: "Інвестиції в райони, що розвиваються, часто вигідні в майбутньому. Слідкуйте за міськими проектами та планами забудови." }
+          ]
+        }
+      ]
+    +seoAccordion("Купити комерційну нерухомість в новобудові", seoSections)
+
+block footer
+  +footer()
+
+block scripts
+  script(type="module" src="/src/pages/commercial/commercial.js")

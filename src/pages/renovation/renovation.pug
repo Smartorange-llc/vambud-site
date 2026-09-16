@@ -1,0 +1,140 @@
+extends /../index.pug
+
+block variable
+  -
+    var title_page = 'Ремонт під ключ'
+    var id_page = 'id-page-renovation'
+
+block meta
+  title= title_page
+  meta(name='description', content='Квартири з ремонтом під ключ від VAMBUD: прозоре формування вартості, фіксовані етапи робіт, пакетні рішення та гарантія результату.')
+
+block header
+  +header
+
+block content
+  mixin renoArrow()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M12.521 11.7715L12.521 12.5215L11.021 12.5215L11.021 6.04004L4.229 12.832L3.16846 11.7715L9.96045 4.97949L3.479 4.97949L3.479 3.47949L4.229 3.47949L11.772 3.47852C11.9707 3.47859 12.1617 3.55774 12.3022 3.69824C12.4428 3.83879 12.5219 4.02979 12.522 4.22852L12.521 11.7715Z")
+
+  section.reno-hero
+    img.reno-hero__bg(src="/src/shared/images/renovation/main-banner.jpg" alt="VAMBUD" loading="eager")
+    .reno-hero__overlay
+    .reno-hero__inner.container
+      +breadcrumbs([{ label: "Головна", href: "/home.html" }, { label: "Ремонт під ключ" }])
+      h1.reno-hero__title Ремонт під ключ
+
+  section.reno-pitch.container
+    .reno-pitch__card
+      img.reno-pitch__bg(src="/src/shared/images/renovation/pitch-bg.jpg" alt="" loading="eager")
+      .reno-pitch__gradient
+      .reno-pitch__text
+        h2.reno-pitch__title Квартири з ремонтом під ключ
+        p.reno-pitch__lead Ми у VAMBUD подбали, щоб ваш переїзд у нову квартиру був наповнений лише приємними відчуттями. Тому весь процес з ремонтних робіт та післяремонтного прибирання — наші клопоти. Вам залишається лише спланувати новосілля.
+      .reno-pitch__info
+        .reno-pitch__info-text
+          span.reno-pitch__area
+            | 32 - 112
+            span.reno-pitch__area-unit м²
+          span.reno-pitch__area-label Квартира і ремонт під ключ
+        button.reno-pitch__btn.reno-btn.reno-btn--light(type="button" data-call-us-btn)
+          span Дізнатися ціну
+          +renoArrow()
+
+  section.reno-price.container
+    .reno-price__card
+      .reno-price__left
+        h2.reno-price__title
+          | Як формується
+          br
+          | вартість?
+        .reno-price__texts
+          p.reno-price__text Вартість квартири з ремонтом формується прозоро та прогнозовано. Ми не продаємо «ремонт у повітрі» — кожен метр, матеріал і робота зафіксовані ще на старті.
+          p.reno-price__text Усі рішення узгоджені між собою: дизайн → матеріали → роботи.
+        p.reno-price__statement Фінальна вартість фіксується в договорі — без прихованих витрат.
+      .reno-price__factors
+        span.reno-price__factors-title ЦІНА ЗАЛЕЖИТЬ ВІД
+        ul.reno-price__list
+          -
+            var priceFactors = [
+              "Площі квартири",
+              "Обраного ремонтного пакету",
+              "Додаткових опцій"
+            ]
+          each factor, index in priceFactors
+            li.reno-price__list-item
+              span.reno-price__list-num= (index + 1) < 10 ? '0' + (index + 1) : (index + 1)
+              span.reno-price__list-text= factor
+        a.reno-price__btn.reno-btn.reno-btn--accent(href="#" data-presentation-trigger)
+          span Отримати презентацію
+          +renoArrow()
+      .reno-price__media
+        img(src="/src/shared/images/renovation/price-image.jpg" alt="Приклад ремонту VAMBUD" loading="lazy")
+
+  section.reno-process.container
+    .reno-process__card
+      .reno-process__intro
+        h2.reno-process__title Етапи ремонту під ключ
+        p.reno-process__lead Ремонт квартир під ключ від будівельної компанії VAMBUD — це чітко організований процес з фіксованими етапами та контрольованими термінами. Ми виконуємо ремонтні роботи з урахуванням технічних норм і побажань клієнта.
+        img.reno-process__image(src="/src/shared/images/renovation/process-image.jpg" alt="Ремонтні роботи VAMBUD" loading="lazy")
+      .reno-process__steps
+        -
+          var steps = [
+            { title: "Консультація та вибір рішення", text: "Обговорюємо ваші потреби, побажання до ремонту та підбираємо оптимальний формат робіт для квартири." },
+            { title: "Розробка та погодження дизайн-проєкту", text: "Створюємо дизайн-проєкт, узгоджуємо планування, стиль, матеріали та всі ключові рішення майбутнього інтер'єру." },
+            { title: "Кошторис та офіційний договір", text: "Формуємо детальний кошторис, фіксуємо вартість, терміни виконання робіт та відповідальність сторін у договорі." },
+            { title: "Закупівля матеріалів та підготовка приміщення", text: "Організовуємо закупівлю матеріалів і готуємо квартиру до старту ремонтних робіт." },
+            { title: "Ремонтні роботи відповідно до графіка", text: "Виконуємо ремонт поетапно, згідно з погодженим графіком, технічними вимогами та стандартами якості." },
+            { title: "Фінальне оздоблення, клінінг", text: "Завершуємо оздоблювальні роботи, проводимо прибирання та готуємо квартиру до передачі власнику." }
+          ]
+        each step, index in steps
+          .reno-process__step
+            span.reno-process__step-num= (index + 1) < 10 ? '0' + (index + 1) : (index + 1)
+            .reno-process__step-content
+              h3.reno-process__step-title= step.title
+              p.reno-process__step-text= step.text
+
+  section.reno-cta.container
+    .reno-cta__card
+      img.reno-cta__bg(src="/src/shared/images/renovation/cta-bg.jpg" alt="" loading="lazy" data-parallax="image")
+      .reno-cta__gradient
+      .reno-cta__content
+        .reno-cta__text-group
+          h2.reno-cta__title Готові заїжджати без турбот?
+          p.reno-cta__text Квартири з ремонтом — це оптимальне рішення для тих, хто цінує свій час, бюджет і прогнозований результат. VAMBUD пропонує замовити ремонт під ключ у власних житлових комплексах із фіксованою вартістю та контролем якості на кожному етапі.
+        span.reno-cta__divider
+        button.reno-cta__btn.reno-btn.reno-btn--accent(type="button" data-call-us-btn)
+          span Отримати розрахунок
+
+  section.reno-benefits.container
+    .reno-benefits__card
+      .reno-benefits__wrap
+        img.reno-benefits__bg(src="/src/shared/images/renovation/benefits-bg.jpg" alt="" loading="lazy" data-parallax="image")
+        .reno-benefits__gradient
+      .reno-benefits__intro
+        h2.reno-benefits__title Чому обирають ремонт від VAMBUD
+        p.reno-benefits__lead Ми пропонуємо систему пакетних і дизайнерських рішень, які дозволяють швидко підготувати квартиру до життя або інвестиції. Усі матеріали, роботи та дизайн узгоджені між собою, що мінімізує ризики помилок і перевитрат. Замовляючи квартиру з ремонтом у VAMBUD, ви отримуєте комплексний сервіс від надійної компанії — з договором, гарантією та відповідальністю за результат.
+      .reno-benefits__grid
+        -
+          var benefitCards = [
+            { title: "Повний цикл", text: "Від дизайн-проєкту до фінального прибирання та здачі — без сторонніх підрядників." },
+            { title: "Офіційний договір", text: "Фіксуємо всі умови, матеріали та терміни в договорі — ніяких усних домовленостей." },
+            { title: "Пакетний формат", text: "Обираєте рівень ремонту під свій бюджет — від базового до дизайнерського." },
+            { title: "Економія часу", text: "Готові рішення дозволяють розпочати ремонт одразу, без місяців узгоджень." },
+            { title: "Прозорий кошторис", text: "Жодних прихованих доплат — фінальна ціна фіксується ще до початку робіт." },
+            { title: "Гарантія результату", text: "5 років гарантії на виконані роботи — ми відповідаємо за результат." }
+          ]
+        each card, index in benefitCards
+          .reno-benefits__item
+            span.reno-benefits__item-num= (index + 1) < 10 ? '0' + (index + 1) : (index + 1)
+            .reno-benefits__item-text
+              h3.reno-benefits__item-title= card.title
+              p.reno-benefits__item-desc= card.text
+
+  +presentationModal
+
+block footer
+  +footer
+
+block scripts
+  script(type="module" src="/src/pages/renovation/renovation.js")

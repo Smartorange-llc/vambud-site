@@ -10,25 +10,30 @@ block meta
   meta(name='description', content='')
 
 block header
-  +header() 
+  +header()
 
 block content
-  section.page-404
-    .page-404__photo
-      img(loading="eager" src="/src/shared/images/404.jpg" alt="404")
-      
-    .page-404__info
-      .page-404__info-inner
-        p.page-404__subtitle Сторінку не знайдено
-        h1.page-404__title ІНОДІ, ЩОБ ЗНАЙТИ ДІМ, ТРЕБА ТРОХИ ЗАБЛУКАТИ
-        .page-404__btns
-          a(href="/").general-btn.general-btn--dark
-            span НА ГОЛОВНУ
-          a(href="/apartments").general-btn.general-btn--dark
-            span ОБРАТИ КВАРТИРУ
-  +footerSvg
+  section.page-404-hero
+    img.page-404-hero__bg(loading="eager" src="/src/shared/images/404-hero.jpg" alt="")
+    .page-404-hero__gradient.page-404-hero__gradient--top
+    .page-404-hero__gradient.page-404-hero__gradient--bottom
+    .page-404-hero__intro
+      .page-404-hero__text
+        h1.page-404-hero__title Схоже, ви забралися аж на дах
+        p.page-404-hero__subtitle Цієї сторінки тут немає, натомість звідси чудовий краєвид! Наша будівельна бригада ще просто не проклала сюди інтернет-кабель.
+      span.page-404-hero__number(aria-hidden="true") 404
+    .page-404-hero__btns
+      a.page-404-hero__btn.page-404-hero__btn--primary(href="/home.html")
+        span Спуститися на головну
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M12.521 11.7715L12.521 12.5215L11.021 12.5215L11.021 6.04007L4.229 12.8321L3.16846 11.7715L9.96045 4.97952L3.479 4.97952L3.479 3.47952L4.229 3.47952L11.772 3.47855C11.9707 3.47863 12.1617 3.55777 12.3022 3.69827C12.4428 3.83882 12.5219 4.02982 12.522 4.22855L12.521 11.7715Z" fill="white"/>
+        </svg>
+      a.page-404-hero__btn.page-404-hero__btn--ghost(href="/projects.html")
+        span Повернутися до проєктів
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M12.521 11.7715L12.521 12.5215L11.021 12.5215L11.021 6.04007L4.229 12.8321L3.16846 11.7715L9.96045 4.97952L3.479 4.97952L3.479 3.47952L4.229 3.47952L11.772 3.47855C11.9707 3.47863 12.1617 3.55777 12.3022 3.69827C12.4428 3.83882 12.5219 4.02982 12.522 4.22855L12.521 11.7715Z" fill="#0F1010"/>
+        </svg>
 block footer
-  +footer() 
+  +footer()
 block scripts
   script(type="module" src="/src/pages/404/404.js")
-

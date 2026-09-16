@@ -1,0 +1,54 @@
+mixin vacancyModal
+  .overflow(data-vacancy-modal__overflow data-lenis-prevent).hidden
+    .modal-form.vacancy-modal(data-vacancy-modal)
+      .close-btn(data-vacancy-modal-close)
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M0.928711 2.34375L8.58496 10.001L0.928711 17.6592L2.34277 19.0732L9.99902 11.415L17.6562 19.0732L18.3643 18.3662L19.0713 17.6592L11.4131 10.001L19.0713 2.34375L18.3643 1.63672L17.6562 0.929688L9.99902 8.58691L2.34277 0.929688L0.928711 2.34375Z" fill="#27292B"/>
+        </svg>
+
+      // Scrolls as one unit on mobile/tablet (.main + .side stacked in a
+      // column) so .modal-form.vacancy-modal itself never has to be the
+      // scrolling element — that's what let .close-btn (positioned relative
+      // to it) drift away with the content before. At laptop this becomes
+      // the row layout instead, and .main/.side go back to scrolling
+      // independently (see their own overflow-y rule below).
+      .vacancy-modal__body
+        .vacancy-modal__main
+          h3.vacancy-modal__title(data-vacancy-modal-title)
+          .vacancy-modal__description(data-vacancy-modal-description)
+
+          .vacancy-modal__contacts
+            p.vacancy-modal__motivation(data-vacancy-modal-motivation)
+            a.vacancy-modal__phone-btn(data-vacancy-modal-phone-link href="")
+              span Телефонуйте
+              svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+                path(d="M19.9994 14.9738V17.9846C20.0005 18.2642 19.9431 18.5408 19.831 18.7969C19.7188 19.053 19.5542 19.2829 19.3478 19.4719C19.1415 19.6608 18.8978 19.8047 18.6325 19.8942C18.3672 19.9838 18.0861 20.017 17.8072 19.9919C14.7128 19.6563 11.7404 18.601 9.1289 16.9108C6.69921 15.3699 4.63926 13.3141 3.09534 10.8892C1.39586 8.27099 0.338241 5.29008 0.00816212 2.18795C-0.0169672 1.91042 0.0160811 1.63071 0.105202 1.36663C0.194324 1.10254 0.337566 0.859872 0.525808 0.654066C0.71405 0.448259 0.943169 0.283825 1.19858 0.171234C1.45398 0.058642 1.73008 0.000359723 2.0093 9.73016e-05H5.02608C5.5141 -0.00469635 5.98722 0.167778 6.35725 0.485372C6.72727 0.802966 6.96896 1.24401 7.03727 1.72629C7.1646 2.68982 7.40074 3.63587 7.74118 4.54641C7.87648 4.90563 7.90576 5.29602 7.82556 5.67133C7.74536 6.04665 7.55903 6.39115 7.28867 6.66402L6.01156 7.93859C7.44308 10.4512 9.52758 12.5315 12.0451 13.9602L13.3222 12.6856C13.5956 12.4158 13.9408 12.2298 14.3169 12.1498C14.6929 12.0698 15.0841 12.099 15.444 12.234C16.3564 12.5738 17.3043 12.8095 18.2698 12.9365C18.7582 13.0053 19.2044 13.2509 19.5233 13.6265C19.8422 14.0021 20.0116 14.4817 19.9994 14.9738Z" fill="#4F307F" transform="scale(0.8)")
+              span.vacancy-modal__phone-value(data-vacancy-modal-phone)
+            .vacancy-modal__divider
+              span.vacancy-modal__divider-line
+              span Або
+              span.vacancy-modal__divider-line
+            button.vacancy-modal__apply.general-btn(type="button" data-call-us-btn data-vacancy-modal-apply data-vacancy-modal-close)
+              span Відгукнутися на вакансію
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M12.521 11.7715L12.521 12.5215L11.021 12.5215L11.021 6.04004L4.229 12.832L3.16846 11.7715L9.96045 4.97949L3.479 4.97949L3.479 3.47949L4.229 3.47949L11.772 3.47852C11.9707 3.47859 12.1617 3.55774 12.3022 3.69824C12.4428 3.83879 12.5219 4.02979 12.522 4.22852L12.521 11.7715Z" fill="white"/>
+              </svg>
+
+        .vacancy-modal__side
+          .vacancy-modal__section
+            .vacancy-modal__section-head
+              span.vacancy-modal__section-title Ваші основні задачі:
+              span.vacancy-modal__section-line
+            .vacancy-modal__groups(data-vacancy-modal-tasks)
+
+          .vacancy-modal__section
+            .vacancy-modal__section-head
+              span.vacancy-modal__section-title Вимоги до кандидата:
+              span.vacancy-modal__section-line
+            ul.vacancy-modal__list(data-vacancy-modal-requirements)
+
+          .vacancy-modal__section
+            .vacancy-modal__section-head
+              span.vacancy-modal__section-title Ми пропонуємо:
+              span.vacancy-modal__section-line
+            ul.vacancy-modal__list(data-vacancy-modal-offers)

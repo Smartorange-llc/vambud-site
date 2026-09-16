@@ -1,9 +1,19 @@
 mixin pagination()
   .pagination&attributes(attributes)
-    .pagination__utility 
-      +button-prev.pagination__prev 
+    .pagination__utility
+      button.pagination__prev(type="button" aria-label="Попередня сторінка")
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M12 5.99946C12 6.36751 11.701 6.66623 11.333 6.66645L2.27637 6.66645L6.4707 10.8608C6.73092 11.121 6.73064 11.5438 6.4707 11.8041C6.21039 12.0641 5.78858 12.0642 5.52832 11.8041L0.195313 6.47114C0.0702775 6.34612 1.20819e-06 6.17628 2.62245e-07 5.99946C0.000130409 5.82282 0.0703951 5.65269 0.195313 5.52778L5.52832 0.194773C5.7886 -0.0648427 6.21053 -0.0650054 6.4707 0.194773C6.7309 0.454998 6.73066 0.877761 6.4707 1.13813L2.27637 5.33247L11.333 5.33247C11.7008 5.33269 11.9997 5.63163 12 5.99946Z" fill="currentColor"/>
+        </svg>
       .pagination-count
-        .pagination-count__current 01
-        .pagination-count__max з 00 сторінок
-      +button-next.pagination__next
-    button.pagination__more Завантажити ще
+        span.pagination-count__current 01
+        span.pagination-count__divider
+        span.pagination-count__max з 00 сторінок
+      button.pagination__next(type="button" aria-label="Наступна сторінка")
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M-2.62244e-07 5.99945C-2.46156e-07 6.3675 0.298991 6.66622 0.666992 6.66644L9.72363 6.66644L5.5293 10.8608C5.26908 11.121 5.26937 11.5437 5.5293 11.8041C5.78961 12.0641 6.21142 12.0642 6.47168 11.8041L11.8047 6.47113C11.9297 6.34611 12 6.17627 12 5.99945C11.9999 5.82282 11.9296 5.65267 11.8047 5.52777L6.47168 0.194762C6.2114 -0.0648358 5.78946 -0.065005 5.5293 0.194762C5.26909 0.454981 5.26936 0.877746 5.5293 1.13812L9.72363 5.33246L0.666992 5.33246C0.299165 5.33268 0.000282497 5.63164 -2.62244e-07 5.99945Z" fill="currentColor"/>
+        </svg>
+    button.pagination__more(type="button")
+      span Завантажити ще
+      svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+        path(d="M8 3V13M8 13L3.5 8.5M8 13L12.5 8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round")

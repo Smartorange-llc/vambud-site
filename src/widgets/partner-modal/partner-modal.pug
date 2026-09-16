@@ -1,0 +1,33 @@
+mixin partnerModal
+  .overflow(data-partner-modal__overflow data-lenis-prevent).hidden
+    .modal-form.partner-modal(data-partner-modal)
+      .close-btn(data-partner-modal-close)
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M0.928711 2.34375L8.58496 10.001L0.928711 17.6592L2.34277 19.0732L9.99902 11.415L17.6562 19.0732L18.3643 18.3662L19.0713 17.6592L11.4131 10.001L19.0713 2.34375L18.3643 1.63672L17.6562 0.929688L9.99902 8.58691L2.34277 0.929688L0.928711 2.34375Z" fill="#27292B"/>
+        </svg>
+
+      .partner-modal__top
+        ul.partner-modal__discounts(data-partner-modal-discounts)
+        .partner-modal__logo
+          img(data-partner-modal-logo src="" alt="")
+
+      .partner-modal__panel
+        h3.partner-modal__name(data-partner-modal-name)
+        p.partner-modal__text(data-partner-modal-description)
+
+      .partner-modal__panel.partner-modal__panel--contacts
+        .partner-modal__contact-row(data-partner-modal-address-row hidden)
+          span.partner-modal__contact-icon
+            svg(xmlns="http://www.w3.org/2000/svg" width="15" height="24" viewBox="0 0 15 24" fill="none")
+              path(d="M7.4668 0C11.4263 1.47966e-05 14.9335 2.49052 14.9336 7.24512C14.9336 8.24126 14.4056 9.69789 14.1416 10.3018L7.4668 24L0.791992 10.3018C0.528007 9.69793 0 8.2413 0 7.24512C8.18333e-05 2.49051 3.50726 0 7.4668 0ZM7.4668 4.2666C5.69949 4.2666 4.2666 5.69949 4.2666 7.4668C4.26667 9.23405 5.69953 10.667 7.4668 10.667C9.23402 10.6669 10.6669 9.23401 10.667 7.4668C10.667 5.69952 9.23406 4.26666 7.4668 4.2666Z" fill="#4F307F")
+          .partner-modal__contact-col
+            span.partner-modal__contact-label Адреса:
+            p.partner-modal__contact-value(data-partner-modal-address)
+
+        .partner-modal__contact-row(data-partner-modal-phone-row hidden)
+          span.partner-modal__contact-icon
+            svg(xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none")
+              path(d="M4.85843 0.00304438C7.82205 0.166119 11.0236 1.97091 13.5264 4.47375C16.0291 6.97656 17.8331 10.1781 17.9961 13.1417C18.1092 15.1874 15.2314 19.274 14.1006 17.6114C14.0998 17.6102 14.0932 17.6012 14.0899 17.5978L11.7364 13.8038C11.7041 13.7535 11.481 13.3269 11.4698 13.2657C11.2854 12.2944 12.2502 11.3617 12.9805 10.2911C13.0726 10.1564 13.1508 9.93293 13.0694 9.79113C12.4171 8.65316 11.8279 7.955 10.9346 7.06164C10.0413 6.16831 9.34657 5.57916 8.20511 4.92687C8.06329 4.8456 7.83973 4.92717 7.70511 5.01574C6.63115 5.74592 5.70263 6.71047 4.73147 6.52648C4.67475 6.51585 4.24204 6.28824 4.19241 6.25988L0.402372 3.91027C0.401877 3.90994 0.392373 3.90305 0.3887 3.89953C-1.27383 2.77224 2.80931 -0.106552 4.85843 0.00304438Z" fill="#4F307F")
+          .partner-modal__contact-col
+            span.partner-modal__contact-label Контактний номер:
+            a.partner-modal__contact-value(data-partner-modal-phone)

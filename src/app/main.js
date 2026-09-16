@@ -1,9 +1,8 @@
 import "./styles/index.scss";
 
-// Swiper styles.
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+// Vendor styles (swiper etc.), scoped to a low-priority CSS layer so
+// widget/page styles always win regardless of bundle chunk order.
+import "./styles/vendor.scss";
 
 // Forms initialization.
 import "@features/form/form-init";

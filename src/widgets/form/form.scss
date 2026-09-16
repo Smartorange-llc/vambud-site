@@ -106,7 +106,7 @@
   align-items: center;
   padding: 28px 20px;
   border-radius: 32px;
-  border: 1px solid #DFDEE1;
+  border: 1px solid $bg-color;
 
 
   @include tablet {
@@ -274,11 +274,11 @@
 
   .inputs-wrapper {
     gap: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
 
     @include tablet {
-      gap: 16px;
-      margin-bottom: 28px;
+      gap: 28px;
+      margin-bottom: 32px;
     }
   }
 
@@ -296,7 +296,7 @@
 
   .general-btn {
     width: 100%;
-    background-color: transparent;
+
     border: 1px solid $accent-color;
 
     &::before {
@@ -323,6 +323,8 @@
 
     @media (hover: hover) {
       &:hover {
+        background-color: $wc;
+
         span {
           color: $accent-color;
         }
@@ -477,11 +479,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  width: 20px;
-  height: 20px;
-  top: 20px;
-  right: 20px;
+  border-radius: 50%;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  width: 24px;
+  height: 24px;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
 
   @media (hover: hover) {
@@ -494,8 +498,8 @@
 
   svg {
     transition: transform 0.3s ease;
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
 
     path {
       fill: $text-color;
@@ -763,7 +767,7 @@
 
 .input-message {
   position: absolute;
-  bottom: -25px;
+  bottom: -20px;
   // left: 50%;
   // transform: translateX(-50%);
   z-index: 2;
@@ -881,7 +885,9 @@
 //   }
 // }
 
-.submit-btn__text {}
+.general-btn span.submit-btn__text {
+  @include middle-text;
+}
 
 .iti__flag {
   background-image: url("/src/widgets/form/img/flags.png");

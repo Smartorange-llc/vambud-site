@@ -1,0 +1,79 @@
+{
+  "map": {
+    "mapbox_access_token": "key",
+    "default_coordinates": [48.916, 24.687],
+    "default_zoom": 16,
+    "markers": [
+      {
+        "type": "main",
+        "coordinates": [48.916, 24.687],
+        "title": "ЖК Wawel (Вавель)",
+        "description": "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)",
+        "images": ["/src/shared/images/projects/wawel.jpg"]
+      },
+      {
+        "type": "shop",
+        "coordinates": [48.9145, 24.6905],
+        "title": "ТРЦ Veles Mall",
+        "description": "Найближчий торговельно-розважальний центр",
+        "images": ["/src/shared/images/projects/krakivskyi.jpg"]
+      },
+      {
+        "type": "school",
+        "coordinates": [48.9178, 24.684],
+        "title": "Загальноосвітня школа",
+        "description": "5–7 хв пішки від комплексу",
+        "images": []
+      },
+      {
+        "type": "school",
+        "coordinates": [48.9152, 24.6825],
+        "title": "Дитячий садок",
+        "description": "У пішій доступності",
+        "images": []
+      },
+      {
+        "type": "pharmacy",
+        "coordinates": [48.9163, 24.6888],
+        "title": "Аптека",
+        "description": "Поруч з комплексом",
+        "images": []
+      },
+      {
+        "type": "restaurant",
+        "coordinates": [48.9157, 24.6912],
+        "title": "Кафе та ресторани",
+        "description": "Район Позитрон",
+        "images": []
+      },
+      {
+        "type": "sport",
+        "coordinates": [48.9183, 24.6892],
+        "title": "Спортивний майданчик",
+        "description": "Відкритий майданчик поруч",
+        "images": []
+      },
+      {
+        "type": "parking",
+        "coordinates": [48.9139, 24.6858],
+        "title": "АЗС",
+        "description": "На виїзді з району",
+        "images": []
+      },
+      {
+        "type": "underground",
+        "coordinates": [48.9161, 24.6867],
+        "title": "Зупинка громадського транспорту",
+        "description": "Автобусні маршрути в центр міста",
+        "images": []
+      },
+      {
+        "type": "terminal",
+        "coordinates": [48.917, 24.6903],
+        "title": "Відділення поштового оператора",
+        "description": "Пункт видачі посилок",
+        "images": []
+      }
+    ]
+  }
+}

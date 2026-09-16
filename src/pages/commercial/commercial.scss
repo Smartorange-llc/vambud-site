@@ -1,0 +1,1104 @@
+// Body role — matches the mockup's Body token (Montserrat Medium,
+// 16px on mobile / 18px from tablet up), not the lighter `general-text`.
+@mixin commercial-body {
+  font-family: $default-font;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.03em;
+  font-size: 16px;
+
+  @include tablet {
+    font-size: 16px;
+  }
+}
+
+// ==========================================================================
+// Hero
+// ==========================================================================
+
+.commercial-hero {
+  position: relative;
+  height: 240px;
+  min-height: 240px;
+  overflow: hidden;
+
+  @include tablet {
+    height: 340px;
+  }
+
+  @include laptop {
+    height: vw(601);
+  }
+}
+
+.commercial-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.commercial-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 16, 16, 0.5) 0%, rgba(91, 95, 104, 0.55) 60%, $bg-color 100%);
+}
+
+.commercial-hero__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.commercial-hero__title {
+  @include section-title;
+  color: $wc;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0;
+
+  @include laptop {
+    font-size: vw(100);
+  }
+}
+
+// ==========================================================================
+// Promo card
+// ==========================================================================
+.commercial-promo-wrap {
+  margin-top: -30px;
+
+  @include tablet {
+    margin-top: -40px;
+  }
+}
+
+.commercial-promo {
+  position: relative;
+  background-color: $wc;
+  overflow: hidden;
+  border-radius: 24px;
+
+  min-height: 360px;
+
+  @include tablet {}
+
+  @include laptop {
+    display: flex;
+    border-radius: vw(40);
+    justify-content: flex-end;
+    min-height: vw(680);
+  }
+}
+
+
+.commercial-promo__bg {
+  aspect-ratio: 351 / 220;
+  object-fit: cover;
+  object-position: left;
+
+  @include tablet {
+    aspect-ratio: 728 / 438;
+  }
+
+  @include laptop {
+    aspect-ratio: auto;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.commercial-promo__overlay {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0% 25%, rgba(255, 255, 255, 1) 40% 100%);
+
+  @include tablet {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0% 40%, rgba(255, 255, 255, 1) 55% 100%);
+  }
+
+  @include laptop {
+    background: none;
+  }
+}
+
+.commercial-promo__text {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  padding: 20px 12px;
+
+
+  @include tablet {
+    padding: 40px;
+  }
+
+  @include laptop {
+    width: vw(608);
+    gap: vw(28);
+    padding: vw(120) vw(60);
+  }
+}
+
+.commercial-promo__title {
+  @include subtitle-text;
+  color: $bc;
+  margin: 0;
+
+  @include laptop {
+    font-size: vw(24);
+  }
+}
+
+.commercial-promo__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+
+  @include tablet {
+    flex-direction: row;
+    width: auto;
+  }
+}
+
+.commercial-promo__cta.general-btn {
+
+
+  span {
+    text-transform: none;
+  }
+
+  & path {
+    fill: $wc
+  }
+}
+
+// Mobile only: the continuation sentence stays collapsed behind the
+// button; tablet+ always shows the full text (matches the Figma "mobile"
+// frame — no equivalent collapsed state exists at larger breakpoints).
+.commercial-promo__body--more {
+  display: none;
+}
+
+.commercial-promo__text.is-expanded .commercial-promo__body--more {
+  display: block;
+}
+
+.commercial-promo__more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 20px;
+  background: none;
+  border: 1px solid #cfcfcf;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  width: fit-content;
+
+  span {
+    @include commercial-body;
+    font-weight: 700;
+    color: $bc;
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: $bc;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $accent-color;
+    }
+  }
+}
+
+.commercial-promo__more-vbar {
+  transition: opacity 0.2s ease;
+}
+
+.commercial-promo__more[aria-expanded="true"] .commercial-promo__more-vbar {
+  opacity: 0;
+}
+
+@include tablet {
+  .commercial-promo__more {
+    display: none;
+  }
+
+  .commercial-promo__body--more {
+    display: block;
+  }
+}
+
+.commercial-promo__body {
+  @include commercial-body;
+  color: $bc;
+  margin: 0;
+}
+
+// ==========================================================================
+// Sale/Rent toggle
+// ==========================================================================
+
+.commercial-list {
+  padding-top: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(120);
+  }
+}
+
+.commercial-list__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 20px;
+
+  @include laptop {
+    align-items: center;
+
+    margin-bottom: vw(40);
+  }
+}
+
+.commercial-list__nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 100px;
+  border: 1px solid #cfcfcf;
+  background-color: $wc;
+  color: $bc;
+  font-family: $default-font;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.72px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+
+  &.is-active {
+    border-color: transparent;
+    background-color: $accent-color;
+    color: $wc;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-active):hover {
+      border-color: $accent-color;
+    }
+  }
+}
+
+.commercial-list__nav-count {
+  opacity: 0.7;
+}
+
+// ==========================================================================
+// Property accordion
+// ==========================================================================
+
+.commercial-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include tablet {
+    gap: 20px;
+  }
+
+  @include laptop {
+    gap: vw(40);
+  }
+}
+
+.commercial-item {
+  position: relative;
+  background-color: $wc;
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 3px 0 0 #C7BDD5 inset;
+
+  @include tablet {
+    padding: 20px;
+  }
+
+  @include laptop {
+    border-radius: vw(32);
+    padding: vw(40);
+  }
+}
+
+.commercial-item__slider {
+  position: relative;
+  width: 100%;
+  height: 220px;
+
+
+
+  @include tablet {
+    height: 320px;
+  }
+
+  @include laptop {
+    height: vw(500);
+
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.commercial-item__gallery {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+
+  @include tablet {
+    border-radius: 20px;
+  }
+
+  .swiper-slide {
+    height: 100%;
+  }
+}
+
+// Arrows + "01 / 02" counter pill, centred at the bottom of the photo
+// exactly as in the mockup.
+.commercial-item__gallery-nav {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 100px;
+  background-color: rgba(15, 16, 16, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  @include laptop {
+    bottom: vw(20);
+  }
+}
+
+.commercial-item__gallery-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  &.swiper-button-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.commercial-item__gallery-arrow--next svg {
+  transform: rotate(180deg);
+}
+
+.commercial-item__gallery-counter {
+  @include tiny-text;
+  font-weight: 500;
+  color: $wc;
+  min-width: 52px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.commercial-item__badge,
+.commercial-item__price-badge {
+  position: absolute;
+  top: 16px;
+  z-index: 2;
+  @include general-text;
+  color: $bc;
+  background-color: $wc;
+  padding: 8px 16px;
+  border-radius: 100px;
+
+
+  span {
+    text-transform: none;
+  }
+
+  @include laptop {
+    top: vw(20);
+  }
+}
+
+.commercial-item__badge {
+  left: 12px;
+  border-radius: 0 100px 100px 0;
+  background-color: #F3752B;
+
+  padding: 5px 16px 5px 8px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+
+
+  span {
+    color: $wc;
+    text-transform: none;
+  }
+
+  svg {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    width: 19px;
+    height: 50px;
+  }
+
+
+}
+
+.commercial-item__price-badge {
+  right: 16px;
+
+  @include laptop {
+    right: vw(20);
+  }
+}
+
+.commercial-item__main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 0 0;
+
+  @include tablet {
+    padding: 40px 0 0;
+  }
+
+  @include laptop {
+    padding: vw(40) 0 0;
+  }
+}
+
+.commercial-item__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #cfcfcf;
+  flex-direction: column;
+
+  @include laptop {
+    padding-bottom: vw(24);
+    flex-direction: row;
+  }
+}
+
+.commercial-item__title {
+  @include article-title;
+  flex: 1 0 0;
+  min-width: 0;
+  color: $accent-color;
+  margin: 0;
+  text-transform: uppercase;
+
+  @include laptop {
+    font-size: vw(60);
+  }
+}
+
+// Same visual pattern as .general-btn (filled purple pill, white border),
+// but with the label swapping between "Показати ще"/"Показати менше" via
+// the two spans below — CSS just shows whichever matches the open state.
+.commercial-item__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  height: 48px;
+  padding: 0 24px;
+  background-color: $accent-color;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  color: $wc;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  @include tablet {
+    height: 68px;
+  }
+
+  @include laptop {
+    height: vw(68);
+    padding: 0 vw(32);
+  }
+
+  svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+
+    path {
+      fill: $wc;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.commercial-item__toggle-label {
+  @include btn-text;
+  color: $wc;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+[data-toggle-open-label] {
+  display: none;
+}
+
+.commercial-item.is-open {
+  .commercial-item__toggle svg {
+    transform: rotate(180deg);
+  }
+
+  [data-toggle-open-label] {
+    display: block;
+  }
+
+  [data-toggle-closed-label] {
+    display: none;
+  }
+}
+
+.commercial-item__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include tablet {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  @include laptop {
+    gap: vw(120);
+  }
+}
+
+.commercial-item__location,
+.commercial-item__info {
+  display: flex;
+  align-items: center;
+  flex: 1 0 0;
+  min-width: 0;
+  gap: 8px;
+  @include subtitle-text;
+  color: $bc;
+  margin: 0;
+
+  @include laptop {
+    font-size: vw(24);
+    width: calc(50% - vw(60));
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: $accent-color;
+  }
+}
+
+.commercial-item__body {
+  padding: 20px 0;
+
+  @include laptop {
+    padding: vw(40) 0;
+  }
+}
+
+.commercial-item:not(.is-open) .commercial-item__body {
+  display: none;
+}
+
+.commercial-item__columns {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid $accent-color-2;
+  margin-bottom: 24px;
+
+  @include tablet {
+    flex-direction: row;
+    gap: 40px;
+  }
+
+  @include laptop {
+    gap: vw(120);
+    padding-bottom: vw(32);
+    margin-bottom: vw(32);
+  }
+}
+
+.commercial-item__left,
+.commercial-item__right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @include tablet {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+
+  @include laptop {
+    width: calc(50% - vw(60));
+  }
+}
+
+.commercial-item__left {
+  @include laptop {
+    gap: vw(40);
+  }
+}
+
+.commercial-item__description {
+  @include commercial-body;
+  color: $grey-color;
+  margin: 0;
+}
+
+.commercial-item__features-title {
+  @include subtitle-text;
+  font-size: 16px;
+  color: $bc;
+  margin: 0;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.commercial-item__cta {
+  span {
+    text-transform: none;
+  }
+
+  svg path {
+    fill: $wc
+  }
+}
+
+.commercial-item__features {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    @include commercial-body;
+    position: relative;
+    color: $grey-color;
+    padding-left: 16px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: $accent-color;
+    }
+  }
+}
+
+// ==========================================================================
+// Unit cards ("Доступні комерційні приміщення")
+// ==========================================================================
+
+.commercial-item__units-title {
+  @include article-title;
+  color: $bc;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+
+  @include laptop {
+    margin-bottom: vw(24);
+  }
+}
+
+.commercial-item__units-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.commercial-unit {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 20px;
+
+  background: rgba(223, 222, 225, 0.01);
+  box-shadow: 0 0 40px 0 rgba(79, 48, 127, 0.10) inset;
+
+  @include laptop {
+    flex-direction: row;
+    gap: vw(40);
+    padding: vw(8);
+    border-radius: vw(32);
+  }
+}
+
+// Mobile only: .info and .left are flattened via `display: contents` so
+// .commercial-unit__cta (nested two levels deep, inside .left inside .info)
+// becomes a direct flex item of .commercial-unit and can be pushed to the
+// bottom of the whole card (after the floor plan) with `order`, matching
+// the mobile mockup. Tablet+ restores the normal nested two-column layout
+// with the button staying under the description where it already was.
+.commercial-unit__info {
+  display: contents;
+
+  @include tablet {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    gap: vw(40);
+    padding: vw(32);
+  }
+}
+
+.commercial-unit__left {
+  display: contents;
+
+  @include tablet {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1 0 0;
+    min-width: 0;
+  }
+
+  @include laptop {
+    flex: auto;
+    width: vw(372)
+  }
+}
+
+.commercial-unit__right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @include tablet {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+}
+
+.commercial-unit__right {
+  @include laptop {
+    flex: auto;
+    padding: 0 vw(32);
+    width: vw(320)
+  }
+}
+
+.commercial-unit__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+// H3 з макета: 32 (375) / 48 (768) / 48 (1920), Bold.
+.commercial-unit__area {
+  @include section-title;
+  color: $accent-color;
+  font-weight: 700;
+  margin: 0;
+
+  @include tablet {
+    font-size: 48px;
+  }
+
+  @include laptop {
+    font-size: vw(48);
+  }
+}
+
+.commercial-unit__floor {
+  @include tiny-text;
+  flex-shrink: 0;
+  color: $bc;
+  border: 1px solid $bc;
+  border-radius: 100px;
+  padding: 6px 16px;
+}
+
+.commercial-unit__description {
+  @include commercial-body;
+  color: $grey-color;
+  margin: 0;
+}
+
+.commercial-unit__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  height: 56px;
+  padding: 0 24px;
+  background-color: $accent-color;
+  border-radius: 100px;
+  color: $wc;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  // Mobile only (see .commercial-unit__info/.left's display: contents
+  // above): pushes the button after .commercial-unit__right and
+  // .commercial-unit__plan, to the very bottom of the card.
+  order: 1;
+
+  @include tablet {
+    order: 0;
+  }
+
+  @include laptop {
+    height: vw(68);
+    padding: 0 vw(32);
+  }
+
+  span {
+    @include btn-text;
+
+    color: $wc;
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: $wc;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.commercial-unit__suitable-title {
+  @include subtitle-text;
+  font-size: 16px;
+  color: $bc;
+  margin: 0;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.commercial-unit__suitable {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    @include commercial-body;
+    position: relative;
+    color: $grey-color;
+    padding-left: 16px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: $accent-color;
+    }
+  }
+}
+
+// Unit photos are real floor-plan diagrams (from the Figma source), not
+// lifestyle photos — object-fit: contain on a light card so the plan stays
+// fully legible instead of being cropped like a cover photo.
+.commercial-unit__plan {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  order: -1;
+
+
+  @include tablet {
+    aspect-ratio: 892 / 544;
+
+  }
+
+  @include laptop {
+    order: 5;
+    width: vw(892);
+    flex-shrink: 0;
+    border-radius: vw(28);
+
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+}
+
+.commercial-unit__plan-slider {
+  width: 100%;
+  height: 100%;
+
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.commercial-unit__plan-arrow {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  &.swiper-button-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  @include laptop {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.commercial-unit__plan-arrow--prev {
+  left: 8px;
+
+  @include laptop {
+    left: vw(20);
+  }
+}
+
+.commercial-unit__plan-arrow--next {
+  right: 8px;
+
+  svg {
+    transform: rotate(180deg);
+  }
+
+  @include laptop {
+    right: vw(20);
+  }
+}
+
+// SEO content accordion — now the shared seo-accordion widget
+// (src/widgets/seo-accordion). Only this section's own spacing stays here.
+.commercial-seo {
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  @include tablet {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  @include laptop {
+    padding-top: vw(100);
+    padding-bottom: vw(100);
+  }
+}

@@ -305,28 +305,53 @@
   }
 }
 
+// Pseudo-element hover: the purple fill at rest is ::before, rolling up
+// and out on hover (plus the existing lift) to reveal the white base
+// underneath — sized past the circular clip edge so no pixel seam shows
+// where it settles.
 .footer-form__social {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-color: $accent-color;
+  background-color: $wc;
   color: $wc;
+  overflow: hidden;
   flex-shrink: 0;
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    z-index: 0;
+    background-color: $accent-color;
+    border-radius: 50%;
+    transform: translateY(0) rotate(0deg);
+    transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+  }
 
   svg {
+    position: relative;
+    z-index: 1;
     width: 24px;
     height: 24px;
   }
 
   @media (hover: hover) {
     &:hover {
-      background-color: $wc;
       color: $accent-color;
       transform: translateY(-3px);
+
+      &::before {
+        transform: translateY(-130%) rotate(-140deg);
+      }
     }
   }
 }
@@ -371,6 +396,7 @@
 
   .general-btn {
     width: 100%;
+    background-color: $wc;
 
     @include tablet {
       width: fit-content;
@@ -380,7 +406,7 @@
 
 .footer-form {
   .form-field__input {
-    @include btn-text;
+    @include middle-text;
     width: 100%;
     color: $text-color;
     border: none;
@@ -404,7 +430,7 @@
   }
 
   .placeholder {
-    @include btn-text;
+    @include middle-text;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -583,8 +609,8 @@
 
 .footer-contacts__map-btn.general-btn {
   margin-top: 12px;
-  height: auto;
-  padding: 14px 20px;
+  // height: auto;
+
 
   span {
     text-transform: none;
@@ -592,6 +618,14 @@
 
   @include tablet {
     margin-top: 20px;
+  }
+
+  @media (hover:hover) {
+    &:hover {
+      span {
+        color: $accent-color;
+      }
+    }
   }
 }
 
@@ -639,7 +673,11 @@
   gap: 4px;
 }
 
+// Pseudo-element hover: ::before is hidden above at rest (transparent
+// button), rolling down into place on hover to fill it purple — sized
+// past the circular clip edge so no pixel seam shows where it settles.
 .footer-contacts__icon {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -648,26 +686,38 @@
   border-radius: 50%;
   border: 1px solid #CFCFCF;
   color: $text-color;
+  overflow: hidden;
   flex-shrink: 0;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    z-index: 0;
+    background-color: $accent-color;
+    border-radius: 50%;
+    transform: translateY(-130%) rotate(-140deg);
+    transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+  }
 
   svg {
+    position: relative;
+    z-index: 1;
     width: 24px;
     height: 24px;
-
-    path {
-      transition: fill 0.3s ease-in-out;
-    }
   }
 
   @media (hover: hover) {
     &:hover {
-      background-color: $accent-color;
       border-color: $accent-color;
       color: $wc;
 
-      svg path {
-        fill: $wc;
+      &::before {
+        transform: translateY(0) rotate(0deg);
       }
     }
   }
@@ -680,7 +730,11 @@
   flex-wrap: wrap;
 }
 
+// Pseudo-element hover: ::before is hidden above at rest (transparent
+// button), rolling down into place on hover to fill it purple — sized
+// past the circular clip edge so no pixel seam shows where it settles.
 .footer-contacts__social {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -690,17 +744,29 @@
   background-color: $wc;
   border: 1px solid #CFCFCF;
   color: $text-color;
+  overflow: hidden;
   flex-shrink: 0;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    z-index: 0;
+    background-color: $accent-color;
+    border-radius: 50%;
+    transform: translateY(-130%) rotate(-140deg);
+    transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+  }
 
   svg {
+    position: relative;
+    z-index: 1;
     width: 24px;
     height: 24px;
-
-    path {
-
-      transition: fill 0.3s ease-in-out;
-    }
   }
 
   text {
@@ -709,12 +775,11 @@
 
   @media (hover: hover) {
     &:hover {
-      background-color: $accent-color;
       border-color: $accent-color;
       color: $wc;
 
-      svg path {
-        fill: $wc;
+      &::before {
+        transform: translateY(0) rotate(0deg);
       }
     }
   }

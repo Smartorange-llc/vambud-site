@@ -1,185 +1,215 @@
 @use "../../app/styles/vars.scss" as *;
 @use "../../app/styles/mixins.scss" as *;
 
-.page-404 {
+.page-404-hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
   display: flex;
   flex-direction: column;
-  height: 100svh;
+  align-items: center;
+  justify-content: space-between;
+  padding: 96px 20px 40px;
+  overflow: hidden;
+  text-align: center;
+
+  @include tablet {
+    padding: 132px 40px 56px;
+  }
 
   @include laptop {
+    padding: vw(160) vw(40) vw(90);
+  }
+}
+
+.page-404-hero__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  @include tablet {
+    gap: 20px;
+  }
+
+  @include laptop {
+    gap: vw(24);
+  }
+}
+
+.page-404-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: -2;
+}
+
+.page-404-hero__gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.page-404-hero__gradient--top {
+  top: 0;
+  height: 35%;
+  background: linear-gradient(180deg, rgba(9, 10, 12, 0.9) 0%, rgba(9, 10, 12, 0) 100%);
+}
+
+.page-404-hero__gradient--bottom {
+  bottom: 0;
+  height: 55%;
+  background: linear-gradient(0deg, rgba(9, 10, 12, 0.9) 0%, rgba(9, 10, 12, 0) 100%);
+}
+
+.page-404-hero__number {
+  display: block;
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  color: $wc;
+  font-size: 96px;
+
+  @include tablet {
+    font-size: 160px;
+  }
+
+  @include laptop {
+    font-size: vw(200);
+  }
+}
+
+.page-404-hero__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 320px;
+
+  @include tablet {
+    max-width: 560px;
+    gap: 16px;
+  }
+
+  @include laptop {
+    max-width: vw(800);
+    gap: vw(16);
+  }
+}
+
+.page-404-hero__title {
+  @include article-title;
+  margin: 0;
+  color: $wc;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  text-shadow: 0 0 60px #090a0c;
+}
+
+.page-404-hero__subtitle {
+  margin: 0;
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: $wc;
+  text-shadow: 0 0 40px rgba(9, 10, 12, 0.25);
+  font-size: 14px;
+
+  @include tablet {
+    font-size: 18px;
+  }
+
+  @include laptop {
+    font-size: vw(24);
+    letter-spacing: -0.08em;
+  }
+}
+
+.page-404-hero__btns {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 320px;
+  gap: 8px;
+
+  @include tablet {
     flex-direction: row;
-  }
-
-  // ── Photo side ──────────────────────────────────────────────────────────────
-  &__photo {
-    position: relative;
-    overflow: hidden;
-    flex: 1 1 55%;
-
-    @include laptop {
-      width: 50%;
-      flex: none;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-  }
-
-  &__number {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: $default-font;
-    font-size: clamp(100px, 42vw, 200px);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: rgba(246, 244, 235, 0.18);
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 1;
-
-    @include laptop {
-      font-size: clamp(140px, 20vw, 260px);
-    }
-  }
-
-  &__circle-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    z-index: 2;
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background-color: $wc;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-decoration: none;
-    font-family: $default-font;
-    font-size: 9px;
-    font-weight: 700;
+    width: auto;
+    max-width: none;
+    gap: 12px;
+  }
+}
+
+.page-404-hero__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+  @include tablet {
+    padding: 20px 32px;
+  }
+
+  span {
+    @include btn-text;
+    color: $wc;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: $accent-color;
-    line-height: 1.5;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+    transition: color 0.3s ease-in-out;
+  }
 
-    @include tablet {
-      width: 92px;
-      height: 92px;
-      font-size: 11px;
-      top: 20px;
-      right: 20px;
+  svg {
+    flex-shrink: 0;
+
+    path {
+      transition: fill 0.3s ease-in-out;
     }
+  }
+}
 
+.page-404-hero__btn--primary {
+  background-color: $accent-color;
+
+  @media (hover: hover) {
     &:hover {
-      background-color: $accent-color;
-      color: $wc;
+      background-color: transparent;
     }
   }
+}
 
-  // ── Info side ───────────────────────────────────────────────────────────────
-  &__info {
-    background-color: $wc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px 110px;
+.page-404-hero__btn--ghost {
+  background-color: $wc;
+  border-color: $wc;
 
-
-    @include tablet {
-      padding: 40px;
-    }
-
-    @include laptop {
-      width: 50%;
-      flex: none;
-      padding: vw(100);
-    }
+  span {
+    color: $bc;
   }
 
-  &__info-inner {
-
-    width: 100%;
-  }
-
-  &__subtitle {
-    @include general-text;
-    color: $grey-color;
-    margin-bottom: 12px;
-
-    @include tablet {
-      margin-bottom: 16px;
-    }
-  }
-
-  &__title {
-    @include section-title;
-    background: linear-gradient(89deg, #27292B 0%, #BB9983 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 24px;
-
-    @include tablet {
-      margin-bottom: 40px;
-    }
-
-    @include tablet {
-      margin-bottom: 60px;
-    }
-
-
-  }
-
-  // ── Buttons ─────────────────────────────────────────────────────────────────
-  &__btns {
-    display: flex;
-    gap: 8px;
-
-    @include tablet {
-      gap: 12px;
-    }
-  }
-
-  &__btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 20px;
-    background-color: $accent-color;
-    border-radius: 100px;
-    border: 1px solid $accent-color;
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-
-    @include tablet {
-      flex: none;
-      padding: 18px 40px;
-    }
-
-    span {
-      @include tiny-text;
-      color: $wc;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
+  @media (hover: hover) {
     &:hover {
       background-color: transparent;
 
       span {
-        color: $accent-color;
+        color: $wc;
+      }
+
+      svg path {
+        fill: $wc;
       }
     }
   }

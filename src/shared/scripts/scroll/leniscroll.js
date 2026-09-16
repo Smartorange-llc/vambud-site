@@ -52,7 +52,15 @@ export const initSmoothScrolling = () => {
   lenis.on("scroll", () => ScrollTrigger.update());
   window.lenis = lenis;
 
+  // Scroll-lock (used while a modal/menu overflow is open) blocks wheel/touch/
+  // keyboard scrolling on the whole page so the content behind it can't move.
+  // Anything marked data-lenis-prevent — the same attribute Lenis itself
+  // already respects for "this region manages its own scroll" — is exempt,
+  // so a modal with internally scrollable panels (e.g. a popup taller than
+  // its own fixed height) can still be scrolled while it's open.
   const freezeGestures = (e) => {
+    if (e.target?.closest?.("[data-lenis-prevent]")) return;
+
     if (e.cancelable) {
       e.preventDefault();
     }
@@ -62,6 +70,7 @@ export const initSmoothScrolling = () => {
   const freezeKeyboardScroll = (e) => {
     const blockedKeys = ["Space", "PageUp", "PageDown", "End", "Home", "ArrowUp", "ArrowDown"];
     if (!blockedKeys.includes(e.code)) return;
+    if (e.target?.closest?.("[data-lenis-prevent]")) return;
 
     if (e.cancelable) {
       e.preventDefault();

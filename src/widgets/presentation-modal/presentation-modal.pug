@@ -1,0 +1,65 @@
+mixin presentationModal
+  .overflow(data-presentation-modal__overflow data-lenis-prevent).hidden
+    .modal-form.presentation-modal(data-presentation-modal)
+      .close-btn(data-presentation-modal-close)
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M0.928711 2.34375L8.58496 10.001L0.928711 17.6592L2.34277 19.0732L9.99902 11.415L17.6562 19.0732L18.3643 18.3662L19.0713 17.6592L11.4131 10.001L19.0713 2.34375L18.3643 1.63672L17.6562 0.929688L9.99902 8.58691L2.34277 0.929688L0.928711 2.34375Z" fill="#27292B"/>
+        </svg>
+
+      .presentation-modal__photo
+        img(src="/src/shared/images/presentation/presentation-book.png" alt="Презентація VAMBUD" loading="lazy")
+
+      .presentation-modal__panel
+        h3.presentation-modal__title Отримати презентацію
+
+        form(data-form="presentation" contact-form-js autocomplete="off").presentation-modal__form
+          .presentation-modal__inputs
+            .form-field.presentation-modal__field(data-field-input data-field-name data-status="field--inactive")
+              input(type="text" name="name" placeholder="Введіть ваше ім'я").form-field__input
+              .input-message(data-input-message)
+            .form-field.presentation-modal__field(data-field-input data-field-phone data-status="field--inactive")
+              input(type="text" name="phone" placeholder="Телефон").form-field__input
+              .input-message(data-input-message)
+
+          .presentation-modal__social
+            p.presentation-modal__social-label Зручний для вас месенджер для відправки презентації
+            .presentation-modal__messengers(data-presentation-messenger-group)
+              input(type="hidden" name="messenger" value="" data-presentation-messenger-value)
+
+              button(type="button" data-presentation-messenger="Telegram").presentation-modal__messenger
+                span.presentation-modal__messenger-check
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M2.5 6.2L5 8.5L9.5 3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                span.presentation-modal__messenger-name Telegram
+                span.presentation-modal__messenger-icon
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M20.7588 5.07501C21.5257 4.81813 22.1959 5.22714 21.9463 6.27423L21.9463 6.27521L19.1289 18.1551C18.9166 18.9937 18.3614 19.2022 17.5742 18.8074L13.2822 15.9783L11.2119 17.7596C10.9825 17.9647 10.7904 18.1356 10.3486 18.1356L10.6572 14.2274L18.6123 7.79865C18.9578 7.52307 18.5377 7.37092 18.0752 7.6463L8.24122 13.1844L4.00782 11.9988C3.08698 11.742 3.06936 11.1749 4.19923 10.7801L20.7588 5.07501Z" fill="currentColor"/>
+                  </svg>
+
+              button(type="button" data-presentation-messenger="Viber").presentation-modal__messenger
+                span.presentation-modal__messenger-check
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M2.5 6.2L5 8.5L9.5 3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                span.presentation-modal__messenger-name Viber
+                span.presentation-modal__messenger-icon
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12.5754 3.01242C12.5341 3.00991 7.97452 2.73875 5.74634 4.85421C4.49042 6.1529 4.05671 8.01872 4.01099 10.3562C3.96531 12.694 3.89667 17.0629 7.98462 18.2673V20.0857C7.98414 20.1034 7.96752 20.8194 8.41822 20.9597C8.98913 21.1486 9.30966 20.5812 9.85767 19.9909C10.1545 19.6604 10.5657 19.188 10.8626 18.8103C13.6477 19.0463 15.7944 18.5037 16.0471 18.4089C16.6184 18.22 19.7922 17.7945 20.3176 13.4265C20.8658 8.89275 20.0894 6.03569 18.6506 4.76046C18.2166 4.35896 16.4808 3.03604 12.5754 3.01242ZM8.82935 6.83761C9.14902 6.67236 9.44606 6.71963 9.65162 6.97921C9.65162 6.97921 10.0626 7.49869 10.2454 7.75851C10.4051 7.99451 10.6337 8.37209 10.7708 8.58468C10.9763 8.9625 10.8392 9.3647 10.6565 9.53L10.2454 9.86007C10.041 10.0248 10.0626 10.3535 10.0627 10.3562C10.0675 10.3754 10.6433 12.6968 12.8948 13.3083C12.8948 13.3083 13.2143 13.331 13.3743 13.1189L13.6946 12.6941C13.8544 12.4816 14.2195 12.3402 14.6077 12.5525C14.8132 12.6705 15.1791 12.9065 15.4075 13.0954C15.657 13.283 16.1544 13.7038 16.1614 13.7097C16.4123 13.9222 16.4578 14.2289 16.2981 14.5593C16.1382 14.8662 15.9094 15.1502 15.6126 15.4099C15.3845 15.6219 15.1561 15.7162 14.928 15.7634H14.8362C14.7449 15.7633 14.6305 15.7401 14.5393 15.7165C14.1967 15.622 13.6255 15.362 12.6438 14.8191C12.0272 14.4649 11.5015 14.0873 11.0676 13.7331C10.8393 13.5442 10.588 13.3317 10.3596 13.072L10.2688 12.9773C10.0176 12.7175 9.81186 12.481 9.62916 12.2448C9.28662 11.7962 8.92091 11.2534 8.57837 10.6159C8.05312 9.62425 7.80159 9.0338 7.71021 8.65597C7.68741 8.56168 7.66438 8.46713 7.66431 8.34933V8.25461C7.68714 8.01855 7.80167 7.78167 8.00708 7.54562C8.25817 7.26245 8.53265 7.02645 8.82935 6.83761ZM12.1184 6.20968C13.4157 6.20968 14.5083 6.65966 15.3792 7.53488C16.2564 8.41663 16.7082 9.61859 16.7083 11.112C16.708 11.2498 16.5961 11.362 16.4583 11.362C16.3205 11.3618 16.2085 11.2497 16.2083 11.112C16.2082 9.72474 15.7919 8.65858 15.0247 7.88742C14.2511 7.10997 13.2876 6.70968 12.1184 6.70968C11.9806 6.70949 11.8685 6.5975 11.8684 6.45968C11.8686 6.32193 11.9807 6.20988 12.1184 6.20968ZM12.5735 7.36691C13.492 7.442 14.2421 7.77075 14.7952 8.39425L14.7961 8.39523C15.3213 8.98995 15.5909 9.76176 15.5667 10.6452C15.5627 10.7829 15.4475 10.892 15.3098 10.8884C15.1721 10.8844 15.063 10.7693 15.0667 10.6316C15.0851 9.95881 14.9093 9.38075 14.5745 8.91769L14.4211 8.72628C13.9695 8.21702 13.3489 7.93168 12.5325 7.86496C12.3952 7.8535 12.2929 7.73275 12.304 7.59543C12.3155 7.45822 12.4362 7.35586 12.5735 7.36691ZM12.8626 8.59445C13.3288 8.62051 13.7175 8.76794 13.9934 9.06418C14.2668 9.35792 14.3984 9.76515 14.4231 10.2487C14.4299 10.3865 14.3235 10.5035 14.1858 10.5105C14.0484 10.517 13.9312 10.4116 13.9241 10.2741C13.903 9.86075 13.7942 9.58245 13.6282 9.40402C13.4646 9.22853 13.2131 9.11563 12.8352 9.09445C12.6979 9.08638 12.5915 8.96812 12.5989 8.83078C12.6067 8.69346 12.7253 8.58733 12.8626 8.59445Z" fill="currentColor"/>
+                  </svg>
+
+              button(type="button" data-presentation-messenger="WhatsApp").presentation-modal__messenger
+                span.presentation-modal__messenger-check
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M2.5 6.2L5 8.5L9.5 3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                span.presentation-modal__messenger-name WhatsApp
+                span.presentation-modal__messenger-icon
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12.0381 3C7.09797 3 3.07743 7.00117 3.0752 11.9189C3.07465 13.4907 3.48737 15.0255 4.27148 16.3779L3 21L7.75098 19.7598C9.06006 20.4704 10.5343 20.8451 12.0342 20.8457H12.0381C16.9771 20.8455 20.9979 16.8433 21 11.9258C21.0007 9.54245 20.0688 7.30198 18.377 5.61621C16.6848 3.93045 14.4353 3.00113 12.0381 3ZM9.29004 7.50586C9.42802 7.51198 9.57897 7.51852 9.72559 7.78613L9.78809 7.91797C9.98499 8.3901 10.4153 9.57101 10.4707 9.69043C10.526 9.80979 10.563 9.94916 10.4893 10.1084C10.4154 10.2677 10.3781 10.3674 10.2676 10.5068C10.1569 10.6461 10.035 10.8179 9.93555 10.9248C9.82453 11.0438 9.70974 11.1734 9.83887 11.4121C9.96829 11.6515 10.4123 12.4328 11.0703 13.0654C11.9164 13.8787 12.63 14.1302 12.8516 14.25C13.0729 14.3693 13.2019 14.3499 13.3311 14.1904C13.4603 14.0311 13.8846 13.4936 14.0322 13.2549C14.1799 13.0159 14.3273 13.0552 14.5303 13.1348C14.7332 13.2144 15.8212 13.7925 16.043 13.9121C16.2644 14.0314 16.4124 14.0909 16.4678 14.1904C16.5231 14.2903 16.5233 14.768 16.3389 15.3252C16.1544 15.8827 15.2497 16.4202 14.8438 16.46C14.4378 16.4998 14.0569 16.6585 12.1865 15.8633C9.93598 14.9063 8.51505 12.418 8.4043 12.2588C8.29312 12.0985 7.50007 10.9642 7.5 9.79004C7.5 8.61537 8.07235 8.03777 8.27539 7.79883C8.47809 7.56013 8.71752 7.50009 8.86523 7.5C9.01276 7.5 9.1609 7.49994 9.29004 7.50586Z" fill="currentColor"/>
+                  </svg>
+
+          button(type="submit" data-btn-submit).presentation-modal__submit
+            span(data-btn-submit-text) Чекаю презентацію
+            svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+              path(d="M12.521 11.7715L12.521 12.5215L11.021 12.5215L11.021 6.04004L4.229 12.832L3.16846 11.7715L9.96045 4.97949L3.479 4.97949L3.479 3.47949L4.229 3.47949L11.772 3.47852C11.9707 3.47859 12.1617 3.55774 12.3022 3.69824C12.4428 3.83879 12.5219 4.02979 12.522 4.22852L12.521 11.7715Z" fill="white")

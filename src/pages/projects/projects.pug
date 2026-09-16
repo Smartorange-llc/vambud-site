@@ -1,0 +1,292 @@
+extends /../index.pug
+
+block variable
+  -
+    var title_page = 'Наші проєкти'
+    var id_page = 'id-page-projects'
+
+block meta
+  title= title_page
+  meta(name='description', content='Всі житлові комплекси VAMBUD в Івано-Франківську: будуються та реалізовані. Фільтруйте проєкти за статусом та програмою єОселя, розрахуйте розтермінування.')
+
+block header
+  +header
+
+block content
+  mixin arrowIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="currentColor")
+
+  mixin pinIcon()
+    svg.projects-page__pin(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M13.6665 5.39844C13.6664 8.37953 8.3335 16 8.3335 16C8.31026 15.9668 3.00057 8.373 3.00049 5.39844C3.00049 2.41669 5.38809 0.00012786 8.3335 2.33113e-07C11.279 2.33113e-07 13.6665 2.41661 13.6665 5.39844ZM10.7876 5.39844C10.7876 4.02561 9.68881 2.91406 8.3335 2.91406C6.97732 2.91419 5.87939 4.02569 5.87939 5.39844C5.87954 6.77106 6.9776 7.88171 8.3335 7.88184C9.68873 7.88184 10.7875 6.77114 10.7876 5.39844Z" fill="#DFDEE1")
+
+  mixin calcIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none")
+      rect(x="4" y="2" width="16" height="20" rx="3" stroke="currentColor" stroke-width="1.6")
+      path(d="M7 6.5H17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round")
+      circle(cx="8" cy="11" r="1.1" fill="currentColor")
+      circle(cx="12" cy="11" r="1.1" fill="currentColor")
+      circle(cx="16" cy="11" r="1.1" fill="currentColor")
+      circle(cx="8" cy="15" r="1.1" fill="currentColor")
+      circle(cx="12" cy="15" r="1.1" fill="currentColor")
+      circle(cx="16" cy="15" r="1.1" fill="currentColor")
+      circle(cx="8" cy="18.5" r="1.1" fill="currentColor")
+      circle(cx="12" cy="18.5" r="1.1" fill="currentColor")
+      circle(cx="16" cy="18.5" r="1.1" fill="currentColor")
+
+  mixin chevronDownIcon()
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="8" viewBox="0 0 14 8" fill="none">
+      <path d="M1.24976 0C0.744466 3.59363e-05 0.289088 0.304811 0.095459 0.771484C-0.0979967 1.23851 0.00859451 1.77629 0.365967 2.13379L5.69897 7.4668C5.93337 7.70121 6.25127 7.83298 6.58276 7.83301C6.91424 7.83296 7.23217 7.7012 7.46655 7.4668L12.7996 2.13379C13.1568 1.77629 13.2645 1.23844 13.071 0.771484C12.8775 0.304612 12.4212 6.34103e-05 11.9158 0H1.24976Z" fill="#0F1010"/>
+    </svg>
+
+  mixin tablesPlusIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M8 2.5V13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round").projects-tables__more-vbar
+      path(d="M2.5 8H13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round")
+
+  section.projects-page-hero
+    img.projects-page-hero__bg(src="/src/shared/images/projects/hero.jpg" alt="Житлові комплекси VAMBUD" loading="eager")
+    .projects-page-hero__overlay
+    .projects-page-hero__inner.container
+      +breadcrumbs([{ label: "Головна", href: "/home.html" }, { label: "Проєкти" }])
+      h1.projects-page-hero__title Наші проєкти
+      p.projects-page-hero__subtitle Квартири в новобудовах Івано-Франківська
+
+  section.projects-page.container
+    //- Дані проєктів — на WP замінити на реальний список ЖК (CPT/ACF)
+    -
+      var dolishniy = { title: "Долішній", badge: "Енергонезалежні квартири", price: "від 45 700 грн/м²", location: "м. Івано-Франківськ, р-н міського озера", image: "/src/shared/images/projects/dolishniy.jpg" }
+      var krakivskyi = { title: "Квартал Краківський", badge: "Енергонезалежні квартири", price: "від 42 200 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/projects/krakivskyi.jpg" }
+      var prostir = { title: "PROSTIR (ПРОСТІР)", badge: "Енергонезалежні квартири", price: "від 45 300 грн/м²", location: "м. Івано-Франківськ, вул. Петлюри-Польова", image: "/src/shared/images/projects/prostir.jpg" }
+      var wawel = { title: "WAWEL (ВАВЕЛЬ)", badge: "Енергонезалежні квартири", price: "від 44 400 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/projects/wawel.jpg" }
+      // На WP кожен ЖК буде окремим записом (CPT). Тут одні й ті самі 4 реальні
+      // комплекси свідомо продубльовані (так само, як у самому макеті Figma) —
+      // це дає достатньо карток, щоб перевірити фільтрацію й пагінацію.
+      var projects = [
+        Object.assign({ href: "/single-project.html", status: "sale", tags: ["known"] }, dolishniy),
+        Object.assign({ href: "/single-project.html", status: "sale", tags: ["known"] }, krakivskyi),
+        Object.assign({ href: "/single-project.html", status: "sale", tags: ["known"] }, prostir),
+        Object.assign({ href: "/single-project.html", status: "sale", tags: ["known"] }, wawel),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["known", "eoselya"] }, dolishniy),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["known", "eoselya"] }, krakivskyi),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["known", "eoselya"] }, prostir),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["known", "eoselya"] }, wawel),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["eoselya"] }, dolishniy),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["eoselya"] }, krakivskyi),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["eoselya"] }, prostir),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["eoselya"] }, wawel),
+        Object.assign({ href: "/single-project.html", status: "sale", tags: [] }, dolishniy),
+        Object.assign({ href: "/single-project.html", status: "sale", tags: [] }, krakivskyi),
+        Object.assign({ href: "/single-project.html", status: "sale", tags: [] }, prostir),
+        Object.assign({ href: "/single-project.html", status: "sale", tags: [] }, wawel),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["known"] }, dolishniy),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["known"] }, krakivskyi),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["known"] }, prostir),
+        Object.assign({ href: "/single-project.html", status: "completed", tags: ["known"] }, wawel)
+      ]
+      var filters = [
+        { id: "sale", label: "В продажі", active: true },
+        { id: "known", label: "Відомі" },
+        { id: "completed", label: "Реалізовані" },
+        { id: "eoselya", label: "Є оселя" },
+        { id: "all", label: "Усі" }
+      ]
+
+    .projects-page__toolbar
+      .projects-page__filters(role="tablist" aria-label="Фільтр проєктів")
+        each filter in filters
+          - var count = filter.id === "all" ? projects.length : projects.filter(function (item) { return filter.id === "sale" || filter.id === "completed" ? item.status === filter.id : item.tags.indexOf(filter.id) !== -1; }).length
+          button.projects-page__filter-btn(type="button" data-project-filter=filter.id role="tab" aria-selected=filter.active ? "true" : "false" class=filter.active ? "is-active" : "")
+            span= filter.label
+            span.projects-page__filter-count= " (" + count + ")"
+      a.projects-page__calc-btn(href="#projects-calculator")
+        +calcIcon()
+        span Калькулятор розтермінування
+
+    .projects-page__grid(data-projects-grid)
+      each project in projects
+        a.projects-page__card(href=project.href data-project-card data-project-status=project.status data-project-tags=project.tags.join(","))
+          img.projects-page__image(src=project.image alt=project.title loading="lazy")
+          .projects-page__top
+            span.projects-page__price= project.price
+            span.projects-page__badge= project.badge
+          .projects-page__info
+            .projects-page__text
+              h3.projects-page__name= project.title
+              p.projects-page__location
+                +pinIcon()
+                span= project.location
+            span.projects-page__arrow
+              +arrowIcon()
+
+    p.projects-page__empty(data-projects-empty hidden) За цим фільтром проєктів поки немає. Спробуйте інший фільтр.
+
+    +pagination()
+
+  section.projects-calculator#projects-calculator
+    img.projects-calculator__bg(src="/src/shared/images/projects/calculator-bg.svg" alt="" loading="lazy")
+    .projects-calculator__gradient
+    .projects-calculator__inner.container
+      .projects-calculator__head
+        span.projects-calculator__icon
+          +calcIcon()
+        h2.projects-calculator__title
+          | Калькулятор
+          br
+          | розтермінування
+
+      .projects-calculator__box
+        .projects-calculator__panel(data-calculator-form)
+          .projects-calculator__field
+            .projects-calculator__field-top
+              .projects-calculator__field-text
+                span.projects-calculator__label Загальна вартість
+                input.projects-calculator__number(type="number" min="0" step="1000" value="3000000" inputmode="numeric" data-calc-total aria-label="Загальна вартість")
+              .projects-calculator__currency(role="group" aria-label="Валюта розрахунку")
+                button.projects-calculator__currency-btn(type="button" data-calc-currency="USD") $ USD
+                button.projects-calculator__currency-btn.is-active(type="button" data-calc-currency="UAH") ₴ ГРН
+
+          .projects-calculator__field
+            .projects-calculator__dropdown(data-calc-type-dropdown)
+              button.projects-calculator__field-top.projects-calculator__dropdown-trigger(type="button" data-calc-type-trigger aria-haspopup="listbox" aria-expanded="false")
+                .projects-calculator__field-text
+                  span.projects-calculator__label Тип
+                  span.projects-calculator__value(data-calc-type-value) Розстрочка від забудовника (до 20 років)
+                +chevronDownIcon()
+              ul.projects-calculator__dropdown-list(role="listbox" data-calc-type-list hidden aria-label="Тип розтермінування")
+                li.projects-calculator__dropdown-option.is-selected(role="option" tabindex="0" aria-selected="true" data-down-min="30" data-term-max="20") Розстрочка від забудовника (0%, до 20 років)
+                li.projects-calculator__dropdown-option(role="option" tabindex="0" aria-selected="false" data-down-min="10" data-term-max="3") Розстрочка з мінімальним внеском (від 10%, до 3 років)
+                li.projects-calculator__dropdown-option(role="option" tabindex="0" aria-selected="false" data-down-min="50" data-term-max="5") Розстрочка 50/50 (внесок 50%, до 5 років)
+                li.projects-calculator__dropdown-option(role="option" tabindex="0" aria-selected="false" data-down-min="0" data-term-max="20") Держпрограма «єОселя» (пільгова, до 20 років)
+
+          .projects-calculator__field.projects-calculator__field--slider
+            .projects-calculator__field-text
+              span.projects-calculator__label Перший внесок (мін. #[span(data-calc-down-min-label) 30]%)
+              span.projects-calculator__value(data-calc-down-value) 30%
+            input.projects-calculator__range(type="range" min="30" max="90" step="1" value="30" data-calc-down aria-label="Перший внесок")
+            .projects-calculator__range-ends
+              span(data-calc-down-min) 0 $
+              span(data-calc-down-max) 0 $
+
+          .projects-calculator__field.projects-calculator__field--slider
+            .projects-calculator__field-text
+              span.projects-calculator__label Термін (від 2 до 20 років)
+              span.projects-calculator__value(data-calc-term-value) 19
+            input.projects-calculator__range(type="range" min="2" max="20" step="1" value="19" data-calc-term aria-label="Термін розтермінування")
+            .projects-calculator__range-ends
+              span(data-calc-term-min) 2
+              span(data-calc-term-max) 20
+
+        .projects-calculator__result
+          .projects-calculator__result-top
+            p.projects-calculator__result-label Щомісячний платіж
+            p.projects-calculator__result-value(data-calc-monthly) 0 $
+            p.projects-calculator__result-note
+              | *Розрахунок орієнтовний.
+              br
+              | Точні умови розтермінування уточнюйте у менеджера
+          span.projects-calculator__divider
+          .projects-calculator__result-bottom
+            p.projects-calculator__result-text Допоможемо розібратись із розтермінуванням та підібрати зручні умови оплати.
+            button.projects-calculator__cta(type="button" data-call-us-btn)
+              span Залишити заявку
+              +arrowIcon()
+
+  section.projects-tables
+    .projects-tables__inner.container
+      .projects-tables__head
+        h2.projects-tables__title Шукаєте якісне житло в Івано-Франківську?
+        p.projects-tables__text(data-tables-text) Компанія VAMBUD пропонує великий вибір квартир у сучасних новобудовах за доступними цінами. Наші житлові комплекси розташовані в перспективних районах міста з розвиненою інфраструктурою. Ми використовуємо лише якісні будівельні матеріали та сучасні технології будівництва. Кожна квартира має зручне планування та відповідає європейським стандартам якості. Можливість розтермінування та вигідні умови придбання зроблять купівлю квартири максимально комфортною. Довіртеся професіоналам з багаторічним досвідом у будівництві!
+        button.projects-tables__more(type="button" data-tables-text-toggle aria-expanded="false")
+          span(data-tables-more-label) Читати весь опис
+          span.projects-tables__more-icon
+            +tablesPlusIcon()
+
+      .projects-tables__grid
+        -
+          var roomTables = [
+            {
+              title: "1-кімнатні квартири",
+              rows: [
+                { project: "Квартал Краківський", area: "—", price: "Продано", sold: true },
+                { project: "WAWEL", area: "43-50 м²", price: "46800-52000 ₴/м²" },
+                { project: "Долішній", area: "—", price: "Продано", sold: true },
+                { project: "TRIVIUM", area: "37-45 м²", price: "77800-87400 ₴/м²" },
+                { project: "Prostir", area: "39 м²", price: "46800 ₴/м²" },
+                { project: "Shepit", area: "32-58 м²", price: "43300-44200 ₴/м²" }
+              ]
+            },
+            {
+              title: "2-кімнатні квартири",
+              rows: [
+                { project: "Квартал Краківський", area: "60 м²", price: "41500 ₴/м²" },
+                { project: "WAWEL", area: "45-93 м²", price: "43700-49000 ₴/м²" },
+                { project: "Долішній", area: "51-56 м²", price: "54600 ₴/м²" },
+                { project: "TRIVIUM", area: "40-69 м²", price: "79600-87400 ₴/м²" },
+                { project: "Prostir", area: "60-79 м²", price: "43700-45900 ₴/м²" },
+                { project: "Shepit", area: "57-76 м²", price: "42400-44200 ₴/м²" }
+              ]
+            },
+            {
+              title: "3-кімнатні квартири",
+              rows: [
+                { project: "Квартал Краківський", area: "61-113 м²", price: "40700-43700 ₴/м²" },
+                { project: "WAWEL", area: "77-97 м²", price: "43700-45000 ₴/м²" },
+                { project: "Долішній", area: "82-84 м²", price: "45500 ₴/м²" },
+                { project: "TRIVIUM", area: "90-107 м²", price: "76900-91800 ₴/м²" },
+                { project: "Prostir", area: "71-92 м²", price: "43700-45000 ₴/м²" },
+                { project: "Shepit", area: "69-84 м²", price: "42400-43300 ₴/м²" }
+              ]
+            }
+          ]
+        each table in roomTables
+          .projects-tables__card
+            h3.projects-tables__card-title= table.title
+            .projects-tables__row.projects-tables__row--head
+              span.projects-tables__col-project Проект
+              span.projects-tables__col-area Площа
+              span.projects-tables__col-price Ціна
+            each row in table.rows
+              .projects-tables__row
+                span.projects-tables__col-project= row.project
+                span.projects-tables__col-area= row.area
+                span.projects-tables__col-price(class=row.sold ? "is-muted" : "")= row.price
+
+  mixin servicesPlusIcon()
+    svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none")
+      path(d="M8 2.5V13.5" stroke="#0F1010" stroke-width="1.6" stroke-linecap="round").projects-services__toggle-vbar
+      path(d="M2.5 8H13.5" stroke="#0F1010" stroke-width="1.6" stroke-linecap="round")
+
+  section.projects-services.container
+    h2.projects-services__title Додаткові сервіси
+    .projects-services__grid
+      -
+        var services = [
+          { title: "Квартири з чорновим ремонтом", image: "/src/shared/images/renovation/main-banner.jpg", href: "#", description: "Купуйте квартиру в чорновому варіанті та плануйте ремонт і планування повністю під себе — без обмежень типового рішення." },
+          { title: "Ремонт під ключ", image: "/src/shared/images/renovation/price-image.jpg", href: "/renovation.html", description: "Не шукайте майстрів і не контролюйте процес самі — ми беремо ремонт на себе, від дизайн-проєкту до фінального прибирання." },
+          { title: "Енергонезалежні квартири", image: "/src/shared/images/energy/about-image.jpg", href: "/energy.html", description: "Сучасне житло з автономним електроживленням, яке забезпечує комфорт навіть під час відключень електроенергії." },
+          { title: "Перепродаж", image: "/src/shared/images/resale/process-image.jpg", href: "/resale.html", description: "Хочете продати квартиру швидко й вигідно? Звертайтеся напряму до VAMBUD — допоможемо пройти весь шлях від консультації до угоди." }
+        ]
+      each service in services
+        .projects-services__card(data-services-card)
+          a.projects-services__media(href=service.href aria-label=service.title)
+            img(src=service.image alt=service.title loading="lazy")
+          .projects-services__info
+            .projects-services__text
+              a.projects-services__name(href=service.href)= service.title
+              p.projects-services__desc= service.description
+            .projects-services__actions
+              button.projects-services__toggle(type="button" data-services-toggle aria-expanded="false")
+                span.projects-services__toggle-text Що входить?
+                span.projects-services__toggle-icon
+                  +servicesPlusIcon()
+              a.projects-services__link(href=service.href)
+                span Детальніше
+                +arrowIcon()
+
+block footer
+  +footer
+
+block scripts
+  script(type="module" src="/src/pages/projects/projects.js")

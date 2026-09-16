@@ -12,3 +12,12 @@ $bg-color: #DFDEE1;
 $text-color-light: #FFF;
 $golden-gradient: linear-gradient(89deg, #27292B 0%, #BB9983 100%);
 $wood-color: #A48971;
+
+// Establishes the cascade layer order for the whole site: layered rules
+// always lose to unlayered ones, so `base` (reset/fonts/base.scss) and
+// `vendor` (swiper etc., see vendor.scss) never fight page/widget styles
+// on specificity or bundle-chunk order. Emitted into every compiled scss
+// file's output (via the global `@use "vars.scss"` injection in
+// vite.config.js), so whichever CSS chunk Rollup places first still
+// carries this declaration and the order is locked in correctly.
+@layer base, vendor;

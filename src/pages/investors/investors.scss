@@ -1,0 +1,993 @@
+// ==========================================================================
+// Shared page tokens
+// ==========================================================================
+
+// Section-to-section gap is a flat value at every breakpoint in the design
+// (60px on mobile, 100px from tablet up) — not a fluid vw() scale.
+$inv-section-gap-mobile: 60px;
+$inv-section-gap: 100px;
+$inv-section-gap-wide: vw(100);
+
+.inv-start,
+.inv-types,
+.inv-benefits,
+.inv-resale,
+.inv-projects,
+.inv-seo {
+  margin-top: $inv-section-gap-mobile;
+
+  @include tablet {
+    margin-top: $inv-section-gap;
+  }
+
+  @include laptop {
+    margin-top: $inv-section-gap-wide;
+  }
+}
+
+.inv-seo {
+  margin-bottom: $inv-section-gap-mobile;
+
+  @include tablet {
+    margin-bottom: $inv-section-gap;
+  }
+
+  @include laptop {
+    margin-bottom: $inv-section-gap-wide;
+  }
+}
+
+// Title role — big violet uppercase heading used to open every white card.
+@mixin inv-h3 {
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: $accent-color;
+  margin: 0;
+  font-size: 32px;
+
+  @include tablet {
+    font-size: 48px;
+  }
+
+  @include laptop {
+    font-size: vw(60);
+  }
+}
+
+// Subtitle role — bold black line right under an .inv-h3 title.
+@mixin inv-subtitle {
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: $bc;
+  margin: 0;
+  font-size: 16px;
+
+  @include tablet {
+    font-size: 24px;
+  }
+}
+
+// Body role — medium-weight grey paragraph text.
+@mixin inv-body {
+  font-family: $default-font;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.03em;
+  color: $grey-color;
+  margin: 0;
+  font-size: 16px;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+// Card/feature title role — bold black, not uppercase.
+@mixin inv-h5 {
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: $bc;
+  margin: 0;
+  font-size: 16px;
+
+  @include tablet {
+    font-size: 24px;
+  }
+}
+
+// Inset violet glow used on every card/item throughout the page.
+@mixin inv-card-glow {
+  box-shadow: inset 0 0 40px 0 rgba(79, 48, 127, 0.1);
+}
+
+// ==========================================================================
+// Banner
+// ==========================================================================
+
+.inv-banner {
+  position: relative;
+  height: 240px;
+  min-height: 240px;
+  overflow: hidden;
+
+  @include tablet {
+    height: 340px;
+  }
+
+  @include laptop {
+    height: vw(601);
+  }
+}
+
+.inv-banner__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.inv-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 3, 17, 0.48) 0% 60%, rgba(91, 95, 104, 0.7) 79.62%, $bg-color 100%);
+}
+
+.inv-banner__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+
+  @include laptop {
+    gap: vw(12);
+  }
+}
+
+.inv-banner__title {
+  font-family: $default-font;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: $wc;
+  margin: 0;
+  font-size: 32px;
+
+  @include tablet {
+    font-size: 60px;
+  }
+
+  @include laptop {
+    font-size: vw(100);
+  }
+}
+
+// ==========================================================================
+// Start info (hero + stats)
+// ==========================================================================
+
+.inv-start {
+  position: relative;
+  z-index: 2;
+  margin-top: -$inv-section-gap-mobile - 16px;
+
+  @include tablet {
+    margin-top: -40px;
+  }
+
+  @include laptop {
+    margin-top: vw(-120);
+  }
+}
+
+.inv-start__hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: $wc;
+  border-radius: 20px;
+  overflow: hidden;
+
+  @include tablet {
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    height: vw(680);
+    border-radius: vw(40);
+  }
+}
+
+.inv-start__hero-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  padding: 28px 12px;
+
+  @include tablet {
+    padding: 40px;
+    gap: 28px;
+  }
+
+  @include laptop {
+    align-items: flex-start;
+    text-align: left;
+    width: vw(607);
+    margin-left: auto;
+    padding: vw(120) vw(60);
+    gap: vw(28);
+  }
+}
+
+.inv-start__hero-title {
+  @include article-title;
+  color: $bc;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.inv-start__hero-lead {
+  @include inv-body;
+  color: $bc;
+}
+
+.general-btn span {
+  text-transform: none;
+}
+
+.inv-start__hero-media {
+  position: relative;
+  flex: 1 0 0;
+  min-height: 262px;
+  overflow: hidden;
+
+  @include tablet {
+    min-height: 444px;
+  }
+
+  @include laptop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    min-height: 0;
+  }
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.inv-start__hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0) 60%, $wc 100%);
+
+  @include laptop {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 46%, rgba(255, 255, 255, 0.9) 73%, $wc 100%);
+  }
+}
+
+.inv-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+
+  @include laptop {
+    flex-direction: row;
+  }
+}
+
+.inv-stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: center;
+  background-color: $wc;
+  border-radius: 20px;
+  padding: 20px 12px;
+
+  @include tablet {
+    border-radius: 40px;
+    padding: 28px 40px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    border-radius: vw(40);
+    padding: vw(28) vw(40);
+  }
+}
+
+.inv-stats__top {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inv-stats__value {
+  @include article-title;
+  color: $accent-color;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+}
+
+.inv-stats__label {
+  @include inv-h5;
+  font-size: 16px;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.inv-stats__divider {
+  position: relative;
+  width: 260px;
+  max-width: 100%;
+  height: 1px;
+  background-image: linear-gradient(90deg, #ffffff00, $accent-color, #ffffff00);
+}
+
+.inv-stats__divider-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  border: 1px solid $accent-color;
+}
+
+.inv-stats__note {
+  @include inv-body;
+}
+
+// ==========================================================================
+// Shared white "card" section shell
+// ==========================================================================
+
+.inv-types__card,
+.inv-benefits__card,
+.inv-resale__card,
+.inv-projects__card {
+  position: relative;
+  background-color: $wc;
+  border-radius: 20px;
+  overflow: hidden;
+
+  @include tablet {
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    border-radius: vw(40);
+  }
+}
+
+// ==========================================================================
+// Investment Types
+// ==========================================================================
+
+.inv-types__card {
+  padding: 20px 12px;
+
+  @include tablet {
+    padding: 40px 20px;
+  }
+
+  @include laptop {
+    padding: vw(60) vw(40);
+  }
+}
+
+.inv-types__head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  @include laptop {
+    margin-bottom: vw(40);
+  }
+}
+
+.inv-types__title {
+  @include inv-h3;
+}
+
+.inv-types__subtitle {
+  @include inv-subtitle;
+}
+
+.inv-types__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include laptop {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.inv-types__item {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 8px 20px;
+  border-radius: 20px;
+  position: relative;
+
+  @include inv-card-glow;
+
+  @include tablet {
+    padding: 28px 20px;
+  }
+
+  @include laptop {
+    padding: 40px;
+  }
+}
+
+.inv-types__image {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.inv-types__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inv-types__item-title {
+  @include inv-h5;
+}
+
+.inv-types__item-desc {
+  @include inv-body;
+}
+
+.inv-types__item .general-btn {
+  margin-top: auto;
+}
+
+// ==========================================================================
+// Benefits
+// ==========================================================================
+
+.inv-benefits__card {
+  padding: 20px 12px;
+
+  @include laptop {
+    padding: vw(60) vw(40);
+  }
+}
+
+.inv-benefits__head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  @include laptop {
+    margin-bottom: vw(40);
+  }
+}
+
+.inv-benefits__title {
+  @include inv-h3;
+}
+
+.inv-benefits__subtitle {
+  @include inv-subtitle;
+}
+
+.inv-benefits__row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @include laptop {
+    flex-direction: row;
+  }
+}
+
+.inv-benefits__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px;
+  border-radius: 20px;
+
+  @include inv-card-glow;
+
+  @include tablet {
+    gap: 28px;
+    padding: 28px 20px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    align-items: flex-start;
+    padding: vw(40);
+  }
+}
+
+.inv-benefits__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: $accent-color;
+
+  @include tablet {
+    width: 100px;
+    height: 100px;
+  }
+
+  svg {
+    width: 36px;
+    height: 36px;
+
+    @include tablet {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+.inv-benefits__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 0 0;
+  min-width: 0;
+
+  @include tablet {
+    gap: 8px;
+  }
+}
+
+.inv-benefits__item-title {
+  @include inv-h5;
+}
+
+.inv-benefits__item-desc {
+  @include inv-body;
+}
+
+// ==========================================================================
+// VAMBUD Resale
+// ==========================================================================
+
+.inv-resale__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 12px 80px;
+
+  @include tablet {
+    padding: 40px 20px 120px;
+  }
+
+  @include laptop {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: vw(40);
+    padding: vw(60) vw(40);
+  }
+}
+
+.inv-resale__wordmark {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 30%);
+  width: 100%;
+  text-align: center;
+  font-family: $default-font;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: $accent-color;
+  opacity: 0.06;
+  white-space: nowrap;
+  pointer-events: none;
+  font-size: 20vw;
+
+  @include tablet {
+
+    bottom: 0px;
+  }
+
+  @include laptop {
+    transform: translate(-50%, 30%);
+    bottom: 0;
+  }
+}
+
+.inv-resale__intro {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+
+  @include laptop {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+}
+
+.inv-resale__title {
+  @include inv-h3;
+}
+
+.inv-resale__desc {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inv-resale__lead {
+  @include inv-h5;
+}
+
+.inv-resale__text {
+  @include inv-body;
+}
+
+.inv-resale__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  width: 100%;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    width: auto;
+  }
+}
+
+.inv-resale__feature {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  // min-height: 200px;
+  padding: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  @include inv-card-glow;
+
+  @include laptop {
+    padding: vw(40);
+    padding-top: vw(168);
+  }
+}
+
+.inv-resale__num {
+
+  top: 20px;
+  left: 20px;
+  font-family: $default-font;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: $accent-color;
+  opacity: 0.08;
+  font-size: 48px;
+  margin-bottom: auto;
+
+  @include tablet {
+    font-size: 100px;
+  }
+
+  @include laptop {
+    position: absolute;
+    font-size: vw(200);
+    top: vw(-50);
+    left: vw(-20);
+  }
+}
+
+.inv-resale__feature-title {
+  @include inv-h5;
+  position: relative;
+  font-size: 24px;
+}
+
+.inv-resale__feature-desc {
+  @include inv-body;
+  position: relative;
+}
+
+// ==========================================================================
+// Current Projects
+// ==========================================================================
+
+.inv-projects__card {
+  padding: 20px 8px 8px;
+
+  @include tablet {
+    padding: 40px 20px 20px;
+  }
+
+  @include laptop {
+    padding: vw(60) vw(40) vw(40);
+  }
+}
+
+.inv-projects__head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 0 4px;
+
+  @include tablet {
+    padding: 0;
+  }
+
+  @include laptop {
+    margin-bottom: vw(40);
+  }
+}
+
+.inv-projects__title {
+  @include inv-h3;
+}
+
+.inv-projects__subtitle {
+  @include inv-subtitle;
+}
+
+.inv-projects__lead {
+  @include inv-body;
+}
+
+.inv-projects__row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @include laptop {
+    flex-direction: row;
+  }
+}
+
+.inv-projects__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 8px 20px;
+  border-radius: 20px;
+
+  @include inv-card-glow;
+
+  @include tablet {
+    padding: 20px;
+    border-radius: 32px;
+  }
+
+  @include laptop {
+    flex: 1 0 0;
+    padding: 20px;
+    border-radius: vw(32);
+  }
+}
+
+.inv-projects__image-wrap {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.inv-projects__image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+
+  @include tablet {
+    aspect-ratio: 4 / 3;
+  }
+
+  @include laptop {
+    aspect-ratio: 2 / 1;
+    transition: transform 0.5s ease;
+  }
+}
+
+@media (hover: hover) {
+  @include laptop {
+    .inv-projects__item:hover .inv-projects__image {
+      transform: scale(1.06);
+    }
+  }
+}
+
+.inv-projects__price {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  @include inv-h5;
+  font-size: 16px;
+  background-color: $wc;
+  border-radius: 100px;
+  padding: 4px 12px;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.inv-projects__tags {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 60px 12px 16px;
+  list-style: none;
+  background: linear-gradient(180deg, rgba(15, 16, 16, 0) 0%, #0f1010 100%);
+
+  @include tablet {
+    padding: 80px 20px 20px;
+  }
+
+  // Always-on below laptop (no hover to reveal it there); on laptop it's
+  // hidden until the card is hovered, alongside the image's own zoom above.
+  @include laptop {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+  }
+}
+
+@media (hover: hover) {
+  @include laptop {
+    .inv-projects__item:hover .inv-projects__tags {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+}
+
+.inv-projects__tag {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: $wc;
+  font-family: $default-font;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.4;
+  font-size: 14px;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+.inv-projects__tag-dot {
+  flex-shrink: 0;
+  color: $accent-color-2;
+}
+
+.inv-projects__info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @include laptop {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}
+
+.inv-projects__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+
+  @include laptop {
+    flex: 1 0 0;
+  }
+}
+
+.inv-projects__name {
+  @include inv-h5;
+  text-transform: uppercase;
+  color: $accent-color;
+}
+
+.inv-projects__location {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  font-family: $default-font;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1.4;
+  color: $grey-color;
+  font-size: 12px;
+}
+
+.inv-pin {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+// SEO content accordion — now the shared seo-accordion widget
+// (src/widgets/seo-accordion). Only the section-level spacing above
+// (.inv-seo margin-top/bottom) stays page-specific.

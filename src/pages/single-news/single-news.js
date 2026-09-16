@@ -1,15 +1,17 @@
 import "./single-news.scss";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import Swiper from "swiper";
+import { Navigation } from "swiper/modules";
 import { whenLoaderReveals } from "../../shared/scripts/loader-sync.js";
 
 gsap.registerPlugin(ScrollTrigger);
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Pre-hide hero elements immediately so they're invisible behind the loader
   gsap.set(".header", { y: -100, opacity: 0 });
-  gsap.set(".btn-back", { y: -50, scale: 1.1, opacity: 0 });
+  gsap.set(".btn-back", { y: -30, opacity: 0 });
   gsap.set("h1", { y: 30, opacity: 0, clipPath: "inset(0% 0% 100% 0%)" });
-  gsap.set(".single-news__date-wrap", { y: 40, opacity: 0 });
+  gsap.set(".single-news__social", { y: 20, opacity: 0 });
 
   const tl = gsap.timeline({
     paused: true,
@@ -19,45 +21,22 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  // 1. Анімація Header (зверху вниз)
   tl.to(".header", { y: 0, opacity: 1, duration: 1 }, 0);
-
-  // 2. Кнопка "Назад" + заголовок
-  tl.to(".btn-back", { y: 0, scale: 1, opacity: 1, duration: 1 }, "<");
+  tl.to(".btn-back", { y: 0, opacity: 1, duration: 0.6 }, "<");
   tl.to(
     "h1",
     { y: 0, opacity: 1, duration: 0.6, clipPath: "inset(0% 0% 0% 0%)", clearProps: "clipPath" },
-    "-=0.6",
+    "-=0.4",
   );
-
-  // 3. Дата
-  tl.to(".single-news__date-wrap", { y: 0, opacity: 1, duration: 0.6, stagger: 0.2 }, "-=0.8");
+  tl.to(".single-news__social", { y: 0, opacity: 1, duration: 0.6 }, "-=0.4");
 
   whenLoaderReveals().then(() => tl.play());
 
-  initNewsSlider();
-  initMagneticButtons();
+  initGallerySlider();
+  initRelatedSlider();
+  initContentReveal();
 
-  function initMagneticButtons() {
-    const magnetics = document.querySelectorAll(".news-card__magnetic");
-    magnetics.forEach((magnetic) => {
-      const btn = magnetic.querySelector(".news-card__btn");
-      if (!btn) return;
-      magnetic.addEventListener("mousemove", (e) => {
-        const rect = btn.getBoundingClientRect();
-        const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.35;
-        const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.35;
-        const x = Math.max(-10, Math.min(10, dx));
-        const y = Math.max(-10, Math.min(10, dy));
-        gsap.to(btn, { x, y, duration: 0.35, ease: "power2.out" });
-      });
-      magnetic.addEventListener("mouseleave", () => {
-        gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.4)" });
-      });
-    });
-  }
-
-  function initNewsSlider() {
+  function initGallerySlider() {
     const slider = document.querySelector(".news-slider");
     if (!slider) return;
 
@@ -90,7 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
     prevBtn.addEventListener("click", () => goTo(current - 1));
     nextBtn.addEventListener("click", () => goTo(current + 1));
 
-    // Swipe support
     let startX = 0;
     const trackWrap = slider.querySelector(".news-slider__track-wrap");
     trackWrap.addEventListener("pointerdown", (e) => {
@@ -102,37 +80,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const selectors = [".single-news__content>*"];
+  function initRelatedSlider() {
+    const section = document.querySelector(".single-news-related");
+    const sliderEl = section?.querySelector(".single-news-related__slider");
+    if (!section || !sliderEl) return;
 
-  selectors.forEach((selector) => {
-    const elements = document.querySelectorAll(selector);
+    new Swiper(sliderEl, {
+      modules: [Navigation],
+      slidesPerView: "auto",
+      spaceBetween: 8,
+      speed: 600,
+      navigation: {
+        prevEl: section.querySelector("[data-related-prev]"),
+        nextEl: section.querySelector("[data-related-next]"),
+      },
+    });
+  }
+
+  function initContentReveal() {
+    const elements = document.querySelectorAll(".single-news__content > *");
 
     elements.forEach((el) => {
       if (el.classList.contains("news-slider")) return;
-      // Анімація через clip-path (імітація overflow: hidden)
+
       gsap.fromTo(
         el,
-        {
-          yPercent: 100,
-          // Обрізаємо елемент знизу (маска закрита)
-          clipPath: "inset(0% 0% 100% 0%)",
-        },
+        { yPercent: 100, clipPath: "inset(0% 0% 100% 0%)" },
         {
           yPercent: 0,
-          clipPath: "inset(0% 0% 0% 0%)", // Маска повністю відкрита
+          clipPath: "inset(0% 0% 0% 0%)",
           duration: 1,
-
-          ease: "power3.out", // Більш плавний фініш для преміального вигляду
+          ease: "power3.out",
           scrollTrigger: {
             trigger: el,
             start: "top 100%",
             toggleActions: "play none none none",
-            // will-change допомагає уникнути "мигтіння" при роботі з clip-path
             onEnter: () => (el.style.willChange = "transform, clip-path"),
             onComplete: () => (el.style.willChange = "auto"),
           },
         },
       );
     });
-  });
+  }
 });

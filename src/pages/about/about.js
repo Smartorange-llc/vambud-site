@@ -1,586 +1,410 @@
 import "./about.scss";
-import Swiper from "swiper";
-import { Navigation, Pagination } from "swiper/modules";
+import "@app/styles/vendor-fancybox.scss";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import { whenLoaderReveals } from "../../shared/scripts/loader-sync.js";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Swiper from "swiper";
+import { Navigation } from "swiper/modules";
+import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function animateTitleWrap(titleWrap) {
-  const decor = titleWrap.querySelector(".title-decor-svg");
-  const quote = titleWrap.querySelector(".section-quote");
-  const writeBlock = titleWrap.querySelector(".home-svg-to-write");
+function initSectionReveal(selector, targets) {
+  const section = document.querySelector(selector);
+  if (!section) return;
 
-  const appearItems = [decor, quote].filter(Boolean);
+  const els = targets ? section.querySelectorAll(targets) : [section];
+  if (!els.length) return;
 
-  if (writeBlock) {
-    gsap.set(writeBlock, {
-      opacity: 0,
-      y: 28,
-      clipPath: "inset(0 100% 0 0)",
-    });
-  }
-
-  if (appearItems.length) {
-    gsap.set(appearItems, { opacity: 0, y: 28 });
-  }
-
-  const tl = gsap.timeline({
+  gsap.set(els, { opacity: 0, y: 32 });
+  gsap.to(els, {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    ease: "power2.out",
+    stagger: 0.1,
     scrollTrigger: {
-      trigger: titleWrap,
-      start: "top 78%",
+      trigger: section,
+      start: "top 82%",
       once: true,
     },
   });
-
-  if (appearItems.length) {
-    tl.to(appearItems, {
-      opacity: 1,
-      y: 0,
-      duration: 0.9,
-      ease: "power2.out",
-      stagger: 0.16,
-    });
-  }
-
-  if (writeBlock) {
-    tl.to(
-      writeBlock,
-      {
-        opacity: 1,
-        y: 0,
-        clipPath: "inset(0 0% 0 0)",
-        duration: 1.25,
-        ease: "power2.out",
-        clearProps: "clipPath",
-      },
-      "<0.08",
-    );
-  }
 }
 
-function initAboutHeroAnimation() {
-  const hero = document.querySelector(".hero-template");
-  if (!hero) return;
+// Mobile/tablet stand-in for the card's own laptop :hover reveal (see
+// about.scss — laptop has no pointer capable of :hover-only interaction on
+// touch, so "Детальніше" opens this popup instead of expanding the card
+// inline). Content is read straight from each card's own
+// .about-stats__value/__label/__text, so the three stats rendered in
+// about.pug stay the single source of truth; prev/next just moves the
+// index and re-reads from the next/previous card without closing the popup.
+function initStatsModal() {
+  const section = document.querySelector(".about-stats");
+  const overflow = document.querySelector("[data-about-stats-modal__overflow]");
+  const modal = document.querySelector("[data-about-stats-modal]");
+  if (!section || !overflow || !modal) return;
 
-  const topSvg = hero.querySelector(".top-svg");
-  const bottomSvg = hero.querySelector(".bottom-svg");
-  const svgGroups = hero.querySelectorAll(".top-svg g, .bottom-svg g");
-  const videoWrap = hero.querySelector(".svg-decor__video");
-  const videoInner = hero.querySelector(".svg-decor__video-wrap");
-  const shadowImg = hero.querySelector(".shadow-img");
-  const title = hero.querySelector(".title-wrap h1");
-  const handText = hero.querySelector(".title-wrap .home-svg-to-write");
-  const downBtn = hero.querySelector(".btn-down");
-  const btnDown = document.querySelector(".hero-template .btn-down");
-  const advantageSection = document.querySelector(".about-complex__video");
-  if (btnDown && advantageSection) {
-    btnDown.addEventListener("click", () => {
-      advantageSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+  const cards = Array.from(section.querySelectorAll(".about-stats__card"));
+  const triggers = section.querySelectorAll("[data-about-stats-more]");
+  if (!cards.length || !triggers.length) return;
+
+  const body = modal.querySelector(".about-stats-modal__body");
+  const valueEl = modal.querySelector("[data-about-stats-modal-value]");
+  const labelEl = modal.querySelector("[data-about-stats-modal-label]");
+  const textEl = modal.querySelector("[data-about-stats-modal-text]");
+  const prevBtn = modal.querySelector("[data-about-stats-modal-prev]");
+  const nextBtn = modal.querySelector("[data-about-stats-modal-next]");
+
+  let currentIndex = 0;
+
+  function render(index) {
+    currentIndex = (index + cards.length) % cards.length;
+    const card = cards[currentIndex];
+
+    if (valueEl) valueEl.textContent = card.querySelector(".about-stats__value")?.textContent ?? "";
+    if (labelEl) labelEl.textContent = card.querySelector(".about-stats__label")?.textContent ?? "";
+    if (textEl) textEl.textContent = card.querySelector(".about-stats__text")?.textContent ?? "";
+    if (body) body.scrollTop = 0;
   }
-  const edgeSvgs = [topSvg, bottomSvg].filter(Boolean);
-  if (edgeSvgs.length) {
-    gsap.set(edgeSvgs, { opacity: 0, scale: 1.08, transformOrigin: "50% 50%" });
+
+  function open(index) {
+    render(index);
+    window.dispatchEvent(new Event("stop-scroll"));
+    overflow.classList.remove("hidden");
   }
 
-  const targetGroupOpacity = Array.from(svgGroups, (group) => {
-    const attrOpacity = group.getAttribute("opacity");
-    if (attrOpacity !== null) {
-      const parsedAttr = Number.parseFloat(attrOpacity);
-      if (Number.isFinite(parsedAttr)) return parsedAttr;
-    }
+  function close() {
+    if (overflow.classList.contains("hidden")) return;
+    window.dispatchEvent(new Event("start-scroll"));
+    overflow.classList.add("hidden");
+  }
 
-    const styleOpacity = group.style.opacity;
-    if (styleOpacity) {
-      const parsedStyle = Number.parseFloat(styleOpacity);
-      if (Number.isFinite(parsedStyle)) return parsedStyle;
-    }
-
-    const computed = Number.parseFloat(getComputedStyle(group).opacity);
-    return Number.isFinite(computed) ? computed : 1;
+  triggers.forEach((btn, index) => {
+    btn.addEventListener("click", () => open(index));
   });
 
-  if (svgGroups.length) {
-    gsap.set(svgGroups, { opacity: 0 });
-  }
+  prevBtn?.addEventListener("click", () => render(currentIndex - 1));
+  nextBtn?.addEventListener("click", () => render(currentIndex + 1));
 
-  if (videoInner) {
-    gsap.set(videoInner, { opacity: 0, scale: 1.1, transformOrigin: "50% 55%" });
-  }
-
-  if (shadowImg) {
-    gsap.set(shadowImg, { opacity: 0, y: 18 });
-  }
-
-  if (title) {
-    gsap.set(title, { opacity: 0, y: 34, rotate: -2 });
-  }
-
-  if (handText) {
-    gsap.set(handText, {
-      opacity: 0,
-      y: 28,
-      clipPath: "inset(0 100% 0 0)",
-    });
-  }
-
-  if (downBtn) {
-    gsap.set(downBtn, { opacity: 0, y: 24 });
-  }
-
-  const endAt = 2;
-  const tl = gsap.timeline({
-    paused: true,
-    defaults: { ease: "power2.out" },
+  modal.querySelector("[data-about-stats-modal-close]")?.addEventListener("click", close);
+  overflow.addEventListener("click", (evt) => {
+    if (evt.target === overflow) close();
   });
-
-  whenLoaderReveals().then(() => tl.play());
-
-  if (edgeSvgs.length) {
-    tl.to(
-      edgeSvgs,
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 1.45,
-      },
-      endAt - 1.45,
-    );
-  }
-
-  if (svgGroups.length) {
-    tl.to(
-      svgGroups,
-      {
-        opacity: (index) => targetGroupOpacity[index],
-        duration: 1.2,
-        stagger: {
-          each: 0.02,
-          from: "start",
-        },
-      },
-      endAt - 1.2,
-    );
-  }
-
-  if (videoInner) {
-    tl.to(
-      videoInner,
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        clearProps: "transform",
-      },
-      endAt - 1,
-    );
-  }
-
-  if (shadowImg) {
-    tl.to(
-      shadowImg,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.65,
-      },
-      endAt - 0.72,
-    );
-  }
-
-  if (title) {
-    tl.to(
-      title,
-      {
-        opacity: 1,
-        y: 0,
-        rotate: 0,
-        duration: 0.8,
-      },
-      endAt - 0.8,
-    );
-  }
-
-  if (handText) {
-    tl.to(
-      handText,
-      {
-        opacity: 1,
-        y: 0,
-        clipPath: "inset(0 0% 0 0)",
-        duration: 0.62,
-        clearProps: "clipPath",
-      },
-      endAt - 0.62,
-    );
-  }
-
-  if (downBtn) {
-    tl.to(
-      downBtn,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.55,
-      },
-      endAt - 0.55,
-    );
-  }
+  document.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") close();
+  });
 }
 
-initAboutHeroAnimation();
-initAboutMiddleKeyTitleAnimation();
-initAboutComplexAnimations();
-initAboutKeyAnimation();
+function initPhilosophyParallax() {
+  const section = document.querySelector(".about-philosophy");
+  const image = section?.querySelector('[data-parallax="image"]');
+  if (!section || !image) return;
 
-function initAboutMiddleKeyTitleAnimation() {
-  const titleWrap = document.querySelector(".about-key .home-about__title-wrap.container.middle-key__quote");
-  if (!titleWrap) return;
-
-  animateTitleWrap(titleWrap);
-}
-
-function initAboutComplexAnimations() {
-  const section = document.querySelector(".about-complex");
-  if (!section) return;
-
-  const quote = section.querySelector(".section-quote");
-  const contentBlock = section.querySelector(".about-complex__content-block");
-  const img = section.querySelector(".about-complex__img");
-
-  // — entrance animations —
-  if (quote) {
-    gsap.set(quote, { opacity: 0, y: 40 });
-    gsap.to(quote, {
-      opacity: 1,
-      y: 0,
-      duration: 0.9,
-      ease: "power2.out",
+  gsap.fromTo(
+    image,
+    { yPercent: -6 },
+    {
+      yPercent: 6,
+      ease: "none",
       scrollTrigger: {
-        trigger: quote,
-        start: "top 82%",
-        once: true,
+        trigger: section,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
       },
-    });
-  }
-
-  if (contentBlock) {
-    gsap.set(contentBlock, { opacity: 0, y: 50 });
-    gsap.to(contentBlock, {
-      opacity: 1,
-      y: 0,
-      duration: 0.85,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: contentBlock,
-        start: "top 85%",
-        once: true,
-      },
-    });
-  }
-
-  // — parallax on image (overflow:hidden on section hides overshoot) —
-  if (img) {
-    gsap.fromTo(
-      img,
-      { yPercent: 20 },
-      {
-        yPercent: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5,
-        },
-      },
-    );
-  }
+    },
+  );
 }
 
-function initAboutKeyAnimation() {
-  const section = document.querySelector(".about-key");
-  if (!section) return;
+// Card sits on top of the already-parallaxing photo (initPhilosophyParallax)
+// — scrubbing its own rotateX/yPercent at a different rate/axis than the
+// background makes the two layers visibly separate in depth instead of
+// drifting together, which is what actually reads as "3D" here.
+function initPhilosophyCardTilt() {
+  const section = document.querySelector(".about-philosophy");
+  // Animate the inner face, not .about-philosophy__card itself — that outer
+  // element owns the laptop `transform: translateY(-50%)` centering in CSS,
+  // and GSAP writing its own inline transform there would overwrite it.
+  const card = section?.querySelector(".about-philosophy__card-face");
+  if (!section || !card) return;
 
-  const keyholeDesktopMedia = window.matchMedia("(min-width: 1024px)");
+  gsap.fromTo(
+    card,
+    { yPercent: 4, rotateX: 8, transformPerspective: 1000, transformOrigin: "50% 100%" },
+    {
+      yPercent: -4,
+      rotateX: -8,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    },
+  );
+}
 
-  const applyResponsiveKeyholeGeometry = (isDesktop) => {
-    const cutoutGroups = section.querySelectorAll(".keyhole-cutout");
+function initValuesParallax() {
+  const section = document.querySelector(".about-values");
+  const image = section?.querySelector('[data-parallax="image"]');
+  if (!section || !image) return;
 
-    const circleRadius = isDesktop ? 150 : 100;
-    const trapezoidPath = isDesktop
-      ? "M900 388L1020 388L1115 820L805 820Z"
-      : "M920 408L1000 408L1060 708L860 708Z";
+  gsap.fromTo(
+    image,
+    { yPercent: -10 },
+    {
+      yPercent: 10,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    },
+  );
+}
 
-    cutoutGroups.forEach((group) => {
-      const circle = group.querySelector("circle");
-      const path = group.querySelector("path");
+function initHistoryParallax() {
+  const section = document.querySelector(".about-history");
+  const image = section?.querySelector('[data-parallax="image"]');
+  if (!section || !image) return;
 
-      if (circle) circle.setAttribute("r", String(circleRadius));
-      if (path) path.setAttribute("d", trapezoidPath);
-    });
-  };
+  gsap.fromTo(
+    image,
+    { yPercent: -10 },
+    {
+      yPercent: 10,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    },
+  );
+}
 
-  applyResponsiveKeyholeGeometry(keyholeDesktopMedia.matches);
+function initHistoryBirds() {
+  const section = document.querySelector(".about-history");
+  const bird = section?.querySelector(".about-history__bird");
+  if (!section || !bird) return;
 
-  const startKey = section.querySelector(".start-key");
-  const startQuote = section.querySelector(".start-key__quote");
-  const middleKey = section.querySelector(".middle-key");
-  const firstImageWrap = section.querySelector(".about-key__img-wrap .key-img-wrap-1");
-
-  const secondImageSection = section.querySelector(".about-key__img-wrap-2");
-  const endQuote = section.querySelector(".end-key__quote");
-  const endQuoteTitle = section.querySelector(".end-key__quote .section-quote");
-  const cards = section.querySelectorAll(".about-key__cards-wrap .about-key-card");
-
-  const enterCutout = section.querySelector(".svg-key .keyhole-cutout");
-  const exitCutout = section.querySelector(".svg-key-oppend .keyhole-cutout");
-  const enterSvgLayer = section.querySelector(".svg-key");
-  const exitSvgLayer = section.querySelector(".svg-key-oppend");
-  const enterSvg = section.querySelector(".svg-key .keyhole-svg");
-  const exitSvg = section.querySelector(".svg-key-oppend .keyhole-svg");
-  const gradients = section.querySelectorAll(".gradient-key");
-
-  if (!startKey || !startQuote || !middleKey || !firstImageWrap || !secondImageSection || !endQuote) return;
-
-  const onKeyholeBreakpointChange = (event) => {
-    applyResponsiveKeyholeGeometry(event.matches);
-    ScrollTrigger.refresh();
-  };
-
-  if (keyholeDesktopMedia.addEventListener) {
-    keyholeDesktopMedia.addEventListener("change", onKeyholeBreakpointChange);
-  } else {
-    keyholeDesktopMedia.addListener(onKeyholeBreakpointChange);
-  }
-
-  if (enterCutout) {
-    gsap.set(enterCutout, {
-      transformBox: "view-box",
-      transformOrigin: "50% 50%",
-      svgOrigin: "960 540",
-      x: 0,
-      y: 0,
-      scale: 1,
-    });
-  }
-
-  if (enterSvg) {
-    gsap.set(enterSvg, {
-      scale: 1,
-      transformOrigin: "50% 50%",
-    });
-  }
-
-  if (exitCutout) {
-    gsap.set(exitCutout, {
-      transformBox: "view-box",
-      transformOrigin: "50% 50%",
-      scale: 15,
-    });
-  }
-
-  if (exitSvgLayer) {
-    gsap.set(exitSvgLayer, {
-      scale: 1.35,
-      autoAlpha: 1,
-      transformOrigin: "50% 50%",
-    });
-  }
-
-  if (exitSvg) {
-    gsap.set(exitSvg, {
-      scale: 1,
-      transformOrigin: "50% 50%",
-    });
-  }
-
-  gsap.set(startQuote, {
-    autoAlpha: 1,
-    scale: 1,
-    filter: "blur(0px)",
+  gsap.set(bird, {
+    opacity: 0,
+    xPercent: 24,
+    scale: 0.8,
+    y: 36,
+    rotate: -5,
+    scale: 0.9,
     transformOrigin: "50% 50%",
   });
 
-  endQuote.style.setProperty("--end-key-progress", "0");
-
-  if (gradients.length) {
-    gsap.set(gradients, { autoAlpha: 0.8 });
-  }
-
-  if (cards.length) {
-    const firstCard = cards[0];
-    const secondCard = cards[1];
-
-    if (firstCard && window.matchMedia("(min-width: 1024px)").matches) {
-      gsap.fromTo(
-        firstCard,
-        { yPercent: -8 },
-        {
-          yPercent: 8,
-          ease: "none",
-          scrollTrigger: {
-            trigger: firstCard,
-            start: "top bottom",
-            end: "+=140%",
-            scrub: 1.2,
-            invalidateOnRefresh: true,
-          },
-        },
-      );
-    }
-
-    if (secondCard && window.matchMedia("(min-width: 1024px)").matches) {
-      gsap.fromTo(
-        secondCard,
-        { yPercent: -20 },
-        {
-          yPercent: 20,
-          ease: "none",
-          scrollTrigger: {
-            trigger: secondCard,
-            start: "top bottom",
-            end: "+=90%",
-            scrub: 0.45,
-            invalidateOnRefresh: true,
-          },
-        },
-      );
-    }
-  }
-
-  const enterTimeline = gsap.timeline({
+  gsap.to(bird, {
+    opacity: 1,
+    xPercent: 0,
+    scale: 1,
+    y: 0,
+    rotate: 0,
+    scale: 1,
+    duration: 1.6,
+    ease: "back.out(1.5)",
     scrollTrigger: {
-      trigger: startKey,
-      start: "bottom bottom",
-      end: "+=120%",
-      scrub: true,
-      pin: startQuote,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
+      trigger: bird,
+      start: "top 90%",
+      once: true,
+    },
+    onComplete: () => {
+      // Idle glide: gentle altitude bob + wing-tilt wobble, kept off the x-axis
+      // so it doesn't fight the scroll-driven drift tween below.
+      gsap.to(bird, {
+        y: "+=14",
+        duration: 2.6,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+      gsap.to(bird, {
+        rotate: 2,
+        duration: 3.2,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+        delay: 0.4,
+      });
     },
   });
 
-  if (enterCutout) {
-    enterTimeline.to(
-      enterCutout,
-      {
-        x: 0,
-        y: 0,
-        scale: 15,
-        svgOrigin: "960 540",
-        ease: "none",
-      },
-      0,
-    );
-  }
-
-  if (enterSvg) {
-    enterTimeline.to(
-      enterSvg,
-      {
-        scale: 1.35,
-        ease: "none",
-      },
-      0,
-    );
-  }
-
-  enterTimeline.to(
-    startQuote,
-    {
-      autoAlpha: 0,
-      scale: 1.08,
-      filter: "blur(16px)",
-      ease: "none",
+  // Birds drift further across the sky than the background as the section scrolls by.
+  gsap.to(bird, {
+    xPercent: 10,
+    ease: "none",
+    scrollTrigger: {
+      trigger: section,
+      start: "top bottom",
+      end: "bottom top",
+      scrub: true,
     },
-    0,
+  });
+}
+
+function initHistorySlider() {
+  const section = document.querySelector(".about-history");
+  const sliderEl = section?.querySelector(".about-history__slider");
+  if (!section || !sliderEl) return;
+
+  new Swiper(sliderEl, {
+    modules: [Navigation],
+    slidesPerView: 1,
+    spaceBetween: 8,
+    speed: 600,
+    navigation: {
+      prevEl: section.querySelector("[data-history-prev]"),
+      nextEl: section.querySelector("[data-history-next]"),
+    },
+    breakpoints: {
+      1024: { slidesPerView: 2.4 },
+      1366: { slidesPerView: 3 },
+    },
+  });
+}
+
+function initReviewsVideoVisibility() {
+  const section = document.querySelector(".about-reviews");
+  const video = section?.querySelector(".about-reviews__video");
+  if (!section || !video) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.25 },
   );
 
-  if (gradients.length) {
-    enterTimeline.to(
-      gradients,
-      {
-        autoAlpha: 0,
-        ease: "none",
-      },
-      0,
-    );
-  }
+  observer.observe(video);
+}
 
-  if (enterSvgLayer) {
-    ScrollTrigger.create({
-      trigger: startKey,
-      start: "bottom bottom",
-      end: "+=120%",
-      pin: enterSvgLayer,
-      pinSpacing: false,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-    });
-  }
+function initReviewsSlider() {
+  const section = document.querySelector(".about-reviews");
+  const sliderEl = section?.querySelector(".about-reviews__slider");
+  if (!section || !sliderEl) return;
 
-  ScrollTrigger.create({
-    trigger: firstImageWrap,
-    start: "top top",
-    endTrigger: middleKey,
-    end: "top top",
-    pin: true,
-    pinSpacing: false,
-    anticipatePin: 1,
-    invalidateOnRefresh: true,
-  });
-
-  const exitTimeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: secondImageSection,
-      start: "top top",
-      end: "+=110%",
-      scrub: true,
-      pin: secondImageSection,
-      anticipatePin: 1,
-      pinType: "fixed",
-      fastScrollEnd: true,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => {
-        endQuote.style.setProperty("--end-key-progress", self.progress.toFixed(4));
-      },
+  new Swiper(sliderEl, {
+    modules: [Navigation],
+    slidesPerView: 1,
+    spaceBetween: 8,
+    speed: 600,
+    navigation: {
+      prevEl: section.querySelector("[data-reviews-prev]"),
+      nextEl: section.querySelector("[data-reviews-next]"),
+    },
+    breakpoints: {
+      1024: { slidesPerView: 2 },
     },
   });
 
-  if (exitCutout) {
-    exitTimeline.to(
-      exitCutout,
-      {
-        scale: 1,
-        ease: "none",
-      },
-      0,
-    );
-  }
-
-  if (exitSvgLayer) {
-    exitTimeline.to(
-      exitSvgLayer,
-      {
-        scale: 1,
-        autoAlpha: 1,
-        ease: "none",
-      },
-      0,
-    );
-  }
-
-  if (gradients.length) {
-    exitTimeline.to(
-      gradients,
-      {
-        autoAlpha: 0.8,
-        ease: "none",
-      },
-      0,
-    );
-  }
+  Fancybox.bind(section, "[data-fancybox='reviews']");
 }
+
+function initStandardsSlider() {
+  const section = document.querySelector(".about-standards");
+  const sliderEl = section?.querySelector(".about-standards__slider");
+  if (!section || !sliderEl) return;
+
+  new Swiper(sliderEl, {
+    modules: [Navigation],
+    slidesPerView: 1,
+    spaceBetween: 16,
+    speed: 600,
+    navigation: {
+      prevEl: section.querySelector("[data-standards-prev]"),
+      nextEl: section.querySelector("[data-standards-next]"),
+    },
+    breakpoints: {
+      768: { slidesPerView: 1.4 },
+      1024: { slidesPerView: 2, spaceBetween: 24 },
+      1366: { slidesPerView: 2.4, spaceBetween: 24 },
+    },
+  });
+
+  Fancybox.bind(section, "[data-fancybox='standards']");
+}
+
+function initTeamTabs() {
+  const section = document.querySelector(".about-team");
+  if (!section) return;
+
+  const tabs = section.querySelectorAll("[data-team-tab]");
+  const groups = section.querySelectorAll("[data-team-group]");
+  if (!tabs.length || !groups.length) return;
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.teamTab;
+      if (tab.classList.contains("is-active")) return;
+
+      tabs.forEach((otherTab) => {
+        const isActive = otherTab === tab;
+        otherTab.classList.toggle("is-active", isActive);
+        otherTab.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+
+      groups.forEach((group) => {
+        group.hidden = group.dataset.teamGroup !== target;
+      });
+    });
+  });
+}
+
+function initTeamSliders() {
+  const section = document.querySelector(".about-team");
+  if (!section) return;
+
+  section.querySelectorAll("[data-team-group]").forEach((group) => {
+    const key = group.dataset.teamGroup;
+    const sliderEl = group.querySelector(".about-team__slider");
+    if (!sliderEl) return;
+
+    new Swiper(sliderEl, {
+      modules: [Navigation],
+      slidesPerView: "auto",
+      spaceBetween: 8,
+      speed: 600,
+      navigation: {
+        prevEl: section.querySelector(`[data-team-prev-${key}]`),
+        nextEl: section.querySelector(`[data-team-next-${key}]`),
+      },
+    });
+  });
+}
+
+initStatsModal();
+initPhilosophyParallax();
+initPhilosophyCardTilt();
+initValuesParallax();
+initHistoryParallax();
+initHistoryBirds();
+initHistorySlider();
+initReviewsVideoVisibility();
+initReviewsSlider();
+initStandardsSlider();
+initTeamTabs();
+initTeamSliders();
+
+// Targets the inner face, not .about-philosophy__card, for the same reason
+// as initPhilosophyCardTilt above: the shell owns a CSS `transform` at
+// laptop (centering) that a GSAP-written inline transform would overwrite.
+initSectionReveal(".about-philosophy", ".about-philosophy__card-face");
+initSectionReveal(".about-values", ".about-values__title, .about-values__card");
+initSectionReveal(".about-history", ".about-history__title");
+initSectionReveal(".about-reviews", ".about-reviews__title, .about-reviews__card");
+initSectionReveal(".about-standards", ".about-standards__title");
+initSectionReveal(".about-team", ".about-team__title, .about-team__tabs");
+initSectionReveal(".about-career", ".about-career__card");

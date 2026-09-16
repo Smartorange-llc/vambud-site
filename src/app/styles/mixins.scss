@@ -86,11 +86,12 @@ $screen-height: 720;
 }
 
 
+// H2 з макета: 32 / 60 / 100, Regular.
 @mixin section-title() {
   font-family: $default-font;
   font-size: 32px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 100%;
 
   text-transform: uppercase;
@@ -109,6 +110,7 @@ $screen-height: 720;
   }
 }
 
+// H3 з макета: 32 / 48 / 60, Bold. Трекінг -8% на 375/768 і -4% на 1920.
 @mixin article-title() {
   font-size: 32px;
   font-weight: 700;
@@ -122,6 +124,7 @@ $screen-height: 720;
 
   @include laptop {
     font-size: vw(60);
+    letter-spacing: -0.04em;
   }
 }
 
@@ -141,9 +144,10 @@ $screen-height: 720;
 //   }
 // }
 
+// H5 Uppercase з макета: 16 / 24 / 24, Bold.
 @mixin block-subtitle() {
   font-family: $default-font;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 140%;
   letter-spacing: -0.03em;
@@ -201,7 +205,7 @@ $screen-height: 720;
 }
 
 @mixin btn-text() {
-  font-size: 12px;
+  font-size: 16px;
   font-family: $default-font;
   font-weight: 700;
   font-style: normal;
@@ -210,7 +214,7 @@ $screen-height: 720;
   letter-spacing: -0.03em;
 
   @include tablet {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   @include laptop {
@@ -219,9 +223,26 @@ $screen-height: 720;
 
 }
 
+// Той самий Body-токен, що й general-text (16 / 18 / 18, Medium).
 @mixin middle-text() {
   font-family: $default-font;
-  font-size: 14px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
+  text-transform: none;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+
+  @include tablet {
+    font-size: 18px;
+  }
+}
+
+// Body з макета: 16 (375) / 18 (768) / 18 (1920), Montserrat Medium.
+@mixin general-text() {
+  font-family: $default-font;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 140%;
@@ -234,34 +255,7 @@ $screen-height: 720;
   }
 
   @include laptop {
-    font-size: 18px;
-    font-size: clamp(14px,
-        calc(14px + (18 - 14) * ((100vw - 1024px) / (1920 - 1024))),
-        18px);
-
-  }
-}
-
-@mixin general-text() {
-  font-family: $default-font;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
-  text-transform: none;
-  letter-spacing: -0.03em;
-  text-decoration: none;
-
-  @include tablet {
-    font-size: 16px;
-  }
-
-  @include laptop {
-    font-size: 16px;
-    font-size: clamp(14px,
-        calc(14px + (16 - 14) * ((100vw - 1024px) / (1920 - 1024))),
-        16px);
-
+    font-size: vw(18);
   }
 }
 
@@ -330,4 +324,263 @@ $screen-height: 720;
   @include laptop {
     font-size: vw(40);
   }
+}
+
+// ==========================================================================
+// Shared "project card" grid — the photo + price/badge + name/location/arrow
+// card used for listing ЖК projects (projects.pug's catalog, one-room's
+// eligible-projects grid, and any future page that lists project cards the
+// same way). Grid density and card proportions differ per page, so those
+// are parameters; everything else renders identically everywhere and is
+// fixed here so it isn't hand-copied per page.
+// ==========================================================================
+
+@mixin project-card-grid($tablet-cols: 1, $laptop-cols: 2, $tablet-gap: 12px, $laptop-gap: vw(40)) {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+
+  @include tablet {
+    grid-template-columns: repeat($tablet-cols, 1fr);
+    gap: $tablet-gap;
+  }
+
+  @include laptop {
+    grid-template-columns: repeat($laptop-cols, 1fr);
+    gap: $laptop-gap;
+  }
+}
+
+@mixin project-card($mobile-ar, $tablet-ar, $laptop-ar, $tablet-radius: 32px, $laptop-radius: vw(40)) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  aspect-ratio: $mobile-ar;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: $wc;
+  border-radius: 20px;
+
+  @include tablet {
+    aspect-ratio: $tablet-ar;
+    border-radius: $tablet-radius;
+  }
+
+  @include laptop {
+    aspect-ratio: $laptop-ar;
+    border-radius: $laptop-radius;
+  }
+}
+
+// $card-selector: the card class (e.g. ".projects-page__card") this image
+// lives inside, so its hover-zoom can be wired up without repeating a
+// separate `@media (hover: hover) { .card:hover .image {...} }` block
+// per page.
+@mixin project-card-image($card-selector) {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+
+  @media (hover: hover) {
+    #{$card-selector}:hover & {
+      transform: scale(1.06);
+    }
+  }
+}
+
+// $stack-on-mobile: true stacks price/badge into a column on mobile,
+// switching to a row from tablet up (projects-page's catalog); false keeps
+// them in a row at every size (one-room's denser cards, where both always fit).
+@mixin project-card-top($stack-on-mobile: false) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+
+  @if $stack-on-mobile {
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include tablet {
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+    }
+  }
+
+  @else {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @include laptop {
+    padding: vw(20);
+  }
+}
+
+@mixin project-card-price-badge {
+  @include tiny-text;
+  flex-shrink: 1;
+  min-width: 0;
+  padding: 6px 14px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  max-width: calc(50% - 4px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+@mixin project-card-info($tablet-padding: 72px 24px 24px, $laptop-padding: vw(120) vw(40) vw(40), $laptop-gap: vw(20)) {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 48px 16px 16px;
+  background: linear-gradient(180deg, rgba(15, 16, 16, 0) 0%, rgba(15, 16, 16, 0.85) 70%, #0f1010 100%);
+
+  @include tablet {
+    padding: $tablet-padding;
+  }
+
+  @include laptop {
+    padding: $laptop-padding;
+    gap: $laptop-gap;
+  }
+}
+
+@mixin project-card-text {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@mixin project-card-name($mobile-size: 22px, $tablet-size: 32px, $laptop-size: vw(40)) {
+  font-family: $default-font;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.08em;
+  color: $wc;
+  margin: 0;
+  overflow-wrap: break-word;
+  font-size: $mobile-size;
+
+  @include tablet {
+    font-size: $tablet-size;
+  }
+
+  @include laptop {
+    font-size: $laptop-size;
+  }
+}
+
+@mixin project-card-location {
+  @include tiny-text;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: $bg-color;
+  margin: 0;
+
+  span {
+    flex: 1;
+  }
+}
+
+@mixin project-card-pin {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+// $card-selector: see project-card-image() above.
+@mixin project-card-arrow($card-selector) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: $wc;
+  transition: transform 0.3s ease;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (hover: hover) {
+    #{$card-selector}:hover & {
+      transform: rotate(45deg);
+    }
+  }
+}
+
+@mixin project-card-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+@mixin project-card-filter-btn {
+  @include tiny-text;
+  color: $text-color;
+  background-color: $wc;
+  border: 1px solid $accent-color-2;
+  border-radius: 100px;
+  padding: 5px 10px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+  @include tablet {
+    padding: 12px 20px;
+  }
+
+  @include laptop {
+    padding: vw(12) vw(20);
+  }
+
+  &.is-active {
+    background-color: $accent-color;
+    border-color: $accent-color;
+    color: $text-color-light;
+  }
+
+  @media (hover: hover) {
+    &:not(.is-active):hover {
+      border-color: $accent-color;
+    }
+  }
+}
+
+@mixin project-card-filter-count {
+  opacity: 0.7;
+}
+
+@mixin project-card-empty {
+  @include general-text;
+  color: $grey-color;
+  text-align: center;
+  padding: 40px 0;
 }

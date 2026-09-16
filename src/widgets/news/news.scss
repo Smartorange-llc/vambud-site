@@ -1,0 +1,288 @@
+// ==========================================================================
+// News section
+// ==========================================================================
+
+.news {
+  position: relative;
+  padding: 60px 0;
+  background-color: $bg-color;
+
+  @include tablet {
+    padding: 70px 0;
+  }
+
+  @include laptop {
+    padding: vw(100) 0;
+  }
+}
+
+.news__inner {
+  max-width: 100vw;
+
+  @include laptop {}
+}
+
+.news__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.news__title {
+  @include article-title;
+  color: $accent-color;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.news__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 2px;
+  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  transform: translateY(-50%);
+  pointer-events: none;
+
+  &>* {
+    pointer-events: all;
+  }
+
+}
+
+.news__nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  color: $wc;
+  transition: opacity 0.3s ease;
+
+  @include tablet {
+    width: 48px;
+    height: 48px;
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.news__slider {
+  width: 100%;
+
+  position: relative;
+
+  @include laptop {
+    overflow: visible;
+    padding: 0 vw(60);
+  }
+}
+
+.news__slide {
+  height: auto;
+}
+
+.news__card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  background-color: $wc;
+  border-radius: 20px;
+  padding: 12px 12px 24px;
+
+  @include tablet {
+    border-radius: 40px;
+  }
+
+  @include laptop {
+    border-radius: vw(40);
+    padding: vw(20) vw(20) vw(32);
+  }
+}
+
+.news__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.news__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 343 / 230;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+  @include tablet {
+    aspect-ratio: 3 / 2;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  @include laptop {
+    border-radius: vw(32);
+    margin-bottom: vw(24);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+}
+
+.news__logo {
+  @include tiny-text;
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 1;
+  color: $text-color-light;
+  letter-spacing: 0.04em;
+
+  @include laptop {
+    top: vw(20);
+    right: vw(24);
+  }
+}
+
+@media (hover: hover) {
+  .news__card:hover .news__media img {
+    transform: scale(1.06);
+  }
+}
+
+.news__card-title {
+  @include subtitle-text;
+  color: $accent-color;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+  line-height: 130%;
+
+  @include laptop {
+    margin: 0 0 vw(24);
+  }
+}
+
+.news__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.news__view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border: 1px solid $accent-color-2;
+  border-radius: 100px;
+  color: $text-color;
+  text-decoration: none;
+  transition: border-color 0.3s ease;
+
+  svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  span {
+    @include btn-text;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $accent-color;
+
+      svg {
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+.news__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: $text-color;
+  flex-shrink: 0;
+
+  span {
+    @include btn-text;
+  }
+}
+
+.news__date-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid $accent-color-2;
+  color: $grey-color;
+  flex-shrink: 0;
+}
+
+.news__footer-all {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+
+  @include tablet {
+    margin-top: 48px;
+  }
+
+  @include laptop {
+    margin-top: vw(56);
+  }
+}
+
+.news__all-link {
+  background-color: transparent;
+
+  span {
+    text-transform: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: $accent-color;
+
+      span {
+        color: $accent-color;
+      }
+
+      svg path {
+        fill: $accent-color;
+      }
+    }
+  }
+}

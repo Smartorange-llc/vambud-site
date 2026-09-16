@@ -5,35 +5,49 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "./s3d2-Mapbox.scss";
 // import "swiper/css";
 
-if (typeof Swiper.use === "function") Swiper.use([Navigation]);
-
-const MARKERS_BASE_PATH =
-  window.location.hostname === "localhost" ? "/src/shared/images/markers" : `/assets/images/markers`;
-const markerIcon = (fileName) => `${MARKERS_BASE_PATH}/${fileName}`;
+// Real imports (not runtime-built path strings) so Vite hashes and copies
+// these into the production bundle — a `window.location.hostname ===
+// "localhost"` check used to pick the path, but `vite preview` also serves
+// the production build from localhost, so that branch pointed at the raw
+// /src/... source path, which doesn't exist in dist/ and 404'd there.
+import iconMain from "@shared/images/markers/main.png";
+import iconCommercial from "@shared/images/markers/commercial.svg";
+import iconSport from "@shared/images/markers/sport.svg";
+import iconTerminal from "@shared/images/markers/terminal.svg";
+import iconParking from "@shared/images/markers/parking.svg";
+import iconShop from "@shared/images/markers/shop.svg";
+import iconWalking from "@shared/images/markers/walking.svg";
+import iconUnderground from "@shared/images/markers/underground.svg";
+import iconStreet from "@shared/images/markers/street.svg";
+import iconWorkout from "@shared/images/markers/workout.svg";
+import iconAtm from "@shared/images/markers/atm.svg";
+import iconLake from "@shared/images/markers/lake.svg";
+import iconTennis from "@shared/images/markers/tennis.svg";
+import iconSchool from "@shared/images/markers/school.svg";
+import iconPharmacy from "@shared/images/markers/pharmacy.svg";
+import iconRestaurant from "@shared/images/markers/restaurant.svg";
+import iconDefault from "@shared/images/markers/marker.svg";
+import iconZoo from "@shared/images/markers/zoo.svg";
 
 const DEFAULT_TYPE_ICONS = {
-  main: markerIcon("main.png"),
-  club: markerIcon("commercial.svg"),
-  sport: markerIcon("sport.svg"),
-  terminal: markerIcon("marker2.svg"),
-  parking: markerIcon("parking.svg"),
-  shop: markerIcon("shop.svg"),
-  walking: markerIcon("walking.svg"),
-  entertainment: markerIcon("entertainment.svg"),
-  underground: markerIcon("underground.svg"),
-  street: markerIcon("street.svg"),
-  workout: markerIcon("workout.svg"),
-  atm: markerIcon("atm.svg"),
-  lake: markerIcon("lake.svg"),
-  tennis: markerIcon("tennis.svg"),
-  school: markerIcon("school.svg"),
-  pharmacy: markerIcon("pharmacy.svg"),
-  restaurant: markerIcon("restaurant.svg"),
-  default: markerIcon("marker.svg"),
-  ports: markerIcon("port.svg"),
-  marinas: markerIcon("doughnut.svg"),
-  terminal: markerIcon("terminal.svg"),
-  zoo: markerIcon("zoo.svg"),
+  main: iconMain,
+  club: iconCommercial,
+  sport: iconSport,
+  terminal: iconTerminal,
+  parking: iconParking,
+  shop: iconShop,
+  walking: iconWalking,
+  underground: iconUnderground,
+  street: iconStreet,
+  workout: iconWorkout,
+  atm: iconAtm,
+  lake: iconLake,
+  tennis: iconTennis,
+  school: iconSchool,
+  pharmacy: iconPharmacy,
+  restaurant: iconRestaurant,
+  default: iconDefault,
+  zoo: iconZoo,
 };
 
 const MODE_LABELS = {
@@ -671,6 +685,12 @@ export default class MapboxBlock {
   }
 
   add3DBuildings() {
+    // Newer styles (e.g. mapbox/standard) don't expose a "composite" vector
+    // source at all — they already render buildings in 3D natively — so
+    // adding this extrusion layer against it throws. Only add it when the
+    // style actually has that source (classic styles: streets, light, etc.).
+    if (!this.map.getSource("composite")) return;
+
     const layers = this.map.getStyle().layers || [];
     const labelLayerId = layers.find((layer) => layer.type === "symbol" && layer.layout?.["text-field"])?.id;
 
@@ -912,6 +932,7 @@ export default class MapboxBlock {
 
     if (swiperContainer) {
       this.sliderInstance = new Swiper(swiperContainer, {
+        modules: [Navigation],
         slidesPerView: 1,
         navigation: {
           nextEl: ".mapbox-info__swiper-next",

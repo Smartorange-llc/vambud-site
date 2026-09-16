@@ -1,0 +1,470 @@
+// ==========================================================================
+// Founder section
+// ==========================================================================
+
+.founder {
+  position: relative;
+  overflow: hidden;
+
+  background-color: $bg-color;
+
+  // @include tablet {
+  //   padding: 96px 0;
+  // }
+
+  // @include laptop {
+  //   padding: vw(120) 0;
+  // }
+}
+
+.founder__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(180deg, rgba(223, 222, 225, 0.00) 0%, rgba(223, 222, 225, 0.90) 59.62%, $bg-color 100%);
+    pointer-events: none;
+  }
+}
+
+.founder__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.founder__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 32px;
+  text-align: center;
+
+  @include tablet {
+    margin-bottom: 48px;
+  }
+
+  @include laptop {
+    margin-bottom: vw(64);
+
+  }
+}
+
+.founder__word {
+  @include super-title;
+  display: block;
+  color: $text-color-light;
+  text-transform: uppercase;
+  will-change: transform;
+}
+
+.founder__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  @include laptop {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    gap: -vw(40);
+  }
+}
+
+.founder__photo {
+  width: 100%;
+  // max-width: 100%;
+  will-change: transform;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(79, 48, 127, 0.00) 79.16%, #4F307F 100%);
+    pointer-events: none;
+
+    @include tablet {
+      border-radius: 200px;
+    }
+
+    @include laptop {
+      content: none;
+    }
+  }
+
+  @include tablet {
+    max-width: 80%;
+  }
+
+  @include laptop {
+    max-width: vw(938);
+    flex-shrink: 0;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.founder__quote {
+  width: 100%;
+  margin-top: -48px;
+  background: linear-gradient(180deg, rgba(79, 48, 127, 0.85) 0%, rgba(79, 48, 127, 0.98) 100%);
+  border-radius: 20px;
+  padding: 40px 20px;
+  color: $text-color-light;
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Розтягуємо на всю площу */
+    border-radius: inherit;
+    /* Повторюємо радіус картки */
+    /* 1. Задаємо товщину нашого бордера */
+    padding: 1px;
+    /* 2. Малюємо сам градієнт (він буде видно тільки там, де відпрацює маска) */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.1) 40%,
+        rgba(255, 255, 255, 0.1) 70%,
+        rgba(255, 255, 255, 0.8) 100%);
+    /* 3. Магія маскування: вирізаємо середину, залишаючи лише padding (наш 1px бордер) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+
+
+
+  }
+
+  @include tablet {
+    margin-top: -64px;
+    padding: 80px 60px;
+    border-radius: 40px;
+    max-width: 80%;
+  }
+
+  @include laptop {
+    margin-top: 0;
+    max-width: vw(778);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: vw(48);
+    align-self: center;
+  }
+}
+
+.founder__quote-text {
+  @include quote-text;
+  color: $text-color-light;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 0 40px;
+
+  @include tablet {
+    text-align: left;
+    margin-bottom: 60px;
+  }
+
+  @include laptop {
+
+    margin-bottom: vw(60);
+  }
+}
+
+.founder__quote-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+}
+
+.founder__quote-name {
+  @include subtitle-text;
+  color: $text-color-light;
+  text-align: center;
+
+}
+
+.founder .stats__card-btn {
+  width: fit-content;
+  margin: 0;
+
+  @include laptop {
+    @media (hover:hover) {
+      &:hover {
+
+        border-color: $accent-color;
+
+        span {
+          color: $accent-color;
+        }
+      }
+    }
+  }
+
+  span {
+    text-transform: none;
+  }
+}
+
+.founder__quote-plus {
+  margin-left: 10px;
+}
+
+// ==========================================================================
+// Founder popup
+// ==========================================================================
+
+.founder-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background-color: rgba(15, 16, 16, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  @include tablet {
+    padding: 40px;
+  }
+}
+
+.founder-popup__box {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  background: linear-gradient(135deg, darken($accent-color, 10%) 0%, $accent-color 55%, lighten($accent-color, 10%) 100%);
+  border-radius: 20px;
+  padding: 48px 20px 20px;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+  will-change: transform, opacity, filter;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease,
+    filter 0.5s ease;
+
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Розтягуємо на всю площу */
+    border-radius: 24px;
+    /* Повторюємо радіус картки */
+
+    /* 1. Задаємо товщину нашого бордера */
+    padding: 1px;
+
+    /* 2. Малюємо сам градієнт (він буде видно тільки там, де відпрацює маска) */
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.05) 40%,
+        rgba(255, 255, 255, 0.05) 60%,
+        rgba(255, 255, 255, 0.4) 100%);
+
+    /* 3. Магія маскування: вирізаємо середину, залишаючи лише padding (наш 1px бордер) */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    /* Щоб рамка не перехоплювала кліки */
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .founder-popup.hidden & {
+    transform: translate3d(0, 24px, 0) scale(0.96);
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  @include tablet {
+    border-radius: 40px;
+    max-height: calc(100dvh - 80px);
+    padding: 100px 60px 30px;
+  }
+
+  @include laptop {
+    padding: vw(100) vw(60) vw(30);
+    border-radius: vw(40);
+    max-height: calc(100dvh - 120px);
+  }
+}
+
+.founder-popup__close {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  @media (hover: hover) {
+    &:hover svg {
+      transform: rotate(90deg);
+      opacity: 0.7;
+    }
+  }
+
+  @include tablet {
+    top: 40px;
+    right: 40px;
+  }
+
+  @include laptop {
+    top: vw(40);
+    right: vw(40);
+  }
+}
+
+.founder-popup__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+
+  >* {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.45s ease,
+      filter 0.45s ease;
+  }
+
+  .founder-popup__text {
+    &:nth-of-type(1) {
+      transition-delay: 0.15s;
+    }
+
+    &:nth-of-type(2) {
+      transition-delay: 0.22s;
+    }
+
+    &:nth-of-type(3) {
+      transition-delay: 0.29s;
+    }
+
+    &:nth-of-type(4) {
+      transition-delay: 0.36s;
+    }
+  }
+
+  .founder-popup__footer {
+    transition-delay: 0.44s;
+  }
+
+  .founder-popup.hidden & {
+    >* {
+      opacity: 0;
+      filter: blur(8px);
+      transform: translate3d(0, 20px, 0);
+    }
+  }
+}
+
+.founder-popup__text {
+  @include general-text;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 20px;
+
+
+
+  @include tablet {
+    margin-bottom: 24px;
+  }
+}
+
+.founder-popup__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: -10px;
+}
+
+.founder-popup__name {
+  @include subtitle-text;
+  color: $text-color-light;
+}
+
+.founder-popup__signature {
+  flex-shrink: 0;
+
+  img {
+    display: block;
+    height: 72px;
+    width: auto;
+
+    @include tablet {
+      height: 146px;
+    }
+  }
+}

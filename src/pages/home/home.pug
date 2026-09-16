@@ -23,7 +23,7 @@ block content
     .hero__inner.container
       p.hero__label Створюємо власні формати житла
       h1.hero__title Квартири <br class="tab-br"> в <br class="mob-br"> Івано-Франківську
-      a.hero__cta.general-btn(href="#")
+      a.hero__cta.general-btn(href="#" data-presentation-trigger)
         span Завантажити каталог нерухомості
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M6.64941 9.89844L2.56641 5.81543L0.798828 7.58301L1.68262 8.4668L7.01562 13.8008C7.24998 14.0351 7.56802 14.1669 7.89941 14.167C8.23082 14.167 8.54881 14.0351 8.7832 13.8008L14.1162 8.4668L15 7.58301L13.2324 5.81543L9.14941 9.89844V1H6.64941V9.89844Z" fill="white"/>
@@ -65,135 +65,9 @@ block content
         a.stats__card-btn(href="#")
           span Про компанію
 
-  section.founder.container
-    .founder__bg
-      img.founder__bg-img(src="/src/shared/images/home/home-founder-bg.webp" alt="")
-    .founder__inner.container
-      h2.founder__title
-        span.founder__word.founder__word--start(data-parallax-word="start") Слово
-        span.founder__word.founder__word--end(data-parallax-word="end") засновника
-      .founder__content
-        .founder__photo(data-parallax="photo")
-          img(src="/src/shared/images/home/home-founder.webp" alt="Микола Ковальчук")
-        .founder__quote(data-parallax="text")
-          p.founder__quote-text Будівництво завжди залишає слід: воно або робить місто кращим, або забирає в нього душу. Для нас важливо створювати місця, де люди відчувають дім.
-          .founder__quote-footer
-            span.founder__quote-name Микола Ковальчук
-            button.stats__card-btn(type="button" data-founder-open aria-haspopup="dialog")
-              span Детальніше
-              span.founder__quote-plus +
-
-  .founder-popup(data-founder-popup data-lenis-prevent).hidden
-    .founder-popup__box(role="dialog" aria-modal="true" aria-label="Слово засновника")
-      button.founder-popup__close(type="button" data-founder-close aria-label="Закрити")
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M17.293 18.0215L11.9902 12.7178L6.68652 18.0215L5.97949 17.3145L11.2832 12.0107L5.97949 6.70703L6.68652 6L11.9902 11.3037L17.293 6L18 6.70703L12.6973 12.0107L18 17.3145L17.293 18.0215Z" fill="white"/>
-        </svg>
-      .founder-popup__panel
-        p.founder-popup__text Я пам'ятаю той момент, коли ще школярем зрозумів: я хочу будувати. Не тому, що це професія. А тому, що будівництво — це відповідальність. Ти залишаєш слід. Надовго. І він або робить місто кращим — або псує його.
-        p.founder-popup__text Перша мрія здійснилась. Але з часом прийшла інша. Я захотів, щоб наше місто перестало бути випадковим. Щоб у ньому з'явились місця, де хочеться жити. Залишатися. Повертатися додому.
-        p.founder-popup__text Разом із командою ми почали робити не «проєкти». Ми почали створювати середовище. Наші житлові комплекси — не про поверхи і метри. Вони про тишу у дворі. Про світло вранці. Про відчуття, що ти на своєму місці. Наші проєкти мають душу.
-        p.founder-popup__text І якщо люди це відчувають, значить, ми все робимо правильно.
-        .founder-popup__footer
-          span.founder-popup__name Микола Ковальчук
-          .founder-popup__signature
-            img(src="/src/shared/images/home/signature.svg" alt="Підпис Миколи Ковальчука" data-founder-signature)
-
-  section.awards
-    .awards__inner.container
-      .awards__header
-        h2.awards__title Нагороди компанії
-        
-      .awards__slider.swiper
-        .awards__nav
-          button.awards__nav-btn.awards__nav-btn--prev(type="button" data-awards-prev aria-label="Попередня нагорода")
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M12 5.99946C12 6.36751 11.701 6.66623 11.333 6.66645L2.27637 6.66645L6.4707 10.8608C6.73092 11.121 6.73064 11.5438 6.4707 11.8041C6.21039 12.0641 5.78858 12.0642 5.52832 11.8041L0.195313 6.47114C0.0702775 6.34612 1.20819e-06 6.17628 2.62245e-07 5.99946C0.000130409 5.82282 0.0703951 5.65269 0.195313 5.52778L5.52832 0.194773C5.7886 -0.0648427 6.21053 -0.0650054 6.4707 0.194773C6.7309 0.454998 6.73066 0.877761 6.4707 1.13813L2.27637 5.33247L11.333 5.33247C11.7008 5.33269 11.9997 5.63163 12 5.99946Z" fill="white"/>
-            </svg>
-          button.awards__nav-btn.awards__nav-btn--next(type="button" data-awards-next aria-label="Наступна нагорода")
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M-2.62244e-07 5.99945C-2.46156e-07 6.3675 0.298991 6.66622 0.666992 6.66644L9.72363 6.66644L5.5293 10.8608C5.26908 11.121 5.26937 11.5437 5.5293 11.8041C5.78961 12.0641 6.21142 12.0642 6.47168 11.8041L11.8047 6.47113C11.9297 6.34611 12 6.17627 12 5.99945C11.9999 5.82282 11.9296 5.65267 11.8047 5.52777L6.47168 0.194762C6.2114 -0.0648358 5.78946 -0.065005 5.5293 0.194762C5.26909 0.454981 5.26936 0.877746 5.5293 1.13812L9.72363 5.33246L0.666992 5.33246C0.299165 5.33268 0.000282497 5.63164 -2.62244e-07 5.99945Z" fill="white"/>
-            </svg>
-        .swiper-wrapper
-          - var awards = [ { year: "2026", title: "Диплом II місце «Житловий комплекс бізнес-класу»", subtitle: "Від інвестиційного будівельного конгресу", desc: "Нагорода відзначає високий рівень реалізації проєкту, продуману архітектуру, комфорт середовища та відповідність сучасним стандартам бізнес-класу. А визнання серед провідних гравців ринку підкреслює статусність комплексу і його вагоме місце серед найкращих житлових проєктів України.", img: "/src/shared/images/home/awords/aword1.webp" }, { year: "2026", title: "10 місце у ТОП-15 девелоперів України", subtitle: "за рейтингом Ukrainian Business Award", desc: "VAMBUD увійшов до десятки лідерів рейтингу ТОП-15 девелоперів України 2026 від Ukrainian Business Award. Рейтинг засвідчив, що компанія задала високу планку з якості створеного житла та рівня довіри клієнтів, і впевнено утримує позиції серед сильних девелоперів України.", img: "/src/shared/images/home/awords/aword2.webp" }, { year: "2025", title: "ТОП-20 девелоперів України", subtitle: "за рейтингом Forbes та порталу нерухомості ЛУН", desc: "За підсумками 2025 року будівельна компанія VAMBUD посіла 18 місце серед девелоперів України за кількістю зданого житла. Це підтверджує стабільність роботи, масштаб реалізованих проєктів і впевнене місце компанії серед сильних гравців українського ринку нерухомості.", img: "/src/shared/images/home/awords/aword3.webp" },{ year: "2024", title: "Премія «Житловий комплекс України»", subtitle: "Від українського будівельного конгресу", desc: "Нагорода відзначає створення сучасного, комфортного середовища європейського рівня та реалізацію проєкту попри складні обставини. А визнання серед провідних гравців ринку підкреслює винятковість комплексу.", img: "/src/shared/images/home/awords/aword4.webp" }, { year: "2023", title: "Номінація на архітектурну премію Mies van der Rohe", subtitle: "Від Європейського союзу", desc: "Номінація на одну з найпрестижніших європейських архітектурних премій підкреслює художню та містобудівну цінність проєкту.", img: "/src/shared/images/home/awords/aword5.webp" }, { year: "2023", title: "Диплом з відзнакою за реалізований ЖК «Клубне містечко 12»", subtitle: "Від національної спілки архітекторів", desc: "Диплом відзначає високий рівень архітектурного рішення та якість реалізації проєкту «Клубне містечко 12».", img: "/src/shared/images/home/awords/aword6.webp" }, { year: "2018", title: "Перемога в номінації «Найкращий благоустрій територій»", subtitle: "Від Real Estate Awards", desc: "Нагорода стала ще одним підтвердженням, що компанія мислить не лише будівлями, а й тим, як виглядає життя мешканців поза межами своїх квартир — у деталях, у затишку, у гармонії з містом.", img: "/src/shared/images/home/awords/aword7.webp" }, { year: "2014", title: "Переможець конкурсу “Кращі будинки і споруди» на території України у 2014 році", subtitle: "від Міністерства регіонального розвитку України", desc: "Це чергове підтвердження, що для VAMBUD архітектура — не просто форма, а простір для життя, що має значення. Крім технічних параметрів оцінювалися ще й соціальна цінність, архітектурна виразність, благоустрій — те, що творить середовище.", img: "/src/shared/images/home/awords/aword8.webp" } ]
-          each award in awards
-            .swiper-slide.awards__slide
-              .awards__card
-                span.awards__year= award.year
-                .awards__media
-                  a.awards__photo(data-fancybox="awards" href=award.img data-caption=award.title)
-                    img(src=award.img alt=award.title)
-                .awards__body
-                  h3.awards__card-title= award.title
-                  p.awards__card-subtitle= award.subtitle
-                  .awards__card-divider
-                  p.awards__card-desc(data-lenis-prevent)= award.desc
-                button.awards__card-btn(type="button" data-awards-more)
-                  span Детальніше
-                  span.awards__card-plus +
-
-  section.projects
-    //- Дані проєктів — на WP замінити на реальний список ЖК (CPT/ACF)
-    - var projects = [ { title: "Долішній", badge: "Призер номінації «ЖК бізнес класу»", badgeColor: "purple", price: "Від 45 700 грн/м²", location: "м. Івано-Франківськ, р-н Міського озера", image: "/src/shared/images/comp/5.jpg", href: "#", status: "completed", tags: [] }, { title: "Квартал Краківський", badge: "Енергонезалежні квартири", badgeColor: "teal", price: "Від 42 200 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/comp/20.jpg", href: "#", status: "building", tags: ["eoselya"] }, { title: "Prostir (Простір)", badge: "Квартири з терасами і патіо", badgeColor: "orange", price: "Від 45 300 грн/м²", location: "м. Івано-Франківськ, вул. Гетьмана Полуботка", image: "/src/shared/images/comp/35.jpg", href: "#", status: "building", tags: [] }, { title: "Wawel (Вавель)", badge: "Квартири у зданих будинках", badgeColor: "dark", price: "Від 44 400 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/comp/50.jpg", href: "#", status: "completed", tags: ["eoselya"] }, { title: "Клубний квартал «Сонячний»", badge: "Призер архітектурної премії", badgeColor: "purple", price: "Від 40 900 грн/м²", location: "м. Івано-Франківськ, вул. Вовчинецька", image: "/src/shared/images/comp/65.jpg", href: "#", status: "completed", tags: ["eoselya"] }, { title: "Затишний двір", badge: "Енергонезалежні квартири", badgeColor: "teal", price: "Від 38 600 грн/м²", location: "м. Івано-Франківськ, р-н Пасічна", image: "/src/shared/images/comp/12.jpg", href: "#", status: "building", tags: [] }, { title: "Урбан Хаус", badge: "Квартири з терасами і патіо", badgeColor: "orange", price: "Від 41 200 грн/м²", location: "м. Івано-Франківськ, вул. Незалежності", image: "/src/shared/images/comp/45.jpg", href: "#", status: "building", tags: ["eoselya"] }, { title: "Панорама Сіті", badge: "Квартири у зданих будинках", badgeColor: "dark", price: "Від 46 800 грн/м²", location: "м. Івано-Франківськ, вул. Братів Домбровських", image: "/src/shared/images/comp/72.jpg", href: "#", status: "completed", tags: [] } ]
-    - var filters = [ { id: "all", label: "Усі" }, { id: "building", label: "Будуються" }, { id: "completed", label: "Реалізовані" }, { id: "eoselya", label: "Єоселя" } ]
-    .projects__hero
-      img.projects__hero-image(src="/src/shared/images/home/projects.jpg" alt="Житлові комплекси VAMBUD" data-parallax="image")
-      .projects__hero-gradient
-      h2.projects__hero-title.container
-        span.projects__hero-word.projects__hero-word--start(data-parallax-word="start") Наші
-        span.projects__hero-word.projects__hero-word--end(data-parallax-word="end") проєкти
-    .projects__inner.container
-      .projects__toolbar
-        .projects__filters(role="tablist" aria-label="Фільтр проєктів")
-          each filter in filters
-            - var count = filter.id === "all" ? projects.length : projects.filter(function (item) { return filter.id === "eoselya" ? item.tags.indexOf("eoselya") !== -1 : item.status === filter.id; }).length
-            button.projects__filter-btn(type="button" data-project-filter=filter.id role="tab" aria-selected=filter.id === "all" ? "true" : "false" class=filter.id === "all" ? "is-active" : "")
-              span= filter.label
-              if filter.id !== "all"
-                span.projects__filter-count= " (" + count + ")"
-        
-      .projects__slider.swiper
-        .projects__nav
-          button.projects__nav-btn.projects__nav-btn--prev(type="button" data-projects-prev aria-label="Попередній проєкт")
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M12 5.99946C12 6.36751 11.701 6.66623 11.333 6.66645L2.27637 6.66645L6.4707 10.8608C6.73092 11.121 6.73064 11.5438 6.4707 11.8041C6.21039 12.0641 5.78858 12.0642 5.52832 11.8041L0.195313 6.47114C0.0702775 6.34612 1.20819e-06 6.17628 2.62245e-07 5.99946C0.000130409 5.82282 0.0703951 5.65269 0.195313 5.52778L5.52832 0.194773C5.7886 -0.0648427 6.21053 -0.0650054 6.4707 0.194773C6.7309 0.454998 6.73066 0.877761 6.4707 1.13813L2.27637 5.33247L11.333 5.33247C11.7008 5.33269 11.9997 5.63163 12 5.99946Z" fill="white"/>
-            </svg>
-          button.projects__nav-btn.projects__nav-btn--next(type="button" data-projects-next aria-label="Наступний проєкт")
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M-2.62244e-07 5.99945C-2.46156e-07 6.3675 0.298991 6.66622 0.666992 6.66644L9.72363 6.66644L5.5293 10.8608C5.26908 11.121 5.26937 11.5437 5.5293 11.8041C5.78961 12.0641 6.21142 12.0642 6.47168 11.8041L11.8047 6.47113C11.9297 6.34611 12 6.17627 12 5.99945C11.9999 5.82282 11.9296 5.65267 11.8047 5.52777L6.47168 0.194762C6.2114 -0.0648358 5.78946 -0.065005 5.5293 0.194762C5.26909 0.454981 5.26936 0.877746 5.5293 1.13812L9.72363 5.33246L0.666992 5.33246C0.299165 5.33268 0.000282497 5.63164 -2.62244e-07 5.99945Z" fill="white"/>
-            </svg>
-        .swiper-wrapper
-          each project in projects
-            .swiper-slide.projects__slide(data-project-status=project.status data-project-tags=project.tags.join(","))
-              a.projects__card(href=project.href)
-                .projects__media
-                  img(src=project.image alt=project.title loading="lazy")
-                  span.projects__badge(class=`projects__badge--${project.badgeColor}`)= project.badge
-                  span.projects__price= project.price
-                .projects__body
-                  .projects__body-top
-                    h3.projects__name= project.title
-                    
-                    p.projects__location
-                      <svg class="projects__pin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M13.6665 5.39844C13.6664 8.37953 8.3335 16 8.3335 16C8.31026 15.9668 3.00057 8.373 3.00049 5.39844C3.00049 2.41669 5.38809 0.00012786 8.3335 2.33113e-07C11.279 2.33113e-07 13.6665 2.41661 13.6665 5.39844ZM10.7876 5.39844C10.7876 4.02561 9.68881 2.91406 8.3335 2.91406C6.97732 2.91419 5.87939 4.02569 5.87939 5.39844C5.87954 6.77106 6.9776 7.88171 8.3335 7.88184C9.68873 7.88184 10.7875 6.77114 10.7876 5.39844Z" fill="#4A5866"/>
-                      </svg>
-                      span= project.location
-                  span.projects__arrow
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="white"/>
-                      </svg>
-      .projects__footer
-        a.projects__all-link.stats__card-btn(href="/projects.html")
-          span Усі проєкти
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="#0F1010"/>
-          </svg>
-        a.projects__map-btn.general-btn(href="location.html")
-          span Показати на мапі
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M15.9995 12.2998C15.9993 12.6282 15.91 12.9516 15.7397 13.2344C15.5692 13.5174 15.3229 13.7499 15.0259 13.9023L11.4849 15.7207L11.4849 15.7217C11.1286 15.9044 10.7334 16 10.3325 16C9.93188 15.9999 9.5372 15.9043 9.18115 15.7217L9.18115 15.7207L5.90479 14.0391C5.82961 14.0006 5.74788 13.9815 5.6665 13.9814C5.62578 13.9815 5.58437 13.9864 5.54443 13.9961L5.42725 14.0391L2.58154 15.501C2.30841 15.641 2.0027 15.7078 1.69482 15.6934C1.38697 15.6788 1.0891 15.5835 0.830567 15.4189C0.572243 15.2544 0.361545 15.0267 0.217286 14.7598C0.0731846 14.493 -0.00116286 14.1944 -0.000487674 13.8926L-0.00048812 3.7002C-0.000249715 3.37192 0.0890809 3.04833 0.259277 2.76563L0.32666 2.66211C0.492019 2.42587 0.713239 2.23112 0.973145 2.09766L4.51514 0.279297L4.51514 0.278321C4.8714 0.0956021 5.26661 4.51627e-07 5.66748 4.51627e-07C6.01818 0.000113315 6.36454 0.0730566 6.68408 0.213868L6.81885 0.278321L6.81885 0.279297L10.0942 1.96094L10.2114 2.00391C10.2512 2.01352 10.292 2.01849 10.3325 2.01855C10.4141 2.01855 10.4964 1.99952 10.5718 1.96094L13.4185 0.499024L13.6294 0.408203C13.8089 0.343952 13.9983 0.308258 14.1899 0.304688L14.3052 0.306641L14.4194 0.31543C14.61 0.336946 14.7955 0.389971 14.9683 0.470703L15.1685 0.580078L15.353 0.714844C15.4696 0.812045 15.5725 0.924065 15.6606 1.04688L15.7808 1.23926L15.8765 1.44434C15.9582 1.65444 15.9997 1.87854 15.9995 2.10449L15.9995 12.2998ZM1.99951 3.81836L1.99951 13.5508L4.51416 12.2598L4.6499 12.1953C4.65524 12.193 4.66114 12.1908 4.6665 12.1885L4.6665 2.44824L1.99951 3.81836ZM9.18115 3.74023L6.6665 2.44824L6.6665 12.1885C6.71749 12.2105 6.76827 12.2343 6.81787 12.2598L9.33252 13.5508L9.33252 3.81055C9.28166 3.78855 9.23063 3.76562 9.18115 3.74023ZM11.4849 3.74023C11.4351 3.76573 11.3836 3.78846 11.3325 3.81055L11.3325 13.5508L13.9995 12.1807L13.9995 2.44824L11.4849 3.74023Z" fill="white"/>
-          </svg>
+  +founder
+  +awards
+  +projects
 
   section.commercial
     .commercial__media
@@ -204,66 +78,12 @@ block content
       h2.commercial__title
         span.commercial__word.commercial__word--start(data-parallax-word="start") Комерційна
         span.commercial__word.commercial__word--end(data-parallax-word="end") нерухомість
-      a.commercial__cta.stats__card-btn(href="#")
+      a.commercial__cta.stats__card-btn(href="/commercial.html")
         span Дізнатися більше
 
-  section.loyalty.container
-    .loyalty__inner
-      .loyalty__media
-        img.loyalty__image(src="/src/shared/images/home/loyal.jpg" alt="Програма лояльності VAMBUD свої" loading="lazy")
-      .loyalty__content
-        h2.loyalty__title Програма лояльності
-        p.loyalty__text Ваша довіра - найцінніший актив для нас. Саме тому ми створили програму лояльності "VAMBUD свої" - для тих, хто став частиною нашої родини. Ця програма відкриває двері до ексклюзивних знижок від наших партнерів. Приєднуйтесь до "VAMBUD свої" - де кожен клієнт отримує більше, ніж очікує.
-        a.loyalty__cta.general-btn(href="#")
-          span Отримати картку
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="white"/>
-          </svg>
-
-  section.news
-    - var news = [ { title: "Ми у ТОП-20 рейтингу від LUN та Forbes", date: "06.08.2025", image: "/src/shared/images/comp/8.jpg", href: "#", logo: true }, { title: "Простір, який впливає на здоров'я та емоційний стан вас і вашої дитини", date: "06.08.2025", image: "/src/shared/images/comp/30.jpg", href: "#", logo: true }, { title: "Елітна нерухомість Прикарпаття", date: "06.08.2025", image: "/src/shared/images/comp/70.jpg", href: "#", logo: true }, { title: "VAMBUD представив нову концепцію двору", date: "28.07.2025", image: "/src/shared/images/comp/45.jpg", href: "#", logo: true }, { title: "Стартував продаж квартир у новій черзі", date: "15.07.2025", image: "/src/shared/images/comp/60.jpg", href: "#", logo: true }, { title: "Архітектурні рішення для комфортного життя", date: "02.07.2025", image: "/src/shared/images/comp/22.jpg", href: "#", logo: true } ]
-    .news__inner.container
-      .news__header
-        h2.news__title Новини
-        
-      .news__slider.swiper
-        .news__nav
-          button.news__nav-btn.news__nav-btn--prev(type="button" data-news-prev aria-label="Попередня новина")
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M12 5.99946C12 6.36751 11.701 6.66623 11.333 6.66645L2.27637 6.66645L6.4707 10.8608C6.73092 11.121 6.73064 11.5438 6.4707 11.8041C6.21039 12.0641 5.78858 12.0642 5.52832 11.8041L0.195313 6.47114C0.0702775 6.34612 1.20819e-06 6.17628 2.62245e-07 5.99946C0.000130409 5.82282 0.0703951 5.65269 0.195313 5.52778L5.52832 0.194773C5.7886 -0.0648427 6.21053 -0.0650054 6.4707 0.194773C6.7309 0.454998 6.73066 0.877761 6.4707 1.13813L2.27637 5.33247L11.333 5.33247C11.7008 5.33269 11.9997 5.63163 12 5.99946Z" fill="white"/>
-            </svg>
-          button.news__nav-btn.news__nav-btn--next(type="button" data-news-next aria-label="Наступна новина")
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M-2.62244e-07 5.99945C-2.46156e-07 6.3675 0.298991 6.66622 0.666992 6.66644L9.72363 6.66644L5.5293 10.8608C5.26908 11.121 5.26937 11.5437 5.5293 11.8041C5.78961 12.0641 6.21142 12.0642 6.47168 11.8041L11.8047 6.47113C11.9297 6.34611 12 6.17627 12 5.99945C11.9999 5.82282 11.9296 5.65267 11.8047 5.52777L6.47168 0.194762C6.2114 -0.0648358 5.78946 -0.065005 5.5293 0.194762C5.26909 0.454981 5.26936 0.877746 5.5293 1.13812L9.72363 5.33246L0.666992 5.33246C0.299165 5.33268 0.000282497 5.63164 -2.62244e-07 5.99945Z" fill="white"/>
-            </svg>
-        .swiper-wrapper
-          each item in news
-            .swiper-slide.news__slide
-              a.news__card(href=item.href)
-                .news__media
-                  img(src=item.image alt=item.title loading="lazy")
-                  if item.logo
-                    span.news__logo VAMBUD
-                .news__body
-                  h3.news__card-title= item.title
-                  .news__footer
-                    .news__view-btn(href=item.href)
-                      span Переглянути
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="#27292B"/>
-                      </svg>
-                    .news__date
-                      span= item.date
-                      span.news__date-icon
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                          <path d="M5 1C4.44771 1 4 1.44772 4 2H3.33301C2.12815 2.00016 1 2.91535 1 4.22266V12.7773C1 14.0847 2.12815 14.9998 3.33301 15H12.667C13.8718 14.9998 15 14.0847 15 12.7773V4.22266C15 2.91535 13.8718 2.00016 12.667 2H12C12 1.44772 11.5523 1 11 1C10.4477 1 10 1.44772 10 2H6C6 1.44772 5.55229 1 5 1ZM13 12.7773C13 12.809 12.9878 12.8555 12.9336 12.9053C12.8779 12.9562 12.7862 12.9999 12.667 13H3.33301C3.2138 12.9999 3.12208 12.9562 3.06641 12.9053C3.01216 12.8555 3 12.809 3 12.7773V8H13V12.7773ZM12.667 4C12.7862 4.00008 12.8779 4.04383 12.9336 4.09473C12.9878 4.14445 13 4.19097 13 4.22266V6H3V4.22266C3 4.19097 3.01216 4.14445 3.06641 4.09473C3.12208 4.04383 3.2138 4.00008 3.33301 4H4C4 4.55228 4.44771 5 5 5C5.55229 5 6 4.55228 6 4H10C10 4.55228 10.4477 5 11 5C11.5523 5 12 4.55228 12 4H12.667Z" fill="#4A5866"/>
-                        </svg>
-      .news__footer-all
-        a.news__all-link.general-btn(href="/news.html")
-          span Дивитись усі новини
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="white"/>
-          </svg>
+  +loyalty
+  +newsSlider
+  +presentationModal
 
 block footer
   +footer  

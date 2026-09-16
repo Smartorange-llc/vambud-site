@@ -1,0 +1,64 @@
+mixin projects
+  section.projects
+    //- Дані проєктів — на WP замінити на реальний список ЖК (CPT/ACF)
+    - var projects = [ { title: "Долішній", badge: "Призер номінації «ЖК бізнес класу»", price: "Від 45 700 грн/м²", location: "м. Івано-Франківськ, р-н Міського озера", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "completed", tags: [] }, { title: "Квартал Краківський", badge: "Енергонезалежні квартири", price: "Від 42 200 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/projects/krakivskyi.jpg", href: "#", status: "building", tags: ["eoselya"] }, { title: "Prostir (Простір)", badge: "Квартири з терасами і патіо", price: "Від 45 300 грн/м²", location: "м. Івано-Франківськ, вул. Гетьмана Полуботка", image: "/src/shared/images/projects/prostir.jpg", href: "#", status: "building", tags: [] }, { title: "Wawel (Вавель)", badge: "Квартири у зданих будинках", price: "Від 44 400 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/projects/wawel.jpg", href: "#", status: "completed", tags: ["eoselya"] }, { title: "Клубний квартал «Сонячний»", badge: "Призер архітектурної премії", price: "Від 40 900 грн/м²", location: "м. Івано-Франківськ, вул. Вовчинецька", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "completed", tags: ["eoselya"] }, { title: "Затишний двір", badge: "Енергонезалежні квартири", price: "Від 38 600 грн/м²", location: "м. Івано-Франківськ, р-н Пасічна", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "building", tags: [] }, { title: "Урбан Хаус", badge: "Квартири з терасами і патіо", price: "Від 41 200 грн/м²", location: "м. Івано-Франківськ, вул. Незалежності", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "building", tags: ["eoselya"] }, { title: "Панорама Сіті", badge: "Квартири у зданих будинках", price: "Від 46 800 грн/м²", location: "м. Івано-Франківськ, вул. Братів Домбровських", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "completed", tags: [] } ]
+    - var filters = [ { id: "all", label: "Усі" }, { id: "building", label: "Будуються" }, { id: "completed", label: "Реалізовані" }, { id: "eoselya", label: "Єоселя" } ]
+    .projects__hero
+      img.projects__hero-image(src="/src/shared/images/home/projects.jpg" alt="Житлові комплекси VAMBUD" data-parallax="image")
+      .projects__hero-gradient
+      h2.projects__hero-title.container
+        span.projects__hero-word.projects__hero-word--start(data-parallax-word="start") Наші
+        span.projects__hero-word.projects__hero-word--end(data-parallax-word="end") проєкти
+    .projects__hero--simple
+      h2.projects__hero-title-simple Відомі проєкти
+    .projects__inner.container
+      .projects__toolbar
+        .projects__filters(role="tablist" aria-label="Фільтр проєктів")
+          each filter in filters
+            - var count = filter.id === "all" ? projects.length : projects.filter(function (item) { return filter.id === "eoselya" ? item.tags.indexOf("eoselya") !== -1 : item.status === filter.id; }).length
+            button.projects__filter-btn(type="button" data-project-filter=filter.id role="tab" aria-selected=filter.id === "all" ? "true" : "false" class=filter.id === "all" ? "is-active" : "")
+              span= filter.label
+              if filter.id !== "all"
+                span.projects__filter-count= " (" + count + ")"
+
+      .projects__slider.swiper
+        .projects__nav
+          button.projects__nav-btn.projects__nav-btn--prev(type="button" data-projects-prev aria-label="Попередній проєкт")
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M12 5.99946C12 6.36751 11.701 6.66623 11.333 6.66645L2.27637 6.66645L6.4707 10.8608C6.73092 11.121 6.73064 11.5438 6.4707 11.8041C6.21039 12.0641 5.78858 12.0642 5.52832 11.8041L0.195313 6.47114C0.0702775 6.34612 1.20819e-06 6.17628 2.62245e-07 5.99946C0.000130409 5.82282 0.0703951 5.65269 0.195313 5.52778L5.52832 0.194773C5.7886 -0.0648427 6.21053 -0.0650054 6.4707 0.194773C6.7309 0.454998 6.73066 0.877761 6.4707 1.13813L2.27637 5.33247L11.333 5.33247C11.7008 5.33269 11.9997 5.63163 12 5.99946Z" fill="white"/>
+            </svg>
+          button.projects__nav-btn.projects__nav-btn--next(type="button" data-projects-next aria-label="Наступний проєкт")
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M-2.62244e-07 5.99945C-2.46156e-07 6.3675 0.298991 6.66622 0.666992 6.66644L9.72363 6.66644L5.5293 10.8608C5.26908 11.121 5.26937 11.5437 5.5293 11.8041C5.78961 12.0641 6.21142 12.0642 6.47168 11.8041L11.8047 6.47113C11.9297 6.34611 12 6.17627 12 5.99945C11.9999 5.82282 11.9296 5.65267 11.8047 5.52777L6.47168 0.194762C6.2114 -0.0648358 5.78946 -0.065005 5.5293 0.194762C5.26909 0.454981 5.26936 0.877746 5.5293 1.13812L9.72363 5.33246L0.666992 5.33246C0.299165 5.33268 0.000282497 5.63164 -2.62244e-07 5.99945Z" fill="white"/>
+            </svg>
+        .swiper-wrapper
+          each project in projects
+            .swiper-slide.projects__slide(data-project-status=project.status data-project-tags=project.tags.join(","))
+              a.projects__card(href=project.href)
+                img.projects__image(src=project.image alt=project.title loading="lazy")
+                .projects__top
+                  span.projects__price= project.price
+                  span.projects__badge= project.badge
+                .projects__info
+                  .projects__text
+                    h3.projects__name= project.title
+                    p.projects__location
+                      <svg class="projects__pin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M13.6665 5.39844C13.6664 8.37953 8.3335 16 8.3335 16C8.31026 15.9668 3.00057 8.373 3.00049 5.39844C3.00049 2.41669 5.38809 0.00012786 8.3335 2.33113e-07C11.279 2.33113e-07 13.6665 2.41661 13.6665 5.39844ZM10.7876 5.39844C10.7876 4.02561 9.68881 2.91406 8.3335 2.91406C6.97732 2.91419 5.87939 4.02569 5.87939 5.39844C5.87954 6.77106 6.9776 7.88171 8.3335 7.88184C9.68873 7.88184 10.7875 6.77114 10.7876 5.39844Z" fill="#DFDEE1"/>
+                      </svg>
+                      span= project.location
+                  span.projects__arrow
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="white"/>
+                    </svg>
+      .projects__footer
+        a.projects__all-link.stats__card-btn(href="/projects.html")
+          span Усі проєкти
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M12.771 12.7715L12.771 13.7715L10.771 13.7715L10.771 7.64355L4.229 14.1855L2.81494 12.7715L9.35693 6.22949L3.229 6.22949L3.229 4.22949L4.229 4.22949L11.772 4.22852C12.037 4.2286 12.2916 4.3341 12.479 4.52148C12.6664 4.70892 12.7719 4.96349 12.772 5.22852L12.771 12.7715Z" fill="#0F1010"/>
+          </svg>
+        a.projects__map-btn.general-btn(href="location.html")
+          span Показати на мапі
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M15.9995 12.2998C15.9993 12.6282 15.91 12.9516 15.7397 13.2344C15.5692 13.5174 15.3229 13.7499 15.0259 13.9023L11.4849 15.7207L11.4849 15.7217C11.1286 15.9044 10.7334 16 10.3325 16C9.93188 15.9999 9.5372 15.9043 9.18115 15.7217L9.18115 15.7207L5.90479 14.0391C5.82961 14.0006 5.74788 13.9815 5.6665 13.9814C5.62578 13.9815 5.58437 13.9864 5.54443 13.9961L5.42725 14.0391L2.58154 15.501C2.30841 15.641 2.0027 15.7078 1.69482 15.6934C1.38697 15.6788 1.0891 15.5835 0.830567 15.4189C0.572243 15.2544 0.361545 15.0267 0.217286 14.7598C0.0731846 14.493 -0.00116286 14.1944 -0.000487674 13.8926L-0.00048812 3.7002C-0.000249715 3.37192 0.0890809 3.04833 0.259277 2.76563L0.32666 2.66211C0.492019 2.42587 0.713239 2.23112 0.973145 2.09766L4.51514 0.279297L4.51514 0.278321C4.8714 0.0956021 5.26661 4.51627e-07 5.66748 4.51627e-07C6.01818 0.000113315 6.36454 0.0730566 6.68408 0.213868L6.81885 0.278321L6.81885 0.279297L10.0942 1.96094L10.2114 2.00391C10.2512 2.01352 10.292 2.01849 10.3325 2.01855C10.4141 2.01855 10.4964 1.99952 10.5718 1.96094L13.4185 0.499024L13.6294 0.408203C13.8089 0.343952 13.9983 0.308258 14.1899 0.304688L14.3052 0.306641L14.4194 0.31543C14.61 0.336946 14.7955 0.389971 14.9683 0.470703L15.1685 0.580078L15.353 0.714844C15.4696 0.812045 15.5725 0.924065 15.6606 1.04688L15.7808 1.23926L15.8765 1.44434C15.9582 1.65444 15.9997 1.87854 15.9995 2.10449L15.9995 12.2998ZM1.99951 3.81836L1.99951 13.5508L4.51416 12.2598L4.6499 12.1953C4.65524 12.193 4.66114 12.1908 4.6665 12.1885L4.6665 2.44824L1.99951 3.81836ZM9.18115 3.74023L6.6665 2.44824L6.6665 12.1885C6.71749 12.2105 6.76827 12.2343 6.81787 12.2598L9.33252 13.5508L9.33252 3.81055C9.28166 3.78855 9.23063 3.76562 9.18115 3.74023ZM11.4849 3.74023C11.4351 3.76573 11.3836 3.78846 11.3325 3.81055L11.3325 13.5508L13.9995 12.1807L13.9995 2.44824L11.4849 3.74023Z" fill="white"/>
+          </svg>
