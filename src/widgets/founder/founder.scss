@@ -364,6 +364,10 @@
     width: 20px;
     height: 20px;
     transition: transform 0.3s ease, opacity 0.3s ease;
+
+    path {
+      fill: $wc;
+    }
   }
 
   @media (hover: hover) {

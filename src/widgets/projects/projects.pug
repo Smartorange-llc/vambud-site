@@ -1,8 +1,13 @@
-mixin projects
+//- filterIds — впорядкований список фільтрів для сторінки, напр. ["sale", "known", "eoselya", "all"].
+//- Перший фільтр активний за замовчуванням. Без аргументу тулбар фільтрів не виводиться.
+mixin projects(filterIds)
   section.projects
     //- Дані проєктів — на WP замінити на реальний список ЖК (CPT/ACF)
-    - var projects = [ { title: "Долішній", badge: "Призер номінації «ЖК бізнес класу»", price: "Від 45 700 грн/м²", location: "м. Івано-Франківськ, р-н Міського озера", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "completed", tags: [] }, { title: "Квартал Краківський", badge: "Енергонезалежні квартири", price: "Від 42 200 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/projects/krakivskyi.jpg", href: "#", status: "building", tags: ["eoselya"] }, { title: "Prostir (Простір)", badge: "Квартири з терасами і патіо", price: "Від 45 300 грн/м²", location: "м. Івано-Франківськ, вул. Гетьмана Полуботка", image: "/src/shared/images/projects/prostir.jpg", href: "#", status: "building", tags: [] }, { title: "Wawel (Вавель)", badge: "Квартири у зданих будинках", price: "Від 44 400 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/projects/wawel.jpg", href: "#", status: "completed", tags: ["eoselya"] }, { title: "Клубний квартал «Сонячний»", badge: "Призер архітектурної премії", price: "Від 40 900 грн/м²", location: "м. Івано-Франківськ, вул. Вовчинецька", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "completed", tags: ["eoselya"] }, { title: "Затишний двір", badge: "Енергонезалежні квартири", price: "Від 38 600 грн/м²", location: "м. Івано-Франківськ, р-н Пасічна", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "building", tags: [] }, { title: "Урбан Хаус", badge: "Квартири з терасами і патіо", price: "Від 41 200 грн/м²", location: "м. Івано-Франківськ, вул. Незалежності", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "building", tags: ["eoselya"] }, { title: "Панорама Сіті", badge: "Квартири у зданих будинках", price: "Від 46 800 грн/м²", location: "м. Івано-Франківськ, вул. Братів Домбровських", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "completed", tags: [] } ]
-    - var filters = [ { id: "all", label: "Усі" }, { id: "building", label: "Будуються" }, { id: "completed", label: "Реалізовані" }, { id: "eoselya", label: "Єоселя" } ]
+    //- status: "sale" (в продажі) або "completed" (реалізовані) — взаємовиключні.
+    //- tags: "known" (відомі) і/або "eoselya" (є оселя) — можуть поєднуватись.
+    - var projects = [ { title: "Долішній", badge: "Призер номінації «ЖК бізнес класу»", price: "Від 45 700 грн/м²", location: "м. Івано-Франківськ, р-н Міського озера", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "completed", tags: ["known"] }, { title: "Квартал Краківський", badge: "Енергонезалежні квартири", price: "Від 42 200 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/projects/krakivskyi.jpg", href: "#", status: "sale", tags: ["eoselya", "known"] }, { title: "Prostir (Простір)", badge: "Квартири з терасами і патіо", price: "Від 45 300 грн/м²", location: "м. Івано-Франківськ, вул. Гетьмана Полуботка", image: "/src/shared/images/projects/prostir.jpg", href: "#", status: "sale", tags: [] }, { title: "Wawel (Вавель)", badge: "Квартири у зданих будинках", price: "Від 44 400 грн/м²", location: "м. Івано-Франківськ, р-н Позитрон (поруч ТРЦ Veles Mall)", image: "/src/shared/images/projects/wawel.jpg", href: "#", status: "completed", tags: ["eoselya", "known"] }, { title: "Клубний квартал «Сонячний»", badge: "Призер архітектурної премії", price: "Від 40 900 грн/м²", location: "м. Івано-Франківськ, вул. Вовчинецька", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "completed", tags: ["eoselya", "known"] }, { title: "Затишний двір", badge: "Енергонезалежні квартири", price: "Від 38 600 грн/м²", location: "м. Івано-Франківськ, р-н Пасічна", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "sale", tags: [] }, { title: "Урбан Хаус", badge: "Квартири з терасами і патіо", price: "Від 41 200 грн/м²", location: "м. Івано-Франківськ, вул. Незалежності", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "sale", tags: ["eoselya"] }, { title: "Панорама Сіті", badge: "Квартири у зданих будинках", price: "Від 46 800 грн/м²", location: "м. Івано-Франківськ, вул. Братів Домбровських", image: "/src/shared/images/projects/dolishniy.jpg", href: "#", status: "completed", tags: [] } ]
+    - var filterLabels = { sale: "У продажі", known: "Відомі", eoselya: "єОселя", all: "Всі" }
+    - var filters = (filterIds || []).map(function (id, index) { return { id: id, label: filterLabels[id], active: index === 0 }; })
     .projects__hero
       img.projects__hero-image(src="/src/shared/images/home/projects.jpg" alt="Житлові комплекси VAMBUD" data-parallax="image")
       .projects__hero-gradient
@@ -12,13 +17,13 @@ mixin projects
     .projects__hero--simple
       h2.projects__hero-title-simple Відомі проєкти
     .projects__inner.container
-      .projects__toolbar
-        .projects__filters(role="tablist" aria-label="Фільтр проєктів")
-          each filter in filters
-            - var count = filter.id === "all" ? projects.length : projects.filter(function (item) { return filter.id === "eoselya" ? item.tags.indexOf("eoselya") !== -1 : item.status === filter.id; }).length
-            button.projects__filter-btn(type="button" data-project-filter=filter.id role="tab" aria-selected=filter.id === "all" ? "true" : "false" class=filter.id === "all" ? "is-active" : "")
-              span= filter.label
-              if filter.id !== "all"
+      if filters.length
+        .projects__toolbar
+          .projects__filters(role="tablist" aria-label="Фільтр проєктів")
+            each filter in filters
+              - var count = filter.id === "all" ? projects.length : projects.filter(function (item) { return item.status === filter.id || item.tags.indexOf(filter.id) !== -1; }).length
+              button.projects__filter-btn(type="button" data-project-filter=filter.id role="tab" aria-selected=filter.active ? "true" : "false" class=filter.active ? "is-active" : "")
+                span= filter.label
                 span.projects__filter-count= " (" + count + ")"
 
       .projects__slider.swiper

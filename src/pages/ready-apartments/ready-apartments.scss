@@ -399,7 +399,7 @@
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.08em;
-  text-transform: uppercase;
+
   margin: 4px 0 0;
   font-size: 32px;
   white-space: nowrap;
@@ -883,6 +883,10 @@
   flex-shrink: 0;
   width: 32px;
   height: 32px;
+
+  path {
+    fill: $accent-color;
+  }
 
   @include tablet {
     width: 54px;

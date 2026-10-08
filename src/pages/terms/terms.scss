@@ -471,6 +471,15 @@
   color: $wc;
 }
 
+.terms-benefit__subtitle {
+  @include subtitle-text;
+  margin: 0;
+}
+
+.terms-benefit--dark .terms-benefit__subtitle {
+  color: $wc;
+}
+
 .terms-benefit__text {
   display: flex;
   flex-direction: column;
@@ -577,6 +586,9 @@
     width: 45%;
   }
 
+  @include laptop {
+    width: 100%;
+  }
 
 }
 

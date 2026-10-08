@@ -1,0 +1,479 @@
+<html>
+<head>
+</head>
+
+<body>
+
+<?
+
+/*
+ * PDF BUBBLES YARD (mPDF 7.1.6), стилі: style-pdf_apica.css
+ * Figma: A4 PDF 1 (планування), A4 PDF 2 (план поверху), A4 PDF 3 (девелопер).
+ * Верстка лише таблицями: без div у td, без float і position.
+ * Фото сторінки девелопера: themes/apica/frontend/views/layouts/pdf/1.jpg, 2.jpg, 3.jpg (як у старому шаблоні),
+ * інші картинки макета: themes/apica/frontend/views/layouts/pdf/bubbles-yard/
+ */
+
+$type_object = (isset($this->config->api_settings->type_view->{$flat->type_object}))? $this->_e($this->config->api_settings->type_view->{$flat->type_object}->text->{0}) : $this->_e('Квартира');
+
+$parentDir = dirname($dirs);
+
+$by_assets = $parentDir.'/themes/apica/frontend/views/layouts/pdf/';
+
+$by_photos = $parentDir.'/themes/apica/frontend/views/layouts/pdf';
+
+// Друге планування (праворуч від основного, 220px): поле об'єкта з картинкою, напр. 'custom_field_img_1'. '' — не показувати
+$by_plan2_field = '';
+
+// у шрифті NeueMachina немає гліфів ² та № — вони виводяться шрифтом montserrat (.by-glyph)
+$by_m2 = $this->_e('м', $lang).'<span class="by-glyph">²</span>';
+
+$by_h = function ($text) {
+    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+};
+
+$by_type_label = mb_strtoupper(mb_substr($type_object, 0, 1, 'UTF-8'), 'UTF-8').mb_substr($type_object, 1, null, 'UTF-8');
+
+$by_params = [];
+
+if (!empty($flat->sec_name)) $by_params[] = [$this->_e('Секція', $lang), $by_h($flat->sec_name)];
+
+$by_params[] = [$this->_e('Поверх', $lang), $flat->floor];
+$by_params[] = [$by_type_label.' <span class="by-glyph">№</span>', $flat->number];
+$by_params[] = [$this->_e('Загальна площа', $lang), round($flat->all_room, 2).' '.$by_m2];
+
+if ($flat->life_room != 0) $by_params[] = [$this->_e('Житлова площа', $lang), $flat->life_room.' '.$by_m2];
+
+$by_rooms = [];
+
+if (!empty($flat->properties)) {
+    foreach ($flat->properties as $room) {
+        if ($room->property_name) $by_rooms[] = $room;
+    }
+}
+
+$by_compact = (count($by_rooms) > 10)? ' by-room-compact' : '';
+
+// Ліва колонка 800px: інформація зверху, контакти притиснуті донизу. Висота інформації в px макета:
+// лого 50 + 20 + тип 28 + 20 + параметри по 20 + 18 + приміщення по 20 (16.67 якщо їх більше 10)
+$by_px = 297 / 1269;
+$by_info_h = round((136 + count($by_params) * 20 + count($by_rooms) * ($by_compact? 16.67 : 20) + 2) * $by_px, 2);
+$by_contact_h = max(0, round(187.23 - $by_info_h, 2));
+
+// Сторінка девелопера: лого 50 + 20 + заголовок 56 + 12 + текст 153
+$by_about_info_h = round(293 * $by_px, 2);
+$by_about_contact_h = round(187.23 - $by_about_info_h, 2);
+
+// Картинка $w x $h, вписана в рамку $boxW x $boxH мм (object-fit: contain)
+$by_fit = function ($w, $h, $boxW, $boxH) {
+    if ($w <= 0 || $h <= 0) return [$boxW, $boxH];
+
+    $k = min($boxW / $w, $boxH / $h);
+
+    return [round($w * $k, 2), round($h * $k, 2)];
+};
+
+$by_img = function ($file, $boxW, $boxH) use ($by_fit) {
+    $size = @getimagesize($file);
+
+    if (!$size) return '<img src="'.$file.'" style="max-width: '.$boxW.'mm; max-height: '.$boxH.'mm;" />';
+
+    list($w, $h) = $by_fit($size[0], $size[1], $boxW, $boxH);
+
+    return '<img src="'.$file.'" style="width: '.$w.'mm; height: '.$h.'mm;" />';
+};
+
+// Фото фоном комірки $boxW x $boxH мм з обрізкою під рамку (object-fit: cover), $pos — яку частину фото лишити
+$by_cover = function ($file, $boxW, $boxH, $pos) {
+    $size = @getimagesize($file);
+    $resize = 6;
+
+    if ($size && $size[1] > 0) $resize = ($size[0] / $size[1] > $boxW / $boxH)? 5 : 4;
+
+    return 'background-image: url('.$file.'); background-repeat: no-repeat; background-image-resize: '.$resize.'; background-position: '.$pos.';';
+};
+
+$by_plan = ($flat->img_big)? $dirs.'/'.$this->cropImg($flat->img_big, 'resize', false, 1500, 0) : '';
+
+$by_plan2 = '';
+
+if ($by_plan2_field && !empty($flat->{$by_plan2_field})) {
+    $by_plan2 = "/img/projects/{$flat->project_id}/{$flat->build}/{$flat->{$by_plan2_field}}";
+    $by_plan2 = (file_exists($dirs.$by_plan2))? $dirs.$by_plan2 : '';
+}
+
+// Кулька за блоком контактів (Figma: 200x200px, x -50px, y 462px) — фон таблиці сторінки.
+// Розмір 46.81мм задається через роздільну здатність, тож підійде квадратний sphere.png будь-якого розміру
+$by_sphere = $by_assets.'/sphere.png';
+$by_sphere_size = @getimagesize($by_sphere);
+$by_page_bg = ($by_sphere_size)? 'background-image: url('.$by_sphere.'); background-image-resolution: '.round($by_sphere_size[0] / (46.81 / 25.4)).'dpi;' : '';
+
+// Компас 112 x 104.88px у правій комірці заголовка (як у старому шаблоні), будь-який розмір compass.png
+$by_compass = $by_img($by_assets.'/compass.png', 26.21, 24.55);
+
+// SVG-блоки: $svg_box — рамка в мм, $svg_fill / $svg_opacity — підсвітка квартири / будинку
+$svg_fill = '#ED0057';
+
+// план поверху — мініатюра на сторінці планування (301 x 157px)
+ob_start();
+$svg_box = [70.45, 36.74];
+$svg_opacity = 0.8;
+require(BASE_PATH."/themes/apica/frontend/views/layouts/pdf/flat_FloorSvgPlanSmall.phtml");
+$by_floor_small = trim(ob_get_clean());
+
+// план поверху — сторінка поверху (889 x 548px)
+ob_start();
+$svg_box = [208.06, 128.26];
+$svg_opacity = 0.8;
+require(BASE_PATH."/themes/apica/frontend/views/layouts/pdf-site/flat_FloorSvgPlan.phtml");
+$by_floor = trim(ob_get_clean());
+
+// Картинка з полігонами ($Data як $SvgData: ['img' => [ширина, висота, 'name' => шлях], 'dataList' => [...]])
+// у рамці 301 x 157px з обрізкою (object-fit: cover); $is_active($polygon) — які полігони підсвітити.
+// Будується тут, а не через genplanSvgBlockSmall.phtml: стара версія того файлу бере $width/$height з шаблону (850px)
+// і mPDF стискає всю 2 сторінку
+$by_thumb_svg = function ($Data, $is_active) use ($dirs, $svg_fill) {
+    if (empty($Data['img']['name']) || !is_file($dirs.$Data['img']['name'])) return '';
+
+    $gw = isset($Data['img'][0])? (float)$Data['img'][0] : 0;
+    $gh = isset($Data['img'][1])? (float)$Data['img'][1] : 0;
+
+    if ($gw <= 0 || $gh <= 0) {
+        $size = @getimagesize($dirs.$Data['img']['name']);
+        $gw = ($size)? $size[0] : 0;
+        $gh = ($size)? $size[1] : 0;
+    }
+
+    if ($gw <= 0 || $gh <= 0) return '';
+
+    $box_w = 70.45;
+    $box_h = 36.74;
+    $vw = $gw;
+    $vh = $gh;
+
+    if ($vw / $vh > $box_w / $box_h) {
+        $vw = $vh * $box_w / $box_h;
+    } else {
+        $vh = $vw * $box_h / $box_w;
+    }
+
+    $svg = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="'.$box_w.'mm" height="'.$box_h.'mm" viewBox="'.round(($gw - $vw) / 2, 2).' '.round(($gh - $vh) / 2, 2).' '.round($vw, 2).' '.round($vh, 2).'">';
+    $svg.= '<image xlink:href="'.$dirs.$Data['img']['name'].'" x="0" y="0" width="'.$gw.'" height="'.$gh.'"></image>';
+
+    if (!empty($Data['dataList'])) {
+        foreach ($Data['dataList'] as $polygon) {
+            if (!empty($polygon->sorts) && $is_active($polygon)) {
+                $svg.= '<polygon style="fill:'.$svg_fill.'; fill-opacity:0.6;" points="'.$polygon->sorts.'"></polygon>';
+            }
+        }
+    }
+
+    return $svg.'</svg>';
+};
+
+// Генплан з підсвіченим будинком; якщо генплану немає — рендер з макета
+$by_genplan = (isset($SvgData))? $by_thumb_svg($SvgData, function ($polygon) use ($flat) { return $polygon->build == $flat->build; }) : '';
+
+// Обліт будинку з обведеним поверхом — поруч з генпланом на сторінці поверху.
+// $FlyData — у тому ж форматі, що $SvgData, поверхи в 'dataList' з ->sorts та ->floor. Якщо обльоту немає — блок не виводиться,
+// нотатки займають всю ширину
+$by_fly = (isset($FlyData))? $by_thumb_svg($FlyData, function ($polygon) use ($flat) { return isset($polygon->floor) && $polygon->floor == $flat->floor; }) : '';
+
+// Колонки нижнього ряду сторінки поверху: генплан | 20px | обліт | 50px | нотатки
+$by_floor_cols = ($by_fly)? 5 : 3;
+$by_note_sm = ($by_fly)? '-sm' : '';
+
+if (!$by_genplan) $by_genplan = '<img class="by-thumb-img" src="'.$by_assets.'/render.jpg" />';
+
+?>
+
+<? ob_start(); ?>
+
+<table class="by-contact">
+    <tr>
+        <td class="by-space-20"></td>
+    </tr>
+    <tr>
+        <td class="by-contact-label"><?=$this->_e('Відділ продажу:')?></td>
+    </tr>
+    <tr>
+        <td class="by-contact-value by-contact-upper">м.Хмельницький, район Озерна, вул. Момота 24А</td>
+    </tr>
+    <tr>
+        <td class="by-contact-label by-contact-group"><?=$this->_e('Номер телефону', $lang)?>:</td>
+    </tr>
+    <tr>
+        <td class="by-contact-value">
+            <a class="by-link" href="tel:+380503380864">+38 (050) 338 08 64</a><br />
+            <a class="by-link" href="tel:+380984337722">+38 (098) 433 77 22</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="by-contact-label by-contact-group"><?=$this->_e('Центральний офіс APICA:')?></td>
+    </tr>
+    <tr>
+        <td class="by-contact-value by-contact-upper">Хмельницький, Кам'янецька вулиця, 17, ТРЦ "Квартал", 6 поверх</td>
+    </tr>
+    <?if($AgentsAccess){?>
+        <tr>
+            <td class="by-contact-label by-contact-group"><?=$this->_e('Дата зустрічі', $lang)?>: <span class="by-contact-strong"><?=date('d.m.Y');?></span></td>
+        </tr>
+        <?if($menager){?>
+            <tr>
+                <td class="by-contact-label by-contact-group"><?=$this->_e('Ваш персональний менеджер:')?></td>
+            </tr>
+            <tr>
+                <td class="by-contact-value by-contact-upper"><?=$by_h($menager->user_first_name);?></td>
+            </tr>
+        <?}?>
+    <?}?>
+    <tr>
+        <td class="by-space-20"></td>
+    </tr>
+</table>
+
+<? $by_contact = ob_get_clean(); ?>
+
+<? ob_start(); ?>
+
+<table class="by-side">
+    <tr>
+        <td class="by-side-info" style="height: <?=$by_info_h?>mm;">
+            <table class="by-info">
+                <tr>
+                    <td class="by-logo" colspan="2">
+                        <img class="by-logo-img" src="<?=$by_assets?>/logo-bubbles-yard.svg" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="by-space-20" colspan="2"></td>
+                </tr>
+                <tr>
+                    <td class="by-title" colspan="2"><?=$this->_e('Тип', $lang)?> <?=$by_h($flat->type);?></td>
+                </tr>
+                <tr>
+                    <td class="by-space-20" colspan="2"></td>
+                </tr>
+
+                <?foreach ($by_params as $param) {?>
+                    <tr>
+                        <td class="by-param" colspan="2"><?=$param[0]?><span class="by-dots"><dottab /></span><?=$param[1]?></td>
+                    </tr>
+                <?}?>
+                <tr>
+                    <td class="by-space-18" colspan="2"></td>
+                </tr>
+
+                <?foreach ($by_rooms as $i => $room) {?>
+                    <tr>
+                        <td class="by-room-num<?=$by_compact?>"><?=$i + 1?></td>
+                        <td class="by-room<?=$by_compact?>"><?=$by_h($room->property_name)?><span class="by-dots"><dottab /></span><?=$room->property_flat;?> <?=$by_m2?></td>
+                    </tr>
+                <?}?>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="by-side-contact" style="height: <?=$by_contact_h?>mm;"><?=$by_contact?></td>
+    </tr>
+</table>
+
+<? $by_side = ob_get_clean(); ?>
+
+<!-- flat page started -->
+
+<table class="by-page" style="<?=$by_page_bg?>">
+    <tr>
+        <td class="by-page-top" colspan="4"></td>
+    </tr>
+    <tr>
+        <td class="by-page-left"></td>
+        <td class="by-page-side"><?=$by_side?></td>
+        <td class="by-page-gap"></td>
+        <td class="by-page-main">
+            <table class="by-main">
+                <tr>
+                    <td colspan="3">
+                        <table class="by-head">
+                            <tr>
+                                <td class="by-main-title by-title"><?=$this->_e('Планування квартири', $lang)?></td>
+                                <td class="by-compass" rowspan="2"><?=$by_compass?></td>
+                            </tr>
+                            <tr>
+                                <td class="by-head-space"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="by-main-image" colspan="3">
+                        <table class="by-image-area">
+                            <tr>
+                                <?if ($by_plan && $by_plan2) {?>
+                                    <td class="by-plan-main"><?=$by_img($by_plan, 151.89, 128.26)?></td>
+                                    <td class="by-plan-gap"></td>
+                                    <td class="by-plan-second"><?=$by_img($by_plan2, 51.49, 128.26)?></td>
+                                <?} else {?>
+                                    <td class="by-image-cell"><?if ($by_plan) echo $by_img($by_plan, 208.06, 128.26);?></td>
+                                <?}?>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="by-space-30" colspan="3"></td>
+                </tr>
+                <tr>
+                    <td class="by-thumb" rowspan="5"><?=$by_floor_small?></td>
+                    <td class="by-bottom-gap" rowspan="5"></td>
+                    <td class="by-note-label"><?=$this->_e('Нотатки:')?></td>
+                </tr>
+                <tr>
+                    <td class="by-note-line"></td>
+                </tr>
+                <tr>
+                    <td class="by-note-line"></td>
+                </tr>
+                <tr>
+                    <td class="by-note-line"></td>
+                </tr>
+                <tr>
+                    <td class="by-note-line"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<!-- flat page ended -->
+
+<pagebreak />
+
+<!-- floor page started -->
+
+<table class="by-page" style="<?=$by_page_bg?>">
+    <tr>
+        <td class="by-page-top" colspan="4"></td>
+    </tr>
+    <tr>
+        <td class="by-page-left"></td>
+        <td class="by-page-side"><?=$by_side?></td>
+        <td class="by-page-gap"></td>
+        <td class="by-page-main">
+            <table class="by-main">
+                <tr>
+                    <td colspan="<?=$by_floor_cols?>">
+                        <table class="by-head">
+                            <tr>
+                                <td class="by-main-title by-title"><?=$this->_e('План поверху')?></td>
+                                <td class="by-compass" rowspan="2"><?=$by_compass?></td>
+                            </tr>
+                            <tr>
+                                <td class="by-head-space"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="by-main-image" colspan="<?=$by_floor_cols?>">
+                        <table class="by-image-area">
+                            <tr>
+                                <td class="by-image-cell"><?=$by_floor?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="by-space-30" colspan="<?=$by_floor_cols?>"></td>
+                </tr>
+                <tr>
+                    <td class="by-thumb" rowspan="5"><?=$by_genplan?></td>
+                    <?if ($by_fly) {?>
+                        <td class="by-thumb-gap" rowspan="5"></td>
+                        <td class="by-thumb" rowspan="5"><?=$by_fly?></td>
+                    <?}?>
+                    <td class="by-bottom-gap" rowspan="5"></td>
+                    <td class="by-note-label<?=$by_note_sm?>"><?=$this->_e('Нотатки:')?></td>
+                </tr>
+                <tr>
+                    <td class="by-note-line<?=$by_note_sm?>"></td>
+                </tr>
+                <tr>
+                    <td class="by-note-line<?=$by_note_sm?>"></td>
+                </tr>
+                <tr>
+                    <td class="by-note-line<?=$by_note_sm?>"></td>
+                </tr>
+                <tr>
+                    <td class="by-note-line<?=$by_note_sm?>"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<!-- floor page ended -->
+
+<pagebreak />
+
+<!-- developer page started -->
+
+<table class="by-page" style="<?=$by_page_bg?>">
+    <tr>
+        <td class="by-page-top" colspan="4"></td>
+    </tr>
+    <tr>
+        <td class="by-page-left"></td>
+        <td class="by-page-side">
+            <table class="by-side">
+                <tr>
+                    <td class="by-side-info" style="height: <?=$by_about_info_h?>mm;">
+                        <table class="by-info">
+                            <tr>
+                                <td class="by-logo">
+                                    <img class="by-logo-apica-img" src="<?=$by_assets?>/logo-apica.svg" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="by-space-20"></td>
+                            </tr>
+                            <tr>
+                                <td class="by-title"><?=$this->_e('Девелоперська компанія APICA')?></td>
+                            </tr>
+                            <tr>
+                                <td class="by-space-12"></td>
+                            </tr>
+                            <tr>
+                                <td class="by-about-text"><?=$this->_e("Це девелопер нової генерації, створений партнерами, для яких девелопмент є справою життя. Компанія об'єднала багаторічний досвід реалізації житлових і комерційних проєктів у різних містах України, щоб створювати простори нового рівня для рідного Хмельницького та країни.")?></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="by-side-contact" style="height: <?=$by_about_contact_h?>mm;"><?=$by_contact?></td>
+                </tr>
+            </table>
+        </td>
+        <td class="by-page-gap"></td>
+        <td class="by-page-main">
+            <table class="by-about">
+                <tr>
+                    <td class="by-about-photo" style="<?=$by_cover($by_photos.'/1.jpg', 103.33, 93.62, '0% 50%')?>"></td>
+                    <td class="by-about-gap-x"></td>
+                    <td class="by-about-photo" style="<?=$by_cover($by_photos.'/2.jpg', 103.33, 93.62, '50% 50%')?>"></td>
+                </tr>
+                <tr>
+                    <td class="by-about-gap-y" colspan="3"></td>
+                </tr>
+                <tr>
+                    <td class="by-about-wide" colspan="3" style="<?=$by_cover($by_photos.'/3.jpg', 208.06, 92.21, '50% 100%')?>"><img class="by-qr" src="<?=$by_assets?>/qr.jpg" /></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<!-- developer page ended -->
+
+</body>
+</html>

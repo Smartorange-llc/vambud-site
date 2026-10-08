@@ -97,6 +97,7 @@ mixin header
 
     .menu-overlay.hidden(data-menu data-lenis-prevent)
       .menu-panel
+        .menu-panel-fill(aria-hidden="true")
         .menu-container
           .menu-columns
             .menu-column.menu-column--primary
@@ -137,8 +138,8 @@ mixin header
                 span.real Програма лояльності
                 span.fake Програма лояльності
               a(href="/news.html").nav-link.menu-main-link.menu-main-link--sm
-                span.real Новини та акції
-                span.fake Новини та акції
+                span.real Новини 
+                span.fake Новини
               a(href="/vacancies.html").nav-link.menu-main-link.menu-main-link--sm
                 span.real Вакансії
                 span.fake Вакансії

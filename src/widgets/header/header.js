@@ -57,16 +57,43 @@ function setMenuOrigin(menu, triggerEl) {
 
   menu.style.setProperty("--menu-origin-x", `${x}px`);
   menu.style.setProperty("--menu-origin-y", `${y}px`);
+
+  // The reveal circles are a fixed 300vmax in CSS (see header.scss) so
+  // they're always big enough to cover the viewport from any corner once
+  // fully open. Scaling that same box down to exactly the button's own
+  // diameter gives it a starting size/position that matches the button
+  // itself, instead of scale(0) (an invisible point) — so the reveal reads
+  // as the button circle growing, and (since closing reverts to this same
+  // base value) as shrinking back into it.
+  const circleDiameterPx = 3 * Math.max(window.innerWidth, window.innerHeight);
+  const startScale = rect.width / circleDiameterPx;
+  menu.style.setProperty("--menu-start-scale", startScale);
+
+  // .menu-panel-fill's own circle (header.scss) is clipped inside
+  // .menu-panel, so its top/left are resolved against .menu-panel's own
+  // box, not the viewport — and .menu-panel is offset from the viewport
+  // (right-aligned at laptop), so reusing the viewport-relative
+  // --menu-origin-x/y there would push its center off to the side instead
+  // of under the button. Recompute the same point in .menu-panel's own
+  // coordinate space.
+  const panel = menu.querySelector(".menu-panel");
+  if (panel) {
+    const panelRect = panel.getBoundingClientRect();
+    menu.style.setProperty("--menu-panel-origin-x", `${x - panelRect.left}px`);
+    menu.style.setProperty("--menu-panel-origin-y", `${y - panelRect.top}px`);
+  }
 }
+
+let menuBlurTimeoutId = null;
 
 function openMenuWithReveal(menu, triggerEl) {
   if (!menu || menu.classList.contains("is-open")) return;
 
   setMenuOrigin(menu, triggerEl);
-  menu.classList.remove("hidden", "is-closing");
+  menu.classList.remove("hidden", "is-closing", "is-blurred");
   setMenuContentHidden(menu);
 
-  // Force a reflow so the clip-path transition always starts from 0%.
+  // Force a reflow so the reveal transition always starts from scale(0).
   void menu.offsetWidth;
 
   menu.classList.add("is-open");
@@ -74,6 +101,16 @@ function openMenuWithReveal(menu, triggerEl) {
   window.setTimeout(() => {
     revealMenuContent(menu);
   }, MENU_CONTENT_REVEAL_DELAY);
+
+  // backdrop-filter's blur pass isn't compositor-only like the reveal's
+  // transform — its cost scales with the area it's sampling, so turning it
+  // on while the circle is still growing re-blurs an ever-larger region
+  // every frame and stalls the whole animation. Switching it on only once
+  // the growth has finished keeps that expensive pass off the hot path.
+  clearTimeout(menuBlurTimeoutId);
+  menuBlurTimeoutId = window.setTimeout(() => {
+    menu.classList.add("is-blurred");
+  }, MENU_TRANSITION_DURATION);
 }
 
 function closeMenuWithReveal(menu) {
@@ -81,8 +118,15 @@ function closeMenuWithReveal(menu) {
 
   const { links } = getMenuAnimatedElements(menu);
   gsap.killTweensOf(links);
+  // The reveal circle only covers the background — with the old clip-path
+  // approach it also clipped the text away as it shrank, so closing never
+  // needed to touch link opacity directly. Now it does, or the text is left
+  // sitting at full opacity, floating over the page while the circle behind
+  // it shrinks away.
+  gsap.to(links, { autoAlpha: 0, duration: 0.2, ease: "power2.in" });
 
-  menu.classList.remove("is-open");
+  clearTimeout(menuBlurTimeoutId);
+  menu.classList.remove("is-open", "is-blurred");
   menu.classList.add("is-closing");
 
   window.setTimeout(() => {

@@ -189,6 +189,12 @@ a {
 html {
   font-size: 14px;
 
+  // Reserve the scrollbar's track permanently so toggling overflow:hidden
+  // (menu/modal scroll-lock) never changes the viewport's layout width —
+  // without this, the header and other fixed/full-width elements shift
+  // sideways by the scrollbar's width the instant a modal opens.
+  scrollbar-gutter: stable;
+
   //   overscroll-behavior: none;
   //   -webkit-overscroll-behavior: none;
 }

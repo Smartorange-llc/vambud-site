@@ -44,10 +44,29 @@ function initNewsCatalog() {
   const loadMoreBtn = paginationWrap.querySelector(".pagination__more");
 
   const perPage = 12;
+  const buttonsList = Array.from(filterButtons);
+
+  // Links like the footer's "Акції" send visitors here with ?filter=promo
+  // so the page lands with that category already selected instead of
+  // making them click it again. Falls back to whatever's server-rendered
+  // .is-active (or "all") when there's no (or no matching) query param.
+  const requestedFilter = new URLSearchParams(window.location.search).get("filter");
+  const requestedBtn = buttonsList.find((btn) => btn.dataset.newsFilter === requestedFilter);
+
   let activeFilter =
-    Array.from(filterButtons).find((btn) => btn.classList.contains("is-active"))?.dataset.newsFilter || "all";
+    (requestedBtn && requestedFilter) ||
+    buttonsList.find((btn) => btn.classList.contains("is-active"))?.dataset.newsFilter ||
+    "all";
   let filteredCards = allCards;
   let currentPage = 1;
+
+  if (requestedBtn) {
+    buttonsList.forEach((btn) => {
+      const isActive = btn === requestedBtn;
+      btn.classList.toggle("is-active", isActive);
+      btn.setAttribute("aria-selected", String(isActive));
+    });
+  }
 
   function matchesFilter(card, filterId) {
     return filterId === "all" || card.dataset.newsType === filterId;

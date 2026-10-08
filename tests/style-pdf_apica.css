@@ -1,0 +1,347 @@
+/*
+ * BUBBLES YARD — PDF (mPDF 7.1.6), A4 landscape, margins 0.
+ * Figma frame 1269 x 900 px = 297 x 210 mm  ->  1 px = 0.234 mm.
+ * Sizes are in mm (Figma px in comments), fonts in pt.
+ * Layout is tables only: no div inside td, no floats, no absolute positioning.
+ * table/td backgrounds ignore background-size in mPDF -> images are exported
+ * at 300 dpi and sized with background-image-resolution.
+ */
+
+body {
+    font-family: neuemachina, montserrat;
+    font-size: 9.29pt;
+    color: #050505;
+    background-color: #ffffff;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td {
+    padding: 0;
+    vertical-align: top;
+}
+
+img {
+    margin: 0;
+    vertical-align: top;
+}
+
+/* ---------- page grid ---------- */
+
+/* sphere.png behind the contact card: 200 x 200px at x -50px, y 462px;
+   its size is set in the template (background-image-resolution) */
+.by-page {
+    width: 285.29mm;
+    background-repeat: no-repeat;
+    background-position: -11.7mm 108.13mm;
+}
+
+.by-page-top {
+    height: 11.7mm;                         /* 50px */
+}
+
+.by-page-left {
+    width: 11.7mm;                          /* 50px */
+}
+
+.by-page-side {
+    width: 58.51mm;                         /* 250px */
+    height: 187.23mm;                       /* 800px */
+}
+
+.by-page-gap {
+    width: 7.02mm;                          /* 30px */
+}
+
+.by-page-main {
+    width: 208.06mm;                        /* 889px */
+    height: 187.23mm;                       /* 800px */
+}
+
+/* ---------- left column ---------- */
+
+.by-side {
+    width: 58.51mm;
+}
+
+/* heights are set in the template: info height is calculated from the rows,
+   the contact cell takes the rest of 187.23mm and keeps the card at the bottom */
+.by-side-info {
+    width: 58.51mm;
+}
+
+.by-side-contact {
+    width: 58.51mm;
+    vertical-align: bottom;
+}
+
+.by-info {
+    width: 58.51mm;
+}
+
+.by-logo {
+    height: 11.7mm;                         /* 50px */
+}
+
+.by-logo-img {
+    width: 23.4mm;                          /* 100 x 50px */
+    height: 11.7mm;
+}
+
+.by-logo-apica-img {
+    width: 58.51mm;                         /* 250 x 50px */
+    height: 11.7mm;
+}
+
+.by-space-20 {
+    height: 4.68mm;                         /* 20px */
+}
+
+.by-space-18 {
+    height: 4.21mm;                         /* 18px */
+}
+
+.by-space-12 {
+    height: 2.81mm;                         /* 12px */
+}
+
+/* headings: "Neue Machina Bold" if registered as neuemachinatitle,
+   otherwise PP Neue Machina Ultrabold, otherwise Montserrat Bold */
+.by-title {
+    font-family: neuemachinatitle, neuemachina, montserrat;
+    font-weight: bold;
+    font-size: 18.58pt;                     /* 28px */
+    line-height: 1;
+    letter-spacing: -0.06em;                /* -1.68px */
+    text-transform: uppercase;
+    color: #000dcc;
+}
+
+/* "Секція ........ J" rows: label and value bold, dots via <dottab /> */
+.by-param {
+    height: 4.68mm;                         /* 18px row + 2px gap */
+    font-size: 9.29pt;
+    line-height: 1.2;
+    letter-spacing: -0.06em;
+    font-weight: bold;
+    color: #050505;
+    vertical-align: middle;
+}
+
+.by-room-num {
+    width: 5.62mm;                          /* 20px + 4px gap */
+    height: 4.68mm;
+    font-size: 9.29pt;
+    line-height: 1.2;
+    letter-spacing: -0.06em;
+    color: #050505;
+    vertical-align: middle;
+}
+
+.by-room {
+    width: 52.89mm;
+    height: 4.68mm;
+    font-size: 9.29pt;
+    line-height: 1.2;
+    letter-spacing: -0.06em;
+    color: #050505;
+    vertical-align: middle;
+}
+
+.by-room-compact {
+    height: 3.9mm;                          /* more than 10 rooms */
+}
+
+/* ² and № are missing in NeueMachina: these characters use Montserrat */
+.by-glyph {
+    font-family: montserrat;
+}
+
+.by-dots {
+    font-weight: normal;
+    color: #e6e6e6;                         /* #050505, opacity .1 */
+}
+
+/* ---------- contact card ---------- */
+
+.by-contact {
+    width: 58.51mm;
+    background-color: #e3e5ff;
+}
+
+.by-contact-label,
+.by-contact-value {
+    width: 52.89mm;
+    padding-left: 2.81mm;                   /* 12px */
+    padding-right: 2.81mm;
+    font-size: 9.29pt;                      /* 14px */
+    line-height: 1.4;
+    color: #313237;                         /* #050505, opacity .8 on #e3e5ff */
+}
+
+.by-contact-value {
+    font-weight: bold;
+    color: #050505;
+}
+
+.by-contact-upper {
+    text-transform: uppercase;
+}
+
+.by-contact-strong {
+    font-weight: bold;
+    color: #050505;
+}
+
+.by-link {
+    color: #050505;
+    text-decoration: none;
+}
+
+.by-contact-group {
+    padding-top: 2.81mm;                    /* 12px */
+}
+
+/* ---------- right column ---------- */
+
+.by-main {
+    width: 208.06mm;
+}
+
+/* header: title (45px) + compass 112 x 104.88px on the right, as in the old template */
+.by-head {
+    width: 208.06mm;
+}
+
+.by-main-title {
+    width: 181.85mm;
+    height: 10.53mm;                        /* 45px */
+    vertical-align: middle;
+}
+
+.by-head-space {
+    height: 14.02mm;                        /* 104.88 - 45px */
+}
+
+.by-compass {
+    width: 26.21mm;                         /* 112px */
+    text-align: right;
+    vertical-align: top;
+}
+
+/* images: 548px from y 65px; the header is 40px taller (compass),
+   so the image table is pulled up under the compass by 9.34mm */
+.by-main-image {
+    width: 208.06mm;
+    height: 118.92mm;                       /* 548 - 40px */
+    vertical-align: top;
+}
+
+.by-image-area {
+    width: 208.06mm;
+    margin-top: -9.34mm;
+}
+
+.by-image-cell {
+    width: 208.06mm;
+    height: 128.26mm;                       /* 548px */
+    text-align: center;
+    vertical-align: middle;
+}
+
+.by-space-30 {
+    height: 7.02mm;                         /* 30px */
+}
+
+.by-plan-main {
+    width: 151.89mm;                        /* 649px */
+    height: 128.26mm;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.by-plan-gap {
+    width: 4.68mm;                          /* 20px */
+}
+
+.by-plan-second {
+    width: 51.49mm;                         /* 220px */
+    height: 128.26mm;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* bottom row: thumbnail + notes */
+.by-thumb {
+    width: 70.45mm;                         /* 301 x 157px */
+    height: 36.74mm;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.by-thumb-img {
+    width: 70.45mm;
+    height: 36.74mm;
+}
+
+.by-bottom-gap {
+    width: 11.7mm;                          /* 50px */
+}
+
+.by-note-label {
+    width: 125.91mm;                        /* 538px */
+    height: 8.66mm;                         /* 37px: label + 20px gap */
+    font-size: 9.29pt;
+    line-height: 1.2;
+    letter-spacing: -0.06em;
+    color: #050505;
+    border-bottom: 0.25mm solid #dce2eb;
+}
+
+.by-note-line {
+    width: 125.91mm;
+    height: 7.02mm;                         /* 30px */
+    border-bottom: 0.25mm solid #dce2eb;
+}
+
+/* ---------- developer page ---------- */
+/* photos 1.jpg, 2.jpg, 3.jpg are cell backgrounds, cropped to the frame in the template */
+
+.by-about {
+    width: 208.06mm;
+}
+
+.by-about-photo {
+    width: 103.33mm;                        /* 441.5 x 400px */
+    height: 93.62mm;
+}
+
+.by-about-gap-x {
+    width: 1.4mm;                           /* 6px */
+}
+
+.by-about-gap-y {
+    height: 1.4mm;                          /* 6px */
+}
+
+.by-about-wide {
+    width: 208.06mm;                        /* 889 x 394px */
+    height: 92.21mm;
+    text-align: right;
+    vertical-align: bottom;
+}
+
+.by-qr {
+    width: 23.64mm;                         /* 101px */
+    height: 23.64mm;
+}
+
+.by-about-text {
+    font-size: 9.29pt;                      /* 14px */
+    line-height: 1.2;
+    letter-spacing: -0.06em;
+    color: #050505;
+}

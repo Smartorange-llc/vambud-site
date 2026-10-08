@@ -42,8 +42,8 @@ const renderForm = (form, elements, toast) => {
       });
 
       elementsParamFn.$btnSubmit.setAttribute("disabled", true);
-      elementsParamFn.$btnSubmit.querySelector('[data-btn-submit-text="data-btn-submit-text"]').innerHTML =
-        i18next.t("sending");
+      // elementsParamFn.$btnSubmit.querySelector('[data-btn-submit-text="data-btn-submit-text"]').innerHTML =
+      //   i18next.t("sending");
 
       break;
     case "successSand":
@@ -55,8 +55,8 @@ const renderForm = (form, elements, toast) => {
 
       elementsParamFn.$form.reset();
       elementsParamFn.$btnSubmit.setAttribute("disabled", false);
-      elementsParamFn.$btnSubmit.querySelector('[data-btn-submit-text="data-btn-submit-text"]').innerHTML =
-        i18next.t("send");
+      // elementsParamFn.$btnSubmit.querySelector('[data-btn-submit-text="data-btn-submit-text"]').innerHTML =
+      //   i18next.t("send");
       /*  */
       window.dispatchEvent(new Event("succesFormSend"));
       if (elementsParamFn.successAction === "toster") {
@@ -80,8 +80,8 @@ const renderForm = (form, elements, toast) => {
       //   title: 'Bir hata oluştu',
       // });
       elementsParamFn.$btnSubmit.removeAttribute("disabled");
-      elementsParamFn.$btnSubmit.querySelector('[data-btn-submit-text="data-btn-submit-text"]').innerHTML =
-        i18next.t("send");
+      // elementsParamFn.$btnSubmit.querySelector('[data-btn-submit-text="data-btn-submit-text"]').innerHTML =
+      //   i18next.t("send");
       break;
 
     default:

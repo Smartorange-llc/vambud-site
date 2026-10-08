@@ -754,55 +754,73 @@ $logo-letter-travel: 20px + 12px;
   align-items: center;
   justify-content: center;
 
-  background-color: $accent-color;
   pointer-events: all;
   visibility: visible;
-  clip-path: circle(0% at var(--menu-origin-x, 90%) var(--menu-origin-y, 6%));
-  transition: clip-path 0.7s cubic-bezier(0.65, 0, 0.35, 1);
-
-  &.is-open {
-    clip-path: circle(150vmax at var(--menu-origin-x, 90%) var(--menu-origin-y, 6%));
-  }
 
   &.hidden {
     visibility: hidden;
     pointer-events: none;
-    transition: clip-path 0.5s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s linear 0.5s;
+    transition: visibility 0s linear 0.7s;
   }
 
   @include laptop {
     justify-content: flex-end;
-    background-color: transparent;
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-
   }
 }
 
-// Safari/WebKit can fail to (re)composite `backdrop-filter` the first time
-// it lives on the same box as an animated `clip-path` — the blur silently
-// never kicks in after the reveal runs (most visible right after a fresh
-// page load/scroll, before that layer has been forced to repaint once).
-// Giving it its own layer sidesteps the bug — it stays clipped by the
-// parent (clip-path clips all descendants/pseudo-elements) and, being the
-// first generated child, still paints behind `.menu-panel`/`.menu-watermark`
-// (both already `position: relative`/`absolute`) purely through DOM order,
-// with no z-index needed: a *negative* z-index here is its own well-known
-// Chromium bug that drops the backdrop snapshot entirely.
+// The circular reveal used to animate clip-path's own radius (0% -> 150vmax).
+// That forces the browser to repaint the newly-uncovered region on every
+// frame, and the cost grows with the on-screen area — so by the time the
+// circle neared full-screen the animation had collapsed from ~60fps to
+// ~10fps, which read as glitching/jumping rather than a smooth reveal.
+// Scaling a pre-shaped circle via `transform` is compositor-only work with
+// no such repaint, no matter how large the circle ends up, so it stays
+// smooth through the whole transition. It still paints behind `.menu-panel`
+// purely through DOM order (no z-index needed — a *negative* z-index here
+// is its own well-known Chromium bug that drops the backdrop snapshot
+// entirely).
 .menu-overlay::before {
   content: "";
   position: absolute;
-  inset: 0;
+  z-index: 0;
+  top: var(--menu-origin-y, 6%);
+  left: var(--menu-origin-x, 90%);
+  width: 300vmax;
+  height: 300vmax;
+  margin-top: -150vmax;
+  margin-left: -150vmax;
+  border-radius: 50%;
+  background-color: $accent-color;
   pointer-events: none;
-
+  // header.js sets --menu-start-scale so this starts at exactly the menu
+  // button's own size/position instead of an invisible point — falls back
+  // to 0 if JS hasn't run yet (e.g. no-JS first paint).
+  transform: scale(var(--menu-start-scale, 0));
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
 
   @include laptop {
     background-color: #22153631;
+    will-change: transform;
+  }
+}
+
+.menu-overlay.is-open::before {
+  transform: scale(1);
+}
+
+// backdrop-filter's blur pass isn't compositor-only the way the transform
+// above is — its cost scales with the area it's sampling, so having it
+// active while the circle is still growing re-blurs an ever-larger region
+// every frame and stalls the animation (measured: ~10fps by the time the
+// circle neared full-screen). header.js only adds `is-blurred` once the
+// transform transition has finished, so this expensive pass only ever runs
+// against the already-settled, full-size circle.
+.menu-overlay.is-open.is-blurred::before {
+  @include laptop {
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    // Keeps this layer's compositor tile allocated up front instead of
-    // lazily on first paint, which is the other half of the Safari bug.
-    will-change: backdrop-filter;
+    transition: backdrop-filter 0.2s ease, -webkit-backdrop-filter 0.2s ease;
   }
 }
 
@@ -820,14 +838,74 @@ $logo-letter-travel: 20px + 12px;
 
   @include laptop {
     width: vw(1500);
-    background-color: $accent-color;
     display: flex;
     align-items: center;
     overflow: visible;
   }
 }
 
+// At laptop the panel needs its own *opaque* fill (unlike the blurred/tinted
+// `.menu-overlay::before`) so the menu text stays readable instead of
+// sitting on the blurred backdrop. That fill used to ride along with the
+// parent's animated clip-path, so it emerged circularly for free and was
+// always in lockstep with the text reveal (both driven by the same clip).
+// Now that the reveal is a growing circle instead, this needs its own copy
+// of that same circle — sized/timed identically to `.menu-overlay::before`,
+// growing from the same origin with no delay — so it's never behind where
+// the text (which starts fading in at MENU_CONTENT_REVEAL_DELAY, see
+// header.js) already is. A plain delayed opacity fade was tried here first
+// and looked wrong: the text started appearing before this fill had caught
+// up, floating over the raw page underneath it.
+//
+// It can't just be `.menu-panel`'s own `::before` sized to `.menu-panel`
+// directly, because that reintroduces the original bug at a slightly
+// smaller scale — animating a shape sized to the whole panel is still
+// expensive. It also can't be an oversized transform-scaled circle directly
+// on `.menu-panel`, because `.menu-panel` needs `overflow: visible` for
+// `.menu-watermark`'s intentional bleed past its own box. So this gets a
+// dedicated wrapper: a statically-sized (cheap) `overflow: hidden` box that
+// clips an oversized, cheaply-transform-scaled circle to just the panel's
+// rectangle, without touching `.menu-panel`'s own overflow.
+.menu-panel-fill {
+  display: none;
+  pointer-events: none;
+
+  @include laptop {
+    display: block;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+}
+
+.menu-panel-fill::before {
+  content: "";
+  position: absolute;
+  // Relative to .menu-panel (this box's containing block), not the
+  // viewport — see the --menu-panel-origin-x/y comment in header.js.
+  top: var(--menu-panel-origin-y, 6%);
+  left: var(--menu-panel-origin-x, 90%);
+  width: 300vmax;
+  height: 300vmax;
+  margin-top: -150vmax;
+  margin-left: -150vmax;
+  border-radius: 50%;
+  background-color: $accent-color;
+  transform: scale(var(--menu-start-scale, 0));
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
+}
+
+.menu-overlay.is-open .menu-panel-fill::before {
+  transform: scale(1);
+}
+
 .menu-container {
+  // Static (non-positioned) boxes paint behind any positioned z-index:auto
+  // element regardless of DOM order, so without this the opaque
+  // .menu-panel::before fill added above would cover the menu's actual
+  // text/links once it fades in instead of sitting behind them.
+  position: relative;
   width: 100%;
   min-height: 100%;
   margin: 0 auto;
@@ -842,7 +920,7 @@ $logo-letter-travel: 20px + 12px;
 
   @include laptop {
     min-height: 0;
-    padding: vw(120) vw(100);
+    padding: vw(60) vw(100);
   }
 }
 

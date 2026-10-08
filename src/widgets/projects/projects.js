@@ -94,14 +94,13 @@ function initProjectsFilter(swiper) {
   const slides = section.querySelectorAll(".projects__slide");
   if (!buttons.length || !slides.length) return;
 
-  function applyFilter(filterId) {
+  function applyFilter(filterId, { animate = true } = {}) {
     const revealedCards = [];
 
     slides.forEach((slide) => {
       const status = slide.dataset.projectStatus;
       const tags = (slide.dataset.projectTags || "").split(",").filter(Boolean);
-      const matches =
-        filterId === "all" || (filterId === "eoselya" ? tags.includes("eoselya") : status === filterId);
+      const matches = filterId === "all" || status === filterId || tags.includes(filterId);
 
       slide.classList.toggle("is-hidden", !matches);
       if (matches) {
@@ -110,11 +109,13 @@ function initProjectsFilter(swiper) {
       }
     });
 
-    gsap.fromTo(
-      revealedCards,
-      { opacity: 0, y: 24 },
-      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.06, overwrite: true },
-    );
+    if (animate) {
+      gsap.fromTo(
+        revealedCards,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.06, overwrite: true },
+      );
+    }
 
     swiper?.update();
     swiper?.slideTo(0);
@@ -133,6 +134,16 @@ function initProjectsFilter(swiper) {
       applyFilter(btn.dataset.projectFilter);
     });
   });
+
+  // The markup ships with one filter pre-marked .is-active (see
+  // projects.pug) so the buttons render correctly without JS, but the
+  // slides themselves start unfiltered — apply that same filter once on
+  // init so the visible cards match the highlighted button immediately,
+  // with no entrance animation since nothing has been seen yet.
+  const initialBtn = Array.from(buttons).find((btn) => btn.classList.contains("is-active"));
+  if (initialBtn) {
+    applyFilter(initialBtn.dataset.projectFilter, { animate: false });
+  }
 }
 
 initProjectsParallax();
